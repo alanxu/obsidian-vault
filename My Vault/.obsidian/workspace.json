@@ -1,0 +1,218 @@
+{
+  "main": {
+    "id": "76c2c9519d57a450",
+    "type": "split",
+    "children": [
+      {
+        "id": "b2c50f6fd97a7db4",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "0ef15e74a673a2fb",
+            "type": "leaf",
+            "state": {
+              "type": "split-diff-view",
+              "state": {
+                "aFile": "My Vault/.obsidian/plugins/obsidian-git/main.js",
+                "bFile": "My Vault/.obsidian/plugins/obsidian-git/main.js",
+                "aRef": ""
+              },
+              "icon": "diff",
+              "title": "Diff: main.js  (Working Tree)"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "674ff88a832ae78b",
+    "type": "split",
+    "children": [
+      {
+        "id": "9680180fff04ffec",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "646df26cd91e4605",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "6d03e857719165db",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "d61235237aa6ff24",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "d703afb26b0df47f",
+    "type": "split",
+    "children": [
+      {
+        "id": "29268acc090b9177",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "3dd6c98f734214d7",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks"
+            }
+          },
+          {
+            "id": "a70b5435bf904105",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Welcome.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from Welcome"
+            }
+          },
+          {
+            "id": "77bc3239b05f859d",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "45f548ec3918cf4c",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "37efc4d9858aff07",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline"
+            }
+          },
+          {
+            "id": "41e3285d505cae24",
+            "type": "leaf",
+            "state": {
+              "type": "git-view",
+              "state": {},
+              "icon": "git-pull-request",
+              "title": "Source Control"
+            }
+          }
+        ],
+        "currentTab": 5
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false,
+      "obsidian-git:Open Git source control": false
+    }
+  },
+  "active": "0ef15e74a673a2fb",
+  "lastOpenFiles": [
+    "02 - Projects/Job Hunt/ai-ipo-interview-guide.md",
+    "02 - Projects/Job Hunt/anthropic-interview-guide.md",
+    "Mavis.md",
+    "02 - Projects/Job Hunt/README.md",
+    "02 - Projects/Job Hunt/ai-ipo-interview-guide.jsx",
+    "02 - Projects/Job Hunt/ai_ipo_interview_guide.jsx",
+    "02 - Projects/Job Hunt",
+    "Welcome.md",
+    "05 - Archives/README.md",
+    "04 - Resources/README.md",
+    "03 - Areas/README.md",
+    "02 - Projects/README.md",
+    "01 - Daily Notes/README.md",
+    "00 - Inbox/README.md",
+    "05 - Archives",
+    "04 - Resources",
+    "03 - Areas",
+    "02 - Projects",
+    "01 - Daily Notes",
+    "00 - Inbox"
+  ]
+}
