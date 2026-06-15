@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "b2c50f6fd97a7db4",
+        "id": "3afe53bd94dca7c5",
         "type": "tabs",
         "children": [
           {
-            "id": "0ef15e74a673a2fb",
+            "id": "0a95cba422a2261a",
             "type": "leaf",
             "state": {
-              "type": "split-diff-view",
+              "type": "markdown",
               "state": {
-                "aFile": "My Vault/.obsidian/plugins/obsidian-git/main.js",
-                "bFile": "My Vault/.obsidian/plugins/obsidian-git/main.js",
-                "aRef": ""
+                "file": "02 - Projects/Job Hunt/anthropic-interview-guide.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "diff",
-              "title": "Diff: main.js  (Working Tree)"
+              "icon": "lucide-file",
+              "title": "anthropic-interview-guide"
             }
           }
         ]
@@ -94,6 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "02 - Projects/Job Hunt/anthropic-interview-guide.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -103,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks"
+              "title": "Backlinks for anthropic-interview-guide"
             }
           },
           {
@@ -155,12 +156,13 @@
             "state": {
               "type": "outline",
               "state": {
+                "file": "02 - Projects/Job Hunt/anthropic-interview-guide.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline"
+              "title": "Outline of anthropic-interview-guide"
             }
           },
           {
@@ -174,11 +176,12 @@
             }
           }
         ],
-        "currentTab": 5
+        "currentTab": 2
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -192,10 +195,11 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "0ef15e74a673a2fb",
+  "active": "0a95cba422a2261a",
   "lastOpenFiles": [
-    "02 - Projects/Job Hunt/ai-ipo-interview-guide.md",
+    "02 - Projects/Job Hunt/cohere-interview-guide.md",
     "02 - Projects/Job Hunt/anthropic-interview-guide.md",
+    "02 - Projects/Job Hunt/ai-ipo-interview-guide.md",
     "Mavis.md",
     "02 - Projects/Job Hunt/README.md",
     "02 - Projects/Job Hunt/ai-ipo-interview-guide.jsx",
