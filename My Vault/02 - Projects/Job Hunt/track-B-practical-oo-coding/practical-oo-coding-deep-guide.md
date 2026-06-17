@@ -30,15 +30,15 @@ A single, **domain-flavored, project-based problem** (an in-memory DB, a bank, a
 
 Same archetype, different delivery. Know which one you're walking into.
 
-| Company | Platform / mode | Format | Time | Graded by | Notable rules |
-|---|---|---|---|---|---|
-| **Anthropic** | CodeSignal ICA (screen) **+ live** 4-level | 1 project, 4 levels | 90 min (OA); ~60 min live | hidden tests + human | Bank is "circulated"; interviewers **alert to over-rehearsed** solutions → may swap in a fresh problem if a round is "inconclusive." |
-| **OpenAI** | CoderPad live screen + **work-trial** | 1 base problem + **progressive follow-ups** (up to ~6 parts) | 60 min screen | human | Adds **thread safety, file persistence with custom serialization (no `json`/`pickle`), async**. |
-| **Anysphere (Cursor)** | CodeSignal-style OA + live | practical build | ~60–90 min | tests + human | Fast, clean code; streaming/cancellation flavors. |
-| **xAI** | CodeSignal (proctored) | tight algorithmic + practical | 60 min | auto | Very tight timing. |
-| **Robinhood** | CodeSignal OA | ~4 tasks easy→hard (GCA-style) + sometimes concurrency | 90 min | auto | Reliability/fintech flavor; concurrency basics. |
-| **Harvey** | Take-home or CodeSignal | practical AI-eng build | varies | human | Often LLM/agent-flavored. |
-| **Also use CodeSignal ICA** | — | — | — | — | Netflix, Capital One, Meta, Dropbox, Coinbase, The Trade Desk. |
+| Company                     | Platform / mode                            | Format                                                       | Time                      | Graded by            | Notable rules                                                                                                                        |
+| --------------------------- | ------------------------------------------ | ------------------------------------------------------------ | ------------------------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| **Anthropic**               | CodeSignal ICA (screen) **+ live** 4-level | 1 project, 4 levels                                          | 90 min (OA); ~60 min live | hidden tests + human | Bank is "circulated"; interviewers **alert to over-rehearsed** solutions → may swap in a fresh problem if a round is "inconclusive." |
+| **OpenAI**                  | CoderPad live screen + **work-trial**      | 1 base problem + **progressive follow-ups** (up to ~6 parts) | 60 min screen             | human                | Adds **thread safety, file persistence with custom serialization (no `json`/`pickle`), async**.                                      |
+| **Anysphere (Cursor)**      | CodeSignal-style OA + live                 | practical build                                              | ~60–90 min                | tests + human        | Fast, clean code; streaming/cancellation flavors.                                                                                    |
+| **xAI**                     | CodeSignal (proctored)                     | tight algorithmic + practical                                | 60 min                    | auto                 | Very tight timing.                                                                                                                   |
+| **Robinhood**               | CodeSignal OA                              | ~4 tasks easy→hard (GCA-style) + sometimes concurrency       | 90 min                    | auto                 | Reliability/fintech flavor; concurrency basics.                                                                                      |
+| **Harvey**                  | Take-home or CodeSignal                    | practical AI-eng build                                       | varies                    | human                | Often LLM/agent-flavored.                                                                                                            |
+| **Also use CodeSignal ICA** | —                                          | —                                                            | —                         | —                    | Netflix, Capital One, Meta, Dropbox, Coinbase, The Trade Desk.                                                                       |
 
 ### 2a. CodeSignal **Industry Coding Assessment (ICA)** — the dominant format
 - **Structure:** exactly **1 domain-agnostic, project-based question with 4 progressive levels**. Requirements accumulate (L_n includes everything in L_{n-1}).
@@ -62,6 +62,35 @@ Same archetype, different delivery. Know which one you're walking into.
 - Same idea, more time → higher bar on tests, README, and structure. See [[track-G-take-homes/README]].
 
 **The common thread across all formats:** *build a stateful object, extend it across levels, never break earlier levels, narrate your interface before coding.*
+
+### 2e. What it's actually like — OA vs live vs take-home, testing, and what "pass" means
+
+This is the part candidates are most unsure about. The three settings feel very different:
+
+| Dimension               | **OA** (CodeSignal ICA / GCA, async)                                              | **Live / onsite** (CoderPad, Zoom, Google editor)                                    | **Take-home**                                    |
+| ----------------------- | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ | ------------------------------------------------ |
+| Who grades you          | **Automated** — hidden test cases                                                 | **Human** interviewer(s) on a rubric                                                 | **Human** reviewer(s)                            |
+| Are tests provided?     | **Yes** — a few example cases in the prompt + a hidden suite that sets your score | Sometimes a couple of example inputs; **often none**                                 | Usually just a spec                              |
+| Do **you** write tests? | Optional self-check, **not graded**                                               | **Smart to write a few yourself** to verify — doing it unprompted is a strong signal | **Yes — expected and graded** as part of quality |
+| Can you run code?       | Yes — "Run" against sample cases                                                  | CoderPad: yes. **Google onsite: often NO** (write compilable code by hand)           | Yes, on your machine                             |
+| Level pacing            | Levels **unlock sequentially** (must pass to advance)                             | Interviewer paces it; **follow-ups added live** (thread-safety, async, persistence)  | All levels visible upfront                       |
+| Proctoring              | Webcam + screen; no paste / tab-switch                                            | Camera on; narrate throughout                                                        | None                                             |
+| What **"pass"** means   | A **company-set cut score**                                                       | A **holistic hire signal** (no number)                                               | Tests + README + design judgment                 |
+
+**OA — how scoring & "pass" work.** CodeSignal auto-grades against **hidden test cases per level**. The ICA score is on a **200–600** scale (GCA historically 300–850), and it weighs **task difficulty × correctness on hidden tests × time efficiency**, with **partial credit** for passing some tests. The **pass bar is a confidential cut score each company sets** (and varies by role/candidate pool — e.g., reports of "≥X to advance"). Practical rule of thumb: **clearing Levels 1–3 cleanly is a solid pass at most companies; Level 4 is what separates top candidates.** You don't write tests — but you *do* run your code against the visible examples and should reason out edge cases yourself, because the hidden suite is checking exactly those.
+
+**Live — how it's judged.** Usually **no auto-grader**. A human scores you on a rubric: problem-solving approach, correctness, **clean/extensible structure**, **communication (narration)**, edge-case handling, and **how you handle the live follow-ups**. The outcome is a calibrated **strong-hire / hire / lean / no-hire** signal, combined across interviewers — not a percentage. Here you typically **write your own quick test calls / driver code** to demonstrate correctness (or the interviewer hands you example inputs); volunteering a couple of edge-case checks reads as senior. On **Google's onsite editor you often can't execute** — so "testing" means **dry-running/tracing your code aloud and stating the assertions** that should hold.
+
+**Take-home — how it's judged.** Humans review the repo; **tests are expected and graded** alongside the README and design. See [[track-G-take-homes/README]].
+
+**By company (what to expect):**
+- **Anthropic** — CodeSignal **ICA screen** (auto, hidden tests, cut score) → **live 4-level** (human, narrate, deep follow-ups, anti-memorization).
+- **OpenAI** — **CoderPad live** (human rubric, progressive follow-ups: thread-safety, no-`json` persistence, async) + work-trial.
+- **Robinhood / xAI** — **CodeSignal OA** first (auto cut score) → live coding.
+- **Google** — Hiring Assessment + onsite in a **non-runnable** shared editor → write compilable code by hand, committee-reviewed.
+- **Cohere / Harvey / Together** — **take-home**: you write tests; reviewed by humans on tests + README + design.
+
+> **Bottom line on tests:** OA = tests come from the platform (you self-check, optionally). Live = you write a few yourself and narrate them. Google onsite = you can't run, so trace + assert. Take-home = full tests expected.
 
 ---
 
@@ -252,7 +281,7 @@ class InMemoryDB:
 - Practice in a **shared web editor** (CodeSignal practice, Replit, Colab) — not your IDE; no autocomplete, big monitor.
 
 **Frequent follow-ups — be ready to add live**
-- **Thread safety:** wrap mutations in a lock. `Lock` (non-reentrant, faster) vs **`RLock`** (reentrant — needed when a locked method calls another locked method).
+- **Thread safety and concurrency:** wrap mutations in a lock. `Lock` (non-reentrant, faster) vs **`RLock`** (reentrant — needed when a locked method calls another locked method).
 - **Persistence with custom serialization (no `json`/`pickle`):** length-prefixed or delimiter-escaped records; write a tiny parser. (OpenAI loves this.)
 - **Async:** `async def`, `await`, `aiofiles`; same structure + `await`.
 - **GIL:** I/O-bound (crawling) → threads help (GIL released on I/O); CPU-bound → multiprocessing/async.
@@ -279,8 +308,37 @@ class InMemoryDB:
 
 ---
 
+## 6.5 How to practice on real questions (method + where to find them)
+
+The trap: *reading* a solution (the in-memory DB, the bank) feels like progress, but the skill tested is building cleanly under time **without seeing the future levels**. Practice has to simulate that.
+
+**Core principle — reproduce the real conditions exactly:**
+- **Bare web editor** (Replit, Colab, or CodeSignal practice) — *not* your IDE. No autocomplete/Copilot. That's the OA condition.
+- **90-min timer, one blank file, all levels in one codebase.**
+- **Write your own tests as you go.** The real ICA grades on *hidden* tests, so the transferable skill is **reasoning out edge cases yourself** (missing keys, TTL boundaries, ties, out-of-order events) and checking them before moving on. This habit is what separates people who clear Level 4.
+
+**The drill that builds the actual skill (design-for-extension under uncertainty):**
+1. Pick a real problem but **read only Levels 1–2.** Implement them cold.
+2. *Then* reveal Levels 3–4 and bolt them on **without rewriting the core.** If you need a heavy refactor, your L1 design was wrong — that's the lesson; redo it.
+3. This trains the exact thing the round tests: you never see later levels when you design Level 1.
+
+**Prove you're pattern-fluent, not memorizing.** Labs flag circulated solutions and will swap in a fresh problem. After you can do the in-memory DB, do **2–3 variants** (banking system, file host, inventory) and confirm the same primitives carry over (e.g., the **append-only version list + binary search by timestamp** from §4 solves every "value at time T" level). If you can re-derive the pattern on a new skin, you're ready; if you're recalling keystrokes, you're not.
+
+**Where the *real* questions live:**
+- **CodeSignal practice mode** — ships an official sample ICA in the exact format; do this first to learn the interface.
+- **Community ICA practice repo** + **csoahelp / LeetCode Discuss** ICA threads (see §7) — the actual circulated multi-level problems.
+- **1point3acres / Blind / Glassdoor** — recent candidate reports give the *current* problems and per-company twists (freshest signal).
+- **This vault:** the **OpenAI 8-problem bank** and **Anthropic live bank** are real reported questions with worked solutions — **re-implement from scratch**, don't just read.
+- **LeetCode "Design" tag** (#146, #981, #380, #1166 …) for the building-block primitives.
+- **Pramp / interviewing.io** for the *live* variant — narrate aloud to a human, since OpenAI/Anthropic grade your reasoning, not just final code.
+
+**If you do only one thing:** re-implement the **in-memory DB** and the **banking system** from a blank file, timed, in Replit, writing your own edge-case tests — then repeat each a week later cold. Two problems × two clean reps ≈ 80% of what this round throws at you. Rehearse the common follow-ups aloud too (thread-safety with `RLock`, custom serialization without `json`, async).
+
+---
+
 ## 7. Sources
 - CodeSignal — Industry Coding Framework / ICA structure & rules: https://codesignal.com/resource/industry-coding-framework/ · https://support.codesignal.com/hc/en-us/articles/19116922232983-What-are-the-Industry-Coding-Assessment-ICA-rules · GCA structure: https://support.codesignal.com/hc/en-us/articles/360040370853
+- CodeSignal — scoring & "pass" (200–600 scale, difficulty × hidden-test correctness × time, partial credit): https://support.codesignal.com/hc/en-us/articles/13261190299287-Understanding-Assessment-Score · company cut scores: https://support.codesignal.com/hc/en-us/articles/23458723018391-Guide-to-Setting-Cut-Scores
 - In-memory DB ICA (level breakdown, candidate reports): https://www.1point3acres.com/interview/thread/1110874 · https://csoahelp.com/2025/02/09/codesignal-in-memory-database-industry-oa/ · https://github.com/MayukhSobo/in-memory-db
 - ICA practice repo: https://github.com/PaulLockett/CodeSignal_Practice_Industry_Coding_Framework
 - Companies using CodeSignal: https://blog.techdatapark.com/companies-using-codesignal/

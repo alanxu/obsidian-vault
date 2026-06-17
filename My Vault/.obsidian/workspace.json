@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "3afe53bd94dca7c5",
+        "id": "ed6be4d9765e8727",
         "type": "tabs",
         "children": [
           {
-            "id": "0a95cba422a2261a",
+            "id": "92759e8309c115fa",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -195,16 +195,16 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "0a95cba422a2261a",
+  "active": "92759e8309c115fa",
   "lastOpenFiles": [
-    "02 - Projects/Job Hunt/plans/practical-coding-tools-platforms-2026-06-16.md",
+    "02 - Projects/Job Hunt/README.md",
+    "02 - Projects/README.md",
     "02 - Projects/Job Hunt/track-B-practical-oo-coding/practical-oo-coding-deep-guide.md",
+    "02 - Projects/Job Hunt/plans/practical-coding-tools-platforms-2026-06-16.md",
     "02 - Projects/Job Hunt/track-G-take-homes/github-examples.md",
     "02 - Projects/Job Hunt/track-G-take-homes/take-home-question-bank.md",
     "02 - Projects/Job Hunt/track-G-take-homes/per-company-notes.md",
     "02 - Projects/Job Hunt/track-D-ml-llm-system-design/D0-areas-map.md",
-    "02 - Projects/README.md",
-    "02 - Projects/Job Hunt/README.md",
     "02 - Projects/Job Hunt/interview-prep-master-plan-2026.md",
     "02 - Projects/Job Hunt/plans/openai-interview-guide.md",
     "02 - Projects/Job Hunt/plans/interview-prep-master-plan-2026.md",

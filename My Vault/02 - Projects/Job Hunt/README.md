@@ -2,6 +2,11 @@
 
 Active project. Goal: land an offer at a top AI/AI-adjacent company (priority: Anthropic).
 
+## Conventions (working agreement)
+- **Save everything to markdown.** Any substantive answer Claude gives in chat must also be written into an `.md` file in this vault (the relevant track folder or `plans/`) — chat is not the system of record. Backfill if something was answered only in chat.
+- Folder layout: `plans/` = guides, research, master plan · `track-A … track-G/` = per-track prep material · `README.md` = index.
+- Cite sources in-file; verify present-day facts before stating them.
+
 ## Status
 - **Focus target**: Anthropic (SWE / Applied AI / FDE)
 - **Pipeline**: 12 companies tracked — see [[ai-ipo-interview-guide]]
