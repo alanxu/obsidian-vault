@@ -22,7 +22,7 @@ targets: [Anthropic, OpenAI, Google, NVIDIA, Cohere, Harvey, Waymo, Robinhood, W
 
 ## 0. Strategy — why one plan covers all 12
 
-Your 12 targets look different but draw from the **same 6 interview surfaces**. Prep the surfaces once; re-skin per company in the final week.
+Your 12 targets look different but draw from the **same 7 interview surfaces**. Prep the surfaces once; re-skin per company in the final week. (Surface **G — take-home** is a *delivery format*, not a topic: it repackages A/B/D as async work-on-your-own-time, and for Cohere it's the gating round.)
 
 | Surface | What it tests | Who leans on it hardest |
 |---|---|---|
@@ -32,10 +32,11 @@ Your 12 targets look different but draw from the **same 6 interview surfaces**. 
 | **D. ML / LLM system design** | RAG, inference serving, agents, training | Every AI role — your growth area |
 | **E. ML / LLM fundamentals** | Attention, decoding, fine-tuning, RLHF | Frontier labs + all "AI Engineer" titles |
 | **F. Behavioral / staff / values** | Scope, influence, judgment, mission fit | All — #1 failure point at frontier labs |
+| **G. Take-home / work-trial** | Async coding/ML build, or analysis + **write-up/presentation** | **Cohere (gating, ~30% pass)**, OpenAI (work-trial), Anthropic, Harvey, Anysphere, Together |
 
 **Company → archetype map:**
 
-- **Frontier labs** (Anthropic, OpenAI, Cohere, Anysphere, Harvey): heavy on **B + D + E + F**. Algorithmic bar exists but the differentiator is practical coding + AI depth + mission.
+- **Frontier labs** (Anthropic, OpenAI, Cohere, Anysphere, Harvey): heavy on **B + D + E + F**, and most gate via **G (take-home/work-trial)**. Algorithmic bar exists but the differentiator is practical coding + AI depth + mission.
 - **Big Tech / AV** (Google, NVIDIA, Waymo, Lyft, Robinhood): heavy on **A + C + D + F**. Classic loop, staff = more system design and leadership signal.
 - **Toronto product/AV** (Wealthsimple, Waabi): pragmatic **A + C + F**, lighter algorithmic bar, strong "bring your own system" / real-world judgment.
 
@@ -48,13 +49,16 @@ Your 12 targets look different but draw from the **same 6 interview surfaces**. 
 
 | Track | Hours | Why this weight |
 |---|---|---|
-| A — Algorithmic coding | 22 | Re-sharpen patterns + speed; labs & big tech still gate on it |
+| A — Algorithmic coding | 20 | Re-sharpen patterns + speed; labs & big tech still gate on it |
 | B — Practical / OO bank | 12 | Highest-yield for labs; pattern-dense, fast to learn |
 | C — Distributed system design | 8 | Your strength — adapt, don't rebuild |
 | D — ML / LLM system design | 18 | Core of every AI role; your growth area |
 | E — ML / LLM fundamentals | 18 | Closes your infra→ML gap; unlocks D and E rounds |
 | F — Behavioral / staff / values | 8 | Cheap to prep, decisive at labs |
-| Mocks + buffer | 6 | Timed reps, slippage |
+| G — Take-home dry-run + template | 4 | One practice build + reusable scaffold; the rest is *reactive* (see §7.5) |
+| Mocks + buffer | 4 | Timed reps, slippage |
+
+> **G is mostly reactive.** The 4 hrs above buy a *dry-run + reusable template* so you're not starting cold. When a real take-home lands (esp. Cohere), it temporarily becomes your top priority — clear that week's other tracks and spend 8–15 focused hrs on it. Build the template now so that week is execution, not panic.
 
 ---
 
@@ -113,8 +117,8 @@ Your 12 targets look different but draw from the **same 6 interview surfaces**. 
 **Week 8 — ML coding + RAG/agents deep + mock #1**
 - [ ] (2.5h) **E/B**: ML coding round (Waymo-style) — implement k-means, logistic regression w/ gradient descent, and a tiny ReAct agent loop (tool call → observe → act).
 - [ ] (2h) **D**: **Design fraud detection w/ LLMs** + **Design a feature store / real-time ML serving** (§6 D6–D7). Robinhood, Wealthsimple, Stripe-style.
-- [ ] (3h) **MOCK**: One full mock loop — 1 coding (timed 45 min) + 1 system design (45 min). Use a peer or Pramp/interviewing.io. Debrief in writing.
-- [ ] (1h) **F**: Tighten 2 weakest stories from mock feedback.
+- [ ] (2.5h) **MOCK**: One full mock loop — 1 coding (timed 45 min) + 1 system design (45 min). Use a peer or Pramp/interviewing.io. Debrief in writing.
+- [ ] (2h) **G**: Take-home **dry-run** — build the reusable scaffold from §7.5 on a realistic AI-eng task (e.g. a small RAG/eval script) so a real one is execution, not panic.
 
 ### Phase 4 — Simulation + company-specific (Weeks 9–10): reps under pressure, re-skin per company
 
@@ -131,6 +135,8 @@ Your 12 targets look different but draw from the **same 6 interview surfaces**. 
 - [ ] (1h) Logistics: confirm setup (IDE, CoderPad familiarity, camera/mic), sleep, schedule buffer. **Do not cram new topics.**
 
 > **Slip rule:** if a week runs over, protect **E (fundamentals)** and **F (behavioral)** first — they're your gap and the cheapest points. Algorithmic volume (A) is the safe place to trim.
+>
+> **Take-home override:** a real take-home (esp. **Cohere**, ~30% pass) outranks everything. When one lands, pause the week's tracks and pour 8–15 hrs into it using the §7.5 playbook. It's a scored work sample — treat it like the job.
 
 ---
 
@@ -303,6 +309,43 @@ For each: 30-sec version + 2-min version. Lead with the result, then how. Quanti
 - **NVIDIA** — performance obsession, technical depth, pace.
 
 **Always prepare 3–4 questions to ask** each interviewer (team's hardest current problem, how decisions get made, what success looks like in 6 months). For each company write **one specific "why this company"** line tied to their actual product/research (§8).
+
+---
+
+## 7.5 Track G — Take-homes & work trials (~4 hrs prep + reactive)
+
+Several targets gate on async assignments. They're a **relative advantage for you** (infra-strong, more time than a 45-min live round) — *if* you treat them as a scored work sample, not a quick script. Most candidates lose here on **polish, scope, and communication**, not raw ability.
+
+**Who uses them & what type:**
+
+| Company | Type | Notes |
+|---|---|---|
+| **Cohere** | **Analysis + write-up/presentation** | The gating round, ~30% pass. ~48-hr window. *Communication-graded, not just code.* See [[cohere-interview-guide]]. |
+| **OpenAI** | Work-trial / take-home build | ~48-hr practical build; sometimes paid on-site work day. |
+| **Anthropic** | Coding assessment (90 min, 4 progressive levels) | More timed-assessment than open build; see [[anthropic-interview-guide]] (incl. their **AI-usage policy**). |
+| **Harvey / Anysphere** | Practical AI-eng take-home or CodeSignal | Build something real (often LLM/agent-flavored). |
+| **Together** | 4–8 hr build (senior/research) | Inference-engine → CUDA kernel; platform → systems problem. |
+
+### The three types and what graders reward
+1. **Timed coding assessment** (Anthropic, CodeSignal OAs) → correctness + clean incremental design under time. *Prep = your A/B tracks; no special work.*
+2. **Open-ended build** (OpenAI, Harvey, Anysphere, Together) → working software + judgment. Graded on: does it run, is it correct, is the code clean, did you make sane scope/tradeoff calls, is it tested, is the README clear.
+3. **Analysis + presentation** (Cohere) → a *narrative*: framing, method, findings, and a crisp write-up/deck. Graded on **communication and reasoning** as much as the analysis. This is the one your coding-heavy prep does *not* cover — practice it.
+
+### Reusable take-home playbook (build the scaffold once, in the Week 8 dry-run)
+- [ ] **Re-read the prompt twice; restate the goal + success criteria in one sentence** before coding. Email a clarifying question if scope is ambiguous — asking is a positive signal.
+- [ ] **Time-box and scope ruthlessly.** Pick the 80% that demonstrates competence; explicitly list what you cut and why ("Given the window, I prioritized X; with more time I'd add Y"). Scope judgment is exactly the staff signal they're testing.
+- [ ] **Reusable repo scaffold:** clean structure, `README` (how to run, decisions, tradeoffs, what you'd do next), dependency/env file, a few **tests**, sample input/output. Have this skeleton ready so the real one is execution.
+- [ ] **Make it run from a clean clone** with one command. A broken setup sinks an otherwise-good submission.
+- [ ] **Write the README like a staff engineer:** problem framing → approach → key decisions & tradeoffs → results → limitations → next steps. This is where you show seniority.
+- [ ] **Don't gold-plate.** Polish what matters (correctness, clarity, the core demo); skip irrelevant flourishes.
+- [ ] **AI-usage:** know the company's policy. Anthropic publishes explicit guidance (see [[anthropic-interview-guide]]); when allowed, using AI well *and disclosing how* is fine and often expected for AI-eng roles. Never pass off un-understood code — they'll probe it live.
+- [ ] **Expect a follow-up defense.** Many take-homes feed a live round where you walk through and extend your code. Build only what you can explain and modify on the spot.
+
+### Cohere-specific (the analysis + presentation one — your highest-leverage take-home)
+- Deliver a **clear narrative**, not a notebook dump: question → data/method → findings → recommendation → caveats.
+- Lead with the **answer/insight**, then support it. Make 2–3 clean visuals; cut the rest.
+- Tie it to **enterprise/product reality** (cost, latency, data residency, deployment) — Cohere's whole positioning.
+- Practice the **verbal walkthrough** to time; they assess how you communicate, not just what you found.
 
 ---
 
