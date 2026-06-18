@@ -12,12 +12,14 @@ parent: [[interview-prep-master-plan-2026]]
 
 **Who leans on it:** Anthropic, OpenAI, Anysphere, Harvey (and CodeSignal OAs at Robinhood/xAI). Cross-ref [[openai-interview-guide]] (worked solutions) and [[anthropic-interview-guide]].
 
-## To elaborate here
-- [ ] `design-problems-leetcode.md` — worked solutions: #146, #460, #981, #380, #1166, #588, #211, #359, #362, #1244, #1396, #535, #2502, #715
-- [ ] `multilevel-inmemory-db.md` — SET/GET/DELETE/SCAN → TTL → transactions (the canonical one)
-- [ ] `multilevel-ledger-and-kv.md` — expiring credit ledger, GPU credit manager, versioned KV, token-usage aggregator
-- [ ] `anthropic-bank.md` — #636 Exclusive Time (stack-trace), #609 Duplicate Files, #1242 Web Crawler
-- [ ] `oo-design-checklist.md` — how to structure classes so levels bolt on cleanly
+## Question bank → moved to the canonical top-level [[question-bank/README|/question-bank]]
+The per-question bank now lives **outside the track folders** at **[[question-bank/README|/question-bank]]** — it's a shared resource, because these problems are Track B content *regardless* of whether a company delivers them as OA, live, or async take-home (delivery channel ≠ track). The old Track B and Track G copies were merged there (29 questions, one file each).
+
+Each file has frontmatter (`companies · formats · difficulty · LC#`), a worked solution/sketch, **and a "By format" section with per-format follow-ups, tips & pitfalls** (OA·ICA / GCA·HR / live / take-home / onsite).
+
+Start with [[01-in-memory-key-value-database|01 — in-memory DB]] and [[17-lru-cache|17 — LRU]] (together ~80% of the pattern). Round mechanics & worked walk-through: [[practical-oo-coding-deep-guide]].
+
+> **Boundary (B vs G):** Track B = *implement a stateful component* (known answer; this bank). Track G = *build a small project* over hours–days (RAG/agent/doc-extraction; [[take-home-question-bank]]). A timed async coding assessment is a Track B problem delivered async.
 
 ## Drill priority
 Re-solve **#146 LRU** and the **in-memory DB** until automatic — they recur most.
