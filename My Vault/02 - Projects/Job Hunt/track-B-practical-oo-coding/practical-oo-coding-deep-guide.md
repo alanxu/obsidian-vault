@@ -143,6 +143,73 @@ Core: **#146** LRU · **#460** LFU · **#981** Time-Based KV · **#380** Insert/
 
 ---
 
+## 3.5 Agentic problems — where they live (and a worked minimal agent loop)
+
+**Short answer:** Track B's *classic* bank (in-memory DB, bank, ledger) is **not** agentic. But a **small "build me an agent / show the inference loop" coding exercise** has become a **baseline live-coding/whiteboard ask in 2026** at agent-focused companies — and because it's a stateful object (a loop + a tool registry + a state machine), it legitimately falls in **Track B's lane**. The *heavier* agentic forms live in other tracks. Map it like this:
+
+| Agentic form | How it's asked | Your track |
+|---|---|---|
+| **"Build a minimal agent / show the loop"** — code a ReAct-style loop: call (mock) model → parse tool call → dispatch → observe → repeat, with stop conditions | **Live coding / whiteboard** (small) | **Track B (here)** + concepts from Track E |
+| **"Design an agentic platform"** — planning, memory, tool registry, retries, sandboxing, eval, observability, cost | **Live system design** | **Track D → D3** ([[interview-prep-master-plan-2026]] §6) |
+| **"Build a working agent that does X"** — real tools, evals, end-to-end repo | **Take-home** | **Track G** ([[take-home-question-bank]] has the agent/multi-agent prompts) |
+| **Agent theory** — ReAct, reflection, planning, tool calling, memory | **Fundamentals Q&A** | **Track E → Block 4** |
+
+So: **prep a minimal agent loop here** (companies now expect you to "pull out a whiteboard and build an agent" / "show me the inferencing loop"), but don't build a platform in a coding round — that's D3, and the real build is the Track G take-home. Most relevant to **Anthropic, OpenAI, Anysphere, Cognition, Robinhood (agentic team)**.
+
+### Worked minimal agent loop (tested)
+A clean ReAct-style loop. The `policy` stands in for the LLM so it runs offline; the structure is what they grade. Note the three **stop conditions** (final answer, max steps, token budget), **loop detection**, and **tool-error handling** — those are exactly what interviewers probe.
+
+```python
+class Agent:
+    def __init__(self, policy, tools, max_steps=10, token_budget=10000):
+        self.policy = policy          # callable(history) -> action dict (stands in for the LLM)
+        self.tools = tools            # name -> callable(**args) -> str
+        self.max_steps = max_steps
+        self.token_budget = token_budget
+
+    def run(self, task):
+        history = [{"role": "user", "content": task}]
+        tokens = 0
+        seen = set()                                  # loop detection
+        for _ in range(self.max_steps):               # hard stop = loop breaking
+            action = self.policy(history)
+            tokens += action.get("tokens", 0)
+            if tokens > self.token_budget:
+                return {"status": "budget_exceeded", "history": history}
+            if action["type"] == "final":
+                return {"status": "done", "answer": action["answer"], "history": history}
+            key = (action["tool"], str(action.get("args", {})))
+            if key in seen:                           # same call repeated -> stuck
+                return {"status": "loop_detected", "history": history}
+            seen.add(key)
+            name, args = action["tool"], action.get("args", {})
+            history.append({"role": "assistant", "content": f"call {name}({args})"})
+            if name not in self.tools:
+                obs = f"error: unknown tool '{name}'"
+            else:
+                try:
+                    obs = self.tools[name](**args)
+                except Exception as e:                # tool failure -> observe, don't crash
+                    obs = f"error: {e}"
+            history.append({"role": "tool", "name": name, "content": str(obs)})
+        return {"status": "max_steps", "history": history}
+```
+
+**Narrate while building:** "An agent is a loop over (think → act → observe). I'll keep a `history`, ask the policy for the next action, and either finish or dispatch a tool and append the observation. The interesting parts aren't the happy path — they're the **stop conditions and failure modes**, so I'll build those in: max-steps, token budget, repeated-action loop detection, and tool errors captured as observations rather than crashes."
+
+**Follow-ups they'll push on (be ready to add live):**
+- **Infinite-loop / no-progress detection** (repeated actions, oscillation) → cap steps + detect repeats (shown).
+- **Conflicting tool results** → ranking/voting or ask-again policy.
+- **Token / cost budget** → cap, summarize history, truncate old turns (memory management).
+- **Retries with backoff** on transient tool failures; idempotency of tool calls.
+- **Parallel tool calls** and merging results.
+- **Sandboxing / safety** when tools execute code or hit the network.
+- **Eval** — how do you know the agent is good? (success rate, steps-to-solve, cost) → bridges to D5.
+
+> Keep the coding version *small and correct*. Depth on planning/memory/observability/cost belongs in the **D3 design** answer and the **Track G build**, not a 45-min coding round.
+
+---
+
 ## 4. Fully worked example — In-Memory DB, all 4 levels
 
 The teaching point isn't the answer — it's **designing Level 1 so Levels 3–4 bolt on**. Notice: one history list per `(key, field)` carries values, timestamps, and expiries, so the timed/TTL/backup levels reuse the same structure instead of rewriting it.
@@ -339,6 +406,7 @@ The trap: *reading* a solution (the in-memory DB, the bank) feels like progress,
 ## 7. Sources
 - CodeSignal — Industry Coding Framework / ICA structure & rules: https://codesignal.com/resource/industry-coding-framework/ · https://support.codesignal.com/hc/en-us/articles/19116922232983-What-are-the-Industry-Coding-Assessment-ICA-rules · GCA structure: https://support.codesignal.com/hc/en-us/articles/360040370853
 - CodeSignal — scoring & "pass" (200–600 scale, difficulty × hidden-test correctness × time, partial credit): https://support.codesignal.com/hc/en-us/articles/13261190299287-Understanding-Assessment-Score · company cut scores: https://support.codesignal.com/hc/en-us/articles/23458723018391-Guide-to-Setting-Cut-Scores
+- Agentic coding now baseline ("build me an agent / show the inference loop"; ReAct; loop engineering): https://explainx.ai/blog/loop-engineering-coding-agents-claude-code-guide-2026 · https://datasciencedojo.com/blog/agentic-loops-explained-from-react-to-loop-engineering-2026-guide/ · https://atul4u.medium.com/the-complete-agentic-ai-system-design-interview-guide-2026-f95d0cfeb7cf
 - In-memory DB ICA (level breakdown, candidate reports): https://www.1point3acres.com/interview/thread/1110874 · https://csoahelp.com/2025/02/09/codesignal-in-memory-database-industry-oa/ · https://github.com/MayukhSobo/in-memory-db
 - ICA practice repo: https://github.com/PaulLockett/CodeSignal_Practice_Industry_Coding_Framework
 - Companies using CodeSignal: https://blog.techdatapark.com/companies-using-codesignal/
