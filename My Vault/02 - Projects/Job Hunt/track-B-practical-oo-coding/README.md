@@ -12,8 +12,8 @@ parent: [[interview-prep-master-plan-2026]]
 
 **Who leans on it:** Anthropic, OpenAI, Anysphere, Harvey (and CodeSignal OAs at Robinhood/xAI). Cross-ref [[openai-interview-guide]] (worked solutions) and [[anthropic-interview-guide]].
 
-## Question bank → moved to the canonical top-level [[question-bank/README|/question-bank]]
-The per-question bank now lives **outside the track folders** at **[[question-bank/README|/question-bank]]** — it's a shared resource, because these problems are Track B content *regardless* of whether a company delivers them as OA, live, or async take-home (delivery channel ≠ track). The old Track B and Track G copies were merged there (29 questions, one file each).
+## Question bank → moved to the canonical [[question-bank/README|/question-bank]]
+The per-question bank now lives **outside the track folders** at **[[question-bank/README|/question-bank]]**, under **[[question-bank/practical-coding/README|/question-bank/practical-coding]]** — it's a shared resource, because these problems are Track B content *regardless* of whether a company delivers them as OA, live, or async take-home (delivery channel ≠ track). The old Track B and Track G copies were merged there (34 questions, one file each, fully enriched).
 
 Each file has frontmatter (`companies · formats · difficulty · LC#`), a worked solution/sketch, **and a "By format" section with per-format follow-ups, tips & pitfalls** (OA·ICA / GCA·HR / live / take-home / onsite).
 

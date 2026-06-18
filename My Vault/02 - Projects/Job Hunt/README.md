@@ -4,8 +4,8 @@ Active project. Goal: land an offer at a top AI/AI-adjacent company (priority: A
 
 ## Conventions (working agreement)
 - **Save everything to markdown.** Any substantive answer Claude gives in chat must also be written into an `.md` file in this vault (the relevant track folder or `plans/`) — chat is not the system of record. Backfill if something was answered only in chat.
-- Folder layout: `plans/` = guides, research, master plan · `track-A … track-G/` = per-track prep material · `question-bank/` = canonical practical/OO coding questions (shared; one file per question, per-format tips) · `README.md` = index.
-- Boundary: **Track B** = implement a stateful component (→ `question-bank/`). **Track G** = build a small project take-home (RAG/agent/doc-extraction). Delivery channel (OA/live/async) ≠ track.
+- Folder layout: `plans/` = guides, research, master plan · `track-A … track-G/` = per-track prep material · `question-bank/` = the canonical question bank, organized by area: `practical-coding/` (34 enriched files), `algorithmic-coding/`, `distributed-system-design/`, `llm-system-design/` · `README.md` = index.
+- Boundary: **Track B** = implement a stateful component (→ `question-bank/practical-coding/`). **Track G** = build a small project take-home (RAG/agent/doc-extraction). Delivery channel (OA/live/async) ≠ track.
 - Cite sources in-file; verify present-day facts before stating them.
 
 ## Status
