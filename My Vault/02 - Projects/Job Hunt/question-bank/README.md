@@ -21,7 +21,7 @@ updated: 2026-06-18 (restructured into area sub-folders)
 | [[practical-coding/README]] | Practical / OO coding — build a stateful component across 3–6 escalating levels. Multi-level ICA + Anthropic live bank + LeetCode Design warm-ups + agentic primitives. (34 files.) | [[practical-coding/01-in-memory-key-value-database]], [[practical-coding/17-lru-cache]], [[practical-coding/12-multithreaded-web-crawler]], [[practical-coding/16-minimal-agent-loop]] |
 | [[algorithmic-coding/README]] | Algorithmic / DSA — NeetCode 150 weighted to graphs / intervals / geospatial (AV+mobility) + concurrency. | (TBD — drill list in area README) |
 | [[distributed-system-design/README]] | Distributed system design — rate limiters, KV caches, ride dispatch, metrics, payment ledgers, log ingestion, feed, job schedulers. | (TBD — drill list in area README) |
-| [[llm-system-design/README]] | LLM / ML system design — RAG, fine-tune vs prompt, agent platforms, LLM infra, eval, safety, real-time ML. | [[track-D-ml-llm-system-design/D1-rag-with-citations]] (working notes; promote when convenient) |
+| [[llm-system-design/README]] | LLM / ML system design — RAG, inference serving, agents, training, eval, safety, real-time ML. **31 question cards across the 8 areas** + framework ([[D0-areas-map]]) + worked RAG ([[D1-rag-with-citations]]). | [[llm-system-design/06-llm-inference-serving-platform]], [[llm-system-design/09-agent-platform]], [[llm-system-design/13-distributed-training-70b]], [[llm-system-design/01-rag-with-citations]] |
 
 ## How to use
 
