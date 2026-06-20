@@ -118,6 +118,41 @@ def crawl_parallel(seed, get_urls, workers=8):
 
 **The termination invariant:** "done" = queue is empty **and** no worker is currently fetching. Track `in_flight` atomically; signal done when both are zero.
 
+## Design half — full crawler architecture (Anthropic onsite often pairs design + coding)
+Reported as a mixed onsite round (half design, half coding): lead with the architecture, then drill one component in code.
+- **URL Frontier** — the queue of URLs to fetch. Concerns: storage (in-mem → Redis/Kafka at scale), **priority** (freshness/importance), and **dedup** — a `seen` set keyed by *normalized* URL; at web scale a **Bloom filter** or Redis set.
+- **Downloader** — pulls from the frontier, issues HTTP GETs. Engineering: timeouts + **retries/backoff**, a polite **User-Agent**, **per-host rate limiting**, **robots.txt** compliance.
+- **Parser** — extracts (a) page text/content for storage and (b) new outlinks → normalize → back to the frontier.
+- **Storage** — raw HTML and/or parsed text+metadata; distributed FS or DB; **content-addressed** to dedupe identical pages.
+- **Distributed:** shard the frontier by **domain hash** across workers (this also keeps per-host politeness on one shard); shared "seen" via Redis/Bloom; at-least-once vs exactly-once; termination = global frontier empty + no in-flight.
+
+## Async variant (asyncio + aiohttp) — better for I/O-bound crawling
+Crawling is network-I/O-bound, so `asyncio` scales concurrent connections more cheaply than threads (one event loop, no per-thread stack). Same structure as the threaded version, with `await`:
+```python
+import asyncio, aiohttp
+
+async def downloader(queue, session, visited, base_host, results):
+    while True:
+        url = await queue.get()
+        try:
+            async with session.get(url, timeout=aiohttp.ClientTimeout(total=10)) as resp:
+                html = await resp.text()
+            results[url] = html
+            for nxt in extract_links(html):
+                nu = normalize(nxt, base_host)
+                if nu and nu not in visited:
+                    visited.add(nu)
+                    await queue.put(nu)
+        except (aiohttp.ClientError, asyncio.TimeoutError):
+            pass                      # senior: retry-with-backoff or dead-letter — don't silently drop
+        finally:
+            queue.task_done()
+# run N downloader tasks against one asyncio.Queue + one aiohttp.ClientSession; await queue.join() to terminate
+```
+
+### Senior review of the reported answer (author not very senior)
+The reported answer had the standard architecture + an async downloader with `ClientError`/`TimeoutError` handling — solid. A stronger answer would also: (1) say **how** the frontier dedupes (normalized-URL `seen` set / **Bloom filter** at scale), not just "avoid duplicates"; (2) add **per-host rate limiting** — it mentioned User-Agent + robots.txt but not throttling, which is what actually gets you IP-banned; (3) cover the **distributed frontier** (shard by domain hash) and **termination/quiescence**; (4) on failure, **retry with backoff / dead-letter**, not a silent `pass`; (5) **content-address storage** to dedupe identical pages. *(Most are in the follow-ups below — the gap was not volunteering them.)*
+
 ## By format
 
 ### Live · CoderPad (human) — *primary (Anthropic)*

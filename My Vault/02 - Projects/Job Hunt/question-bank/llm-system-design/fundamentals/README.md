@@ -10,7 +10,9 @@ status: building (Part 1 done; Parts 2–6 in progress)
 
 # LLM / ML Fundamentals — Concept Q&A Bank
 
-**One enriched card per concept** (prompt → answer → tradeoffs → follow-ups → pitfalls → tips). These are the *rapid-fire "explain it"* questions; the full **design prompts** ("Design X") live in [[llm-system-design/README]], and **behavioral** in [[track-F-behavioral-staff-values/README]]. Seeded from a 100-question Anthropic-style bank ([[plans/anthropic-oa-vs-onsite]] has the OA-vs-onsite intel from the same source).
+> **Location note:** this is a **sub-bank inside the LLM/ML system-design area** ([[llm-system-design/README]]) — *not* a separate interview format. Fundamentals get probed **within** the ML/LLM round, so they nest here rather than as a top-level question-bank area.
+
+**One enriched card per concept** (prompt → answer → tradeoffs → follow-ups → pitfalls → tips). These are the *rapid-fire "explain it"* questions; the full **design prompts** ("Design X") live one level up in [[llm-system-design/README]], and **behavioral** in [[track-F-behavioral-staff-values/README]]. Seeded from a 100-question Anthropic-style bank ([[plans/anthropic-oa-vs-onsite]] has the OA-vs-onsite intel from the same source).
 
 ## Routing of the source 100 questions
 Concept Qs → enriched cards **here**. Design Qs → existing **llm-system-design** cards. Behavioral → **Track F**.

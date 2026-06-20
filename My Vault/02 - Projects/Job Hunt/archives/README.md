@@ -22,6 +22,11 @@ Record of Notion **brain → 📥 00 — Inbox** items processed into this Job H
 |---|---|---|
 | 2026-06-19 | (untitled Xiaohongshu link) | Not accessible (see [[shared_link]] → Pending). Re-try when content can be pasted. |
 
+## Other digested sources (pasted in chat, not the Notion inbox)
+| Date | Source | Digested into |
+|---|---|---|
+| 2026-06-19 | "Anthropic SDE 上岸 面经" case study (images) — Q1 rate limiter, Q2 web crawler | Q1 → new card [[question-bank/practical-coding/35-sliding-window-rate-limiter]]; Q2 → enriched [[question-bank/practical-coding/12-multithreaded-web-crawler]] (added async/aiohttp variant + full frontier/downloader/parser/storage architecture). Author not senior → **senior-review** notes added to both. |
+
 ## How the weekly run works
 1. Read Notion `brain → 00 — Inbox`.
 2. For each item **not already in this log**: digest into the right Job Hunt area (tracks / plans / question-bank).

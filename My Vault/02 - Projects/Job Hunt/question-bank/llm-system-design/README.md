@@ -19,6 +19,9 @@ created: 2026-06-18
 ## Format
 Mostly **live system design** (45–60 min, whiteboard/CoderPad-doc) and **take-home design write-ups**. A few (training, safety) also appear as **ML-depth/research rounds**. Difficulty ★1–5 = staff-readiness effort.
 
+## Fundamentals / Concept Q&A (sub-bank)
+The ML/LLM round also probes **fundamentals** ("explain attention / KV cache / RLHF / chunking / the agent loop"). Fundamentals are **not a separate interview format** — they're tested *inside this round* — so they live as a concept-Q&A **sub-bank in this area**: **[[fundamentals/README|/llm-system-design/fundamentals]]** (21 enriched cards: LLM basics, RAG concepts, agent concepts, production & safety concepts). Drill those as rapid-fire 2-min answers; the **design prompts** below are the whiteboard set.
+
 ---
 
 ## Area 1 — Retrieval & Knowledge Systems

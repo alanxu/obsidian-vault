@@ -4,7 +4,7 @@ title: "Practical / OO Coding — Question Bank (canonical)"
 scope: "Self-contained practical/OO coding problems (master-plan Track B §3). Delivery-channel-agnostic. 34 files: multi-level ICA + Anthropic live bank + LeetCode Design warm-ups + agentic primitives."
 location: "Under `/question-bank/practical-coding/` (the umbrella question-bank folder)."
 related: ["[[track-B-practical-oo-coding/practical-oo-coding-deep-guide]]", "[[track-G-take-homes/README]]", "[[interview-prep-master-plan-2026]]", "[[openai-interview-guide]]", "[[anthropic-interview-guide]]", "[[cohere-interview-guide]]"]
-count: 34
+count: 35
 created: 2026-06-16
 updated: 2026-06-18 (all files enriched with full prompts, code, follow-ups, pitfalls, tips)
 ---
@@ -51,8 +51,9 @@ One object, 3–6 escalating levels, never break earlier levels.
 | 13 | [[13-stack-trace-to-trace-conversion]] | — | Live | Anthropic (viral 2025) | ⭐ |
 | 14 | [[14-exclusive-execution-time]] | 636 | Live, OA·GCA/HR | Anthropic | ⭐ |
 | 15 | [[15-duplicate-file-detection]] | 609 | Live, Take-home | Anthropic | ⭐ |
+| 35 | [[35-sliding-window-rate-limiter]] | — | Live, OA·GCA/HR | Anthropic (phone screen), Stripe, Cloudflare | ⭐ |
 
-> *Agentic questions moved to their own **Tier 4** below.*
+> *Agentic questions moved to their own **Tier 4** below. #35 is the general `should_allow` rate limiter (digested from an Anthropic case study); #23 is the simpler #359 logger variant.*
 
 ## Tier 3 — LeetCode "Design" warm-ups (pattern primitives)
 | # | Question | LC | Formats | Companies | ⭐ |

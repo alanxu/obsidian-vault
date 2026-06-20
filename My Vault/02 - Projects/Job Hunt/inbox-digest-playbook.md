@@ -25,12 +25,12 @@ Match each item to the EXISTING structure (don't invent new top-level structure 
 | Algorithmic / DSA problem | `question-bank/algorithmic-coding/` | one per problem |
 | Distributed system-design prompt | `question-bank/distributed-system-design/` | one per prompt |
 | **LLM/ML system-design prompt** (Design X) | `question-bank/llm-system-design/` | one per prompt (map to an existing card if already covered) |
-| **LLM/ML concept / "explain X" Q** (fundamentals: attention, RAG concepts, agent concepts, decoding, eval terms) | `question-bank/llm-fundamentals/` | one enriched concept card per question (merge only truly-paired Qs) |
+| **LLM/ML concept / "explain X" Q** (fundamentals: attention, RAG concepts, agent concepts, decoding, eval terms) | `question-bank/llm-system-design/fundamentals/` (sub-bank — fundamentals is **not** a separate format) | one enriched concept card per question (merge only truly-paired Qs) |
 | Behavioral / values / "why company" Q | `track-F-behavioral-staff-values/` | story-bank / per-company hooks |
 | Company interview *intel* (process, OA-vs-onsite, rounds, comp) | `plans/` | a research/intel note |
 | Tooling / platform info | `plans/` | a snapshot note |
 
-**The placement test:** ask *"is it fundamental, a design prompt, a coding problem, behavioral, or intel?"* — that answer is the folder. Do **not** put non-fundamentals in Track E. Do **not** put concept Q&A in the system-design bank.
+**The placement test (question-bank areas = interview FORMATS, not topics):** ask *"which round tests this — practical coding, algorithmic, distributed design, or ML/LLM design?"* — that round is the area. **Fundamentals/concepts are not a format**: they nest under the round that tests them → `question-bank/llm-system-design/fundamentals/`. Never create a top-level area for a *topic* (e.g. don't make `llm-fundamentals/` a sibling of the format areas), and don't dump multi-topic content into Track E.
 
 ## Step 2 — Enrich every item to the bank standard
 Each question/problem file must have (matching existing cards):
@@ -59,6 +59,6 @@ If an item is **already covered** by an existing card → don't duplicate; cross
 - ❌ Assume a title-match means duplicate without diffing content.
 
 ## Quick reference — the vault map
-`plans/` = guides/research/intel · `track-A…G/` = per-skill prep + deep guides · `question-bank/{practical-coding, algorithmic-coding, distributed-system-design, llm-system-design, llm-fundamentals}/` = canonical enriched question banks · `archives/` = processed-inbox log + shared links · `interview-prep-master-plan-2026.md` = master plan.
+`plans/` = guides/research/intel · `track-A…G/` = per-skill prep + deep guides · `question-bank/{practical-coding, algorithmic-coding, distributed-system-design, llm-system-design}/` = canonical enriched question banks, **one folder per interview format** (`llm-system-design/fundamentals/` is a concept sub-bank, not a top-level area) · `archives/` = processed-inbox log + shared links · `interview-prep-master-plan-2026.md` = master plan.
 
 *Memory created 2026-06-19 after a bad digest. The weekly `weekly-notion-inbox-digest` task must follow this playbook.*

@@ -15,7 +15,9 @@ related: ["[[24-hit-counter]]", "[[10-api-log-parser-token-aggregator]]"]
 
 # Logger Rate Limiter (#359)
 
-Print a message only if not seen in the last 10s — bridges to the Track C rate-limiter design. The base is trivial; the follow-ups are where it lives.
+Print a message only if not seen in the last 10s. The base is trivial; the follow-ups are where it lives.
+
+> **The general rate limiter** — Anthropic's `should_allow(user_id, ts)`, N requests in T seconds per user, with the concurrency → distributed-Redis arc — is **[[35-sliding-window-rate-limiter]]**. This card is the simpler LeetCode **#359 logger** variant.
 
 ## Problem
 
@@ -90,4 +92,4 @@ shouldPrintMessage(11, "bar")  # True;  ok["bar"] = 21
 ```
 
 ## Related
-[[24-hit-counter]] · [[10-api-log-parser-token-aggregator]] · Track C rate-limiter design.
+[[35-sliding-window-rate-limiter]] (the general should_allow version) · [[24-hit-counter]] · [[10-api-log-parser-token-aggregator]] · distributed design → `question-bank/distributed-system-design`.
