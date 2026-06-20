@@ -40,6 +40,26 @@ related: [[interview-prep-master-plan-2026]], [[track-B-practical-oo-coding/prac
 ## Key prep implication
 The labs/fintech that gate on **CodeSignal ICA** and **CoderPad** give you a **minimal, no-autocomplete, run-the-tests-yourself** environment. So practice in **Replit / Colab / CodeSignal practice**, not your fully-loaded IDE, and get fluent with the **Python stdlib by hand** (`bisect`, `heapq`, `collections`, `dataclasses`).
 
+## C. Where to get real practical/OO question banks WITH solutions (so you don't rely on AI-curated)
+> **Key constraint:** the actual **CodeSignal ICA** problems are CodeSignal's proprietary IP — **nobody legally sells "the real Anthropic/Meta ICA bank."** But the *problems* (in-memory DB, banking) are heavily reused, so a few canonical ones cover most of the surface. Treat our `question-bank/practical-coding/` as the **digest**; use these as the **primary sources + graders** to practice against.
+
+**Free — real problems + solutions + grader:**
+- **CodeSignal Practice** — https://app.codesignal.com/assessments/practice — the actual ICA/ICF format in the real IDE; source of truth for the format. + **CodeSignal Learn** courses.
+- **LibreSignal** (open-source) — https://github.com/EricZheng0404/LibreSignal — multi-level (L1–4) **banking + in-memory DB** with **reference solutions + test suites**. Closest free "practice the canonical problems with a grader."
+- **LeetCode Discuss → "Industry Coding Assessment" threads** — real candidate-posted ICA problems (eBay/Coinbase/etc.) + community solutions, e.g. https://leetcode.com/discuss/post/7302772/
+- **Community ICA practice repo** — https://github.com/PaulLockett/CodeSignal_Practice_Industry_Coding_Framework
+
+**Paid — real questions + human-backed practice:**
+- **interviewing.io** — company-specific guides (incl. Anthropic) + question database + **live mocks with FAANG/lab engineers**. Best paid option for "actually asked" + non-AI practice.
+- **Exponent (tryexponent.com)** — subscription; company question banks + coding/system-design + mocks; covers AI companies.
+- **1point3acres (一亩三分地)** — real candidate ICA reports (some points-gated); **csoahelp.com** posts the actual problems (in-memory DB, banking) with walkthroughs.
+
+**Adjacent (only if you also have an OOD round):** DesignGurus / Educative **"Grokking the Object-Oriented Design Interview"** — OOD (parking lot, etc.), *not* CodeSignal-ICA.
+
+**⚠️ Avoid:** "OA 代做" / "undetectable AI interview assistant" services (some csoahelp/linkjob/lockedinai offerings). They **violate company policy — Anthropic explicitly prohibits AI in OAs/take-homes and disqualifies for it.** Use those sites only for the *published problems/solutions*, never the proxy/cheating service.
+
+**Recommendation:** paid + comprehensive + human → **interviewing.io** (or Exponent). Free real problems+solutions+grader → **CodeSignal Practice + LibreSignal + LeetCode Discuss**.
+
 ## Sources
 - HackerRank — best coding assessment tools 2026: https://www.hackerrank.com/writing/best-coding-assessment-tools
 - HackerRank — remote technical screening tools Q1 2026: https://www.hackerrank.com/writing/remote-coding-interviews-best-technical-screening-tools-q1-2026
