@@ -27,6 +27,8 @@ Implement four methods, **in this exact signature** (the grader checks return ty
 - `get(key: str, field: str) -> str` — return the value, or `""` (empty string) if the field doesn't exist.
 - `delete(key: str, field: str) -> str` — return `"true"` if a field was removed, `"false"` if there was nothing to delete.
 
+> **Design note — why L1 writes at `ts=0`:** L1 (`set`/`get`/`delete`) and L3 (`set_at`/`get_at`) are *separate API families*; the grader uses one per scenario and never interleaves them. Writing L1 at the fixed sentinel `ts=0` lets L1 reuse the L3 version-list engine (no second code path) **and stays deterministic** — a wall clock (`time.time()`) would make the auto-grader flaky. A value set at 0 *is* still returned by `get_at(ts)` for any `ts ≥ 0` (it's the latest version with `set_ts ≤ ts`); it only gets shadowed if you interleave the two families, which the spec doesn't. If you ever need genuinely unified semantics, use a **logical auto-increment counter** (`self._clock += 1` per write) rather than `now()` — deterministic, monotonic, and immune to clock skew.
+
 ### L2 — Scan / filter
 - `scan(key: str) -> str` — return **all fields of a record** formatted as `"field1(value1), field2(value2), …"` **sorted alphabetically by field name**. If the record has no fields, return `""`.
 - `scan_by_prefix(key: str, prefix: str) -> str` — same, but only include fields whose name starts with `prefix`. Empty result ⇒ `""`.
@@ -44,6 +46,8 @@ Replace the simple CRUD set with timestamped versions and add TTL (time-to-live)
 ### L4 — Backup / Restore (the culmination)
 - `backup(ts) -> int` — snapshot the **current state evaluated at `ts`** and return the count of records that have **at least one live field**. Each field stores its **remaining** TTL (not the original TTL).
 - `restore(ts, ts_to_restore)` — discard current state and restore from the latest backup whose snapshot-time `≤ ts_to_restore`. After restore, all TTLs resume relative to the **new current `ts`** (i.e. a field whose remaining TTL was 7 at backup time will expire `ts + 7` after restore).
+
+> **Clarify — `ts` earlier than a field's create-time:** `backup(ts)` is a time-travel read of the world *as of `ts`*, so a field whose `set_ts > ts` **doesn't exist yet → excluded** (and a record counts only if ≥1 field was created at/before `ts` and is still alive at `ts`). No special case needed — it falls out of the "latest version with `set_ts ≤ ts`" rule: `bisect_right(set_ts_list, ts) − 1 = −1` ⇒ `None`. (Likewise `restore`'s `ts_to_restore` earlier than the first backup ⇒ no matching backup ⇒ no-op; clarify whether that should instead clear state.)
 
 ## Core approach (format-agnostic)
 

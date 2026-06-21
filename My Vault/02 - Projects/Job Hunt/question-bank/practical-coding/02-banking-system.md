@@ -30,11 +30,13 @@ The bank tracks accounts (each with a string `id`), balances, and outgoing total
 ### L2 — Ranking
 - `top_spenders(ts, n) -> str` — top-N accounts by **total outgoing amount** (sum of `transfer` outflows + payments), tie-break by **id ascending**. Format usually `"id1(amount), id2(amount), …"`.
 
-### L3 — Scheduled + cashback
-- `pay(ts, id, amount) -> int` (or `-> payment_id`) — charge the account immediately, **schedule** a cashback (e.g., 2% of `amount`) to credit after a delay (e.g., 5 timestamps). Returns the new balance or `payment_id`.
-- `get_payment_status(ts, id, payment_id) -> str` — returns `"IN_PROGRESS"` until the cashback is credited, `"COMPLETED"` after. Cashbacks process in **time order** as the clock advances.
+### L3 — Scheduled payments + cashback
+- `pay(ts, id, amount) -> str | None` — withdraw `amount` from the account **immediately** (and it counts toward that account's **outgoing** total for `top_spenders`), then **schedule a cashback** of `floor(amount × 2%)` back to the **same account exactly 24 hours later** (`ts + MILLIS_PER_DAY`, `MILLIS_PER_DAY = 86_400_000`). Return a unique payment id `"payment1"`, `"payment2"`, … from a **global** counter (across all accounts, not per-account). Return `None` (or the spec's failure value) if the account is missing or has insufficient funds.
+- `get_payment_status(ts, id, payment_id) -> str | None` — `"IN_PROGRESS"` before the cashback is applied, `"CASHBACK_RECEIVED"` after. Return `None` if the account doesn't exist, the `payment_id` is unknown, or the payment **doesn't belong to that account**.
 
-> **Critical:** events process in **timestamp order**, not arrival order. If `pay` happened at `ts=2` with cashback-due `7`, and another op arrives at `ts=10`, the cashback must be credited **before** processing the `ts=10` op.
+> **The mechanic everyone gets wrong — lazy, time-ordered settlement.** Cashbacks are **not** applied by a background timer. They're applied **lazily at the start of every operation**: before doing anything at time `t`, drain all pending cashbacks whose payout time `≤ t`, **in payout-time order**, crediting each to its (current) owner. So a cashback due at `t = ts + 86_400_000` becomes visible to the *next* call at or after that time — including a `get_payment_status` / `get_balance` query, not just mutations. Implement pending cashbacks as a **min-heap keyed by payout time** and call a `_settle(t)` helper first in every public method.
+
+> **Money & rounding:** integers only (no float). Cashback is **floored** (`amount * 2 // 100`) — a payment under 50 yields 0 cashback but still transitions to `CASHBACK_RECEIVED`. A cashback is an **inflow**, so it does **not** add to `outgoing`/`top_spenders`. The exact **delay, percent, rounding, and id format vary by variant** — confirm them from the worked examples before coding.
 
 ### L4 — Merge + history
 - `merge_accounts(ts, id1, id2) -> bool` — combine two accounts (sum balances, sum outgoing totals, merge pending payments; reassign payment ids; `id2` is consumed).
