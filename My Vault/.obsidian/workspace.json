@@ -195,8 +195,12 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "646df26cd91e4605",
+  "active": "4f09cc69f755d401",
   "lastOpenFiles": [
+    "02 - Projects/Job Hunt/question-bank/practical-coding/05-expiring-credit-ledger.md",
+    "02 - Projects/Job Hunt/question-bank/practical-coding/07-versioned-time-based-kv-store.md",
+    "02 - Projects/Job Hunt/question-bank/practical-coding/06-gpu-credit-manager.md",
+    "02 - Projects/Job Hunt/question-bank/practical-coding/01-in-memory-key-value-database.md",
     "02 - Projects/Job Hunt/source-code/01-in-memory-key-value-database/__pycache__/in_memory_db.cpython-310.pyc",
     "02 - Projects/Job Hunt/source-code/01-in-memory-key-value-database/__pycache__",
     "02 - Projects/Job Hunt/source-code/01-in-memory-key-value-database/README.md",
@@ -210,7 +214,6 @@
     "02 - Projects/Job Hunt/coding-practice/problems/demo-xyz/reference_solution.py",
     "02 - Projects/Job Hunt/coding-practice/problems/demo-xyz/PROBLEM.md",
     "02 - Projects/Job Hunt/coding-practice/problems/demo-xyz",
-    "02 - Projects/Job Hunt/coding-practice/problems/in-memory-db/__pycache__/solution.cpython-310.pyc",
     "02 - Projects/Job Hunt/coding-practice/problems/_template/PROBLEM.md",
     "02 - Projects/Job Hunt/coding-practice/problems/in-memory-db/PROBLEM.md",
     "02 - Projects/Job Hunt/coding-practice/README.md",
@@ -229,9 +232,6 @@
     "02 - Projects/Job Hunt/question-bank/llm-system-design/fundamentals/12-reranking.md",
     "02 - Projects/Job Hunt/question-bank/llm-system-design/fundamentals/11-topk-recall-precision.md",
     "02 - Projects/Job Hunt/question-bank/llm-system-design/fundamentals/10-chunking.md",
-    "02 - Projects/Job Hunt/question-bank/llm-system-design/fundamentals/09-vector-retrieval-failure.md",
-    "02 - Projects/Job Hunt/question-bank/llm-system-design/fundamentals/08-embeddings-and-similarity.md",
-    "02 - Projects/Job Hunt/question-bank/llm-system-design/fundamentals/07-hallucination.md",
-    "02 - Projects/Job Hunt/question-bank/llm-system-design/fundamentals/06-dpo.md"
+    "02 - Projects/Job Hunt/question-bank/llm-system-design/fundamentals/09-vector-retrieval-failure.md"
   ]
 }
