@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "02 - Projects/Job Hunt/question-bank/practical-coding/02-banking-system.md",
+                "file": "02 - Projects/Job Hunt/track-D-ml-llm-system-design/D0-areas-map.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "02-banking-system"
+              "title": "D0-areas-map"
             }
           }
         ]
@@ -195,8 +195,14 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "646df26cd91e4605",
+  "active": "4f09cc69f755d401",
   "lastOpenFiles": [
+    "02 - Projects/Job Hunt/track-E-ml-llm-fundamentals/README.md",
+    "02 - Projects/Job Hunt/question-bank/practical-coding/33-conversation-memory-manager.md",
+    "02 - Projects/Job Hunt/question-bank/practical-coding/30-function-calling-tool-handler.md",
+    "02 - Projects/Job Hunt/question-bank/practical-coding/34-multi-agent-orchestration.md",
+    "02 - Projects/Job Hunt/question-bank/practical-coding/16-minimal-agent-loop.md",
+    "02 - Projects/Job Hunt/question-bank/practical-coding/02-banking-system.md",
     "02 - Projects/Job Hunt/source-code/02-banking-system/README.md",
     "02 - Projects/Job Hunt/source-code/02-banking-system/test_banking_system.py",
     "02 - Projects/Job Hunt/source-code/02-banking-system/banking_system.py",
@@ -226,12 +232,6 @@
     "02 - Projects/Job Hunt/question-bank/llm-system-design/fundamentals/19-multi-agent.md",
     "02 - Projects/Job Hunt/question-bank/llm-system-design/fundamentals/18-agent-memory.md",
     "02 - Projects/Job Hunt/question-bank/llm-system-design/fundamentals/17-react.md",
-    "02 - Projects/Job Hunt/question-bank/llm-system-design/fundamentals/16-agent-loops-and-control.md",
-    "02 - Projects/Job Hunt/question-bank/llm-system-design/fundamentals/15-agent-vs-chatbot.md",
-    "02 - Projects/Job Hunt/question-bank/llm-system-design/fundamentals/14-rag-evaluation.md",
-    "02 - Projects/Job Hunt/question-bank/llm-system-design/fundamentals/13-hybrid-search.md",
-    "02 - Projects/Job Hunt/question-bank/llm-system-design/fundamentals/12-reranking.md",
-    "02 - Projects/Job Hunt/question-bank/llm-system-design/fundamentals/11-topk-recall-precision.md",
-    "02 - Projects/Job Hunt/question-bank/llm-system-design/fundamentals/10-chunking.md"
+    "02 - Projects/Job Hunt/question-bank/llm-system-design/fundamentals/16-agent-loops-and-control.md"
   ]
 }

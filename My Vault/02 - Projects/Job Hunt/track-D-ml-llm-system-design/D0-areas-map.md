@@ -31,12 +31,12 @@ purpose: "Structural map of the 8 competency areas underlying every Track D prom
 ### 1.1 Why this isn't just "system design with a model in it"
 You already own distributed-systems rigor (Track C). ML/LLM design adds **four layers** most infra candidates under-weight — and these layers are exactly where staff signal lives:
 
-| Added layer | The shift in thinking | Where candidates lose points |
-|---|---|---|
-| **Data** | The system's behavior is *learned from data*, not just coded. Data quality, freshness, and leakage determine quality more than code. | Treating data as a static input instead of a versioned, monitored pipeline. |
-| **Model** | The core component is **probabilistic and non-deterministic** — same input, different output; confidently wrong. | Reasoning about the model as if it's a deterministic function. |
-| **Eval** | "Correct" is **statistical and contested**. You must *define* what good means and *measure* it offline + online, or you're flying blind. | Designing the architecture before stating the success metric. |
-| **Online / Offline split** | Almost every ML system is **two loops**: an offline *build* loop (train / index / compute features) and an online *serve* loop. Keeping them consistent (parity) is a top failure mode. | Drawing one pipeline and forgetting the build loop, or skew between them. |
+| Added layer                | The shift in thinking                                                                                                                                                                   | Where candidates lose points                                                |
+| -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| **Data**                   | The system's behavior is *learned from data*, not just coded. Data quality, freshness, and leakage determine quality more than code.                                                    | Treating data as a static input instead of a versioned, monitored pipeline. |
+| **Model**                  | The core component is **probabilistic and non-deterministic** — same input, different output; confidently wrong.                                                                        | Reasoning about the model as if it's a deterministic function.              |
+| **Eval**                   | "Correct" is **statistical and contested**. You must *define* what good means and *measure* it offline + online, or you're flying blind.                                                | Designing the architecture before stating the success metric.               |
+| **Online / Offline split** | Almost every ML system is **two loops**: an offline *build* loop (train / index / compute features) and an online *serve* loop. Keeping them consistent (parity) is a top failure mode. | Drawing one pipeline and forgetting the build loop, or skew between them.   |
 
 Three consequences that show up in *every* answer:
 
@@ -415,16 +415,16 @@ What turns a complete, correct answer into a *staff* answer — independent of a
 
 ## 5. Coverage matrix — areas → prompts → companies → the one thing to nail
 
-| Area | Worked prompt(s) | Also shows up in | Heaviest companies | The one thing to nail |
-|---|---|---|---|---|
-| **1. Retrieval & Knowledge** | **D1** (done) | D8; follow-ups everywhere | Perplexity, Cohere, Harvey, Glean, Anthropic | Retrieval is the quality ceiling; citation *verification* by stakes |
-| **2. Inference & Serving** | **D2** | sub-100ms completion; gateway | NVIDIA, OpenAI, Anthropic, Anysphere, Fireworks, Together | "Prefill compute-bound, decode memory-bound" → batching, KV, p99 |
-| **3. Agentic Systems** | **D3** | Cursor agent; fraud agent | Robinhood, Anysphere, Harvey, Anthropic, Cognition | Reliability of a stochastic loop: compounding error, step caps, injection |
-| **4. Training & Fine-tuning** | **D4** | RLHF/LoRA in E-round | OpenAI, NVIDIA, Cohere, Together, Google | Parallelism mix by bottleneck + fault-tolerant checkpointing (your flex) |
-| **5. Evaluation & Quality** | **D5** | underpins D1, D3 | Anthropic, OpenAI, Cohere, all AI-eng | Metric-first; offline+online+regression gate; calibrated LLM-judge |
-| **6. Data, Features, Embeddings** | **D6, D7, D8** | D1 indexing | Robinhood, Wealthsimple, Cohere, Glean | Train/serve parity + point-in-time correctness; re-embed = migration |
-| **7. Safety & Guardrails** | content moderation | D1 ACL, D3 injection | Anthropic, Harvey, Glean, OpenAI, fintech | Defense-in-depth; injection has no full fix → limit blast radius |
-| **8. Observability, Cost, Reliability** | LLM gateway/router | *every* prompt | applied-AI everywhere; serving-cost shops | Quality+cost as SLOs; gateway = cache+route+fallback; versioned rollback |
+| Area                                    | Worked prompt(s)   | Also shows up in              | Heaviest companies                                        | The one thing to nail                                                     |
+| --------------------------------------- | ------------------ | ----------------------------- | --------------------------------------------------------- | ------------------------------------------------------------------------- |
+| **1. Retrieval & Knowledge**            | **D1** (done)      | D8; follow-ups everywhere     | Perplexity, Cohere, Harvey, Glean, Anthropic              | Retrieval is the quality ceiling; citation *verification* by stakes       |
+| **2. Inference & Serving**              | **D2**             | sub-100ms completion; gateway | NVIDIA, OpenAI, Anthropic, Anysphere, Fireworks, Together | "Prefill compute-bound, decode memory-bound" → batching, KV, p99          |
+| **3. Agentic Systems**                  | **D3**             | Cursor agent; fraud agent     | Robinhood, Anysphere, Harvey, Anthropic, Cognition        | Reliability of a stochastic loop: compounding error, step caps, injection |
+| **4. Training & Fine-tuning**           | **D4**             | RLHF/LoRA in E-round          | OpenAI, NVIDIA, Cohere, Together, Google                  | Parallelism mix by bottleneck + fault-tolerant checkpointing (your flex)  |
+| **5. Evaluation & Quality**             | **D5**             | underpins D1, D3              | Anthropic, OpenAI, Cohere, all AI-eng                     | Metric-first; offline+online+regression gate; calibrated LLM-judge        |
+| **6. Data, Features, Embeddings**       | **D6, D7, D8**     | D1 indexing                   | Robinhood, Wealthsimple, Cohere, Glean                    | Train/serve parity + point-in-time correctness; re-embed = migration      |
+| **7. Safety & Guardrails**              | content moderation | D1 ACL, D3 injection          | Anthropic, Harvey, Glean, OpenAI, fintech                 | Defense-in-depth; injection has no full fix → limit blast radius          |
+| **8. Observability, Cost, Reliability** | LLM gateway/router | *every* prompt                | applied-AI everywhere; serving-cost shops                 | Quality+cost as SLOs; gateway = cache+route+fallback; versioned rollback  |
 
 **One-paragraph prompts (have ready, don't write full):** code-completion serving sub-100 ms (Anysphere) = Area 2 + 3 · LLM gateway/router (applied-AI) = Area 8 · content moderation 10B msgs/day (Anthropic) = Area 7 + 5.
 
