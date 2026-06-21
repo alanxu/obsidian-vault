@@ -16,6 +16,8 @@ updated: 2026-06-18 (all files enriched with full prompts, code, follow-ups, pit
 > **Scope (what belongs here):** problems where you **build/extend a stateful object or small system** with a known answer — the multi-level "stateful service" problems, the Anthropic live bank, the minimal agent loop, and the LeetCode **Design**-tagged warm-ups. **Not here:** pure algorithmic puzzles (Track A) and open-ended *project* take-homes like "build a RAG system" (Track G — [[take-home-question-bank]]).
 >
 > **Why top-level:** this is a shared resource. A problem's *delivery channel* (OA / live / async timed assessment) is **not** its track — these problems are Track B content no matter how a company delivers them. Round mechanics + worked walk-through: [[practical-oo-coding-deep-guide]].
+>
+> **Runnable code (outside the vault):** these cards are the *study notes*. Runnable solutions + tests live in the git repo **`~/projects/interview-questions/practical-coding/<problem>/`** (run with `python3`). Card ↔ folder map by the same name/number, e.g. `01-in-memory-key-value-database` → `~/projects/interview-questions/practical-coding/01-in-memory-key-value-database/`. (New code Claude generates first lands in `Job Hunt/source-code/`, then is `mv`'d into the repo.)
 
 ## Format legend (used in every file's "By format" section)
 - **OA · ICA** — CodeSignal Industry Coding Assessment: 1 project, 4 progressive levels, auto-graded on hidden tests, 90 min.
