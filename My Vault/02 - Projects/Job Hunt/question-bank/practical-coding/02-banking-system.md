@@ -46,17 +46,18 @@ The bank tracks accounts (each with a string `id`), balances, and outgoing total
 
 Two structural choices drive correctness. Make them at L1 and they pay off through L4.
 
-**1. Per-account state**
+**1. State**
 ```
 account = {
   "balance": int,                # cents, NOT float
   "outgoing": int,               # total sent (for top_spenders)
   "history": [(ts, balance_after)],   # for get_balance
-  "pending": [payment_id, ...],  # for cashback bookkeeping
 }
+payments = { "paymentN": {"account": id, "refund": int, "done": bool} }  # global registry
 ```
+Keep cashbacks in a **global** `payments` registry keyed by the `"paymentN"` id (not a per-account list) — `get_payment_status` looks up by id and checks the owner, and `merge` just reassigns the `account` field.
 
-**2. Lazy event advance.** Before any public op at `ts`, **flush all scheduled cashbacks with `due ≤ ts`** from a min-heap `(due_ts, arrival_idx, account_id, amount)`. The `arrival_idx` breaks ties at identical timestamps deterministically.
+**2. Lazy event advance.** Before any public op at `ts`, **flush all scheduled cashbacks with `due ≤ ts`** from a min-heap `(due_ts, seq, payment_id)`. The `seq` breaks ties at identical timestamps deterministically; settling a payment credits its owner and marks it `done`.
 
 For `get_balance(ts, id, time_at)`: keep a per-account `(ts, balance)` history (append on every balance change). At query time, binary-search for the largest entry with `ts ≤ time_at`. **This is the same primitive as Q01 / Q07** — reuse it.
 
@@ -67,20 +68,28 @@ For `merge`: combine balances, sum `outgoing`, **consolidate pending payments**,
 ```python
 import heapq
 
+MILLIS_PER_DAY = 24 * 60 * 60 * 1000   # 86_400_000 — cashback lands 24h after the payment
+CASHBACK_PERCENT = 2                    # 2% cashback, floored to an integer
+
 class Bank:
     def __init__(self):
         self.accounts = {}             # id -> state dict
-        self.pending = []              # min-heap of (due_ts, idx, id, amount)
-        self._counter = 0              # for deterministic tie-break
+        self.pending = []              # min-heap of (due_ts, seq, pid)
+        self.payments = {}             # "paymentN" -> {"account", "refund", "done"}
+        self._seq = 0                  # deterministic heap tie-break
+        self._npay = 0                 # global counter -> "payment1", "payment2", ...
 
     def _advance(self, ts):
+        # Lazy, time-ordered settlement: credit every cashback due by `ts`.
         while self.pending and self.pending[0][0] <= ts:
-            due, _, aid, amount = heapq.heappop(self.pending)
-            if aid not in self.accounts:
-                continue                # account may have been merged/deleted
-            acc = self.accounts[aid]
-            acc["balance"] += amount
-            acc["history"].append((ts, acc["balance"]))
+            due, _, pid = heapq.heappop(self.pending)
+            p = self.payments[pid]
+            aid = p["account"]
+            if aid in self.accounts and p["refund"]:   # owner may have merged away
+                acc = self.accounts[aid]
+                acc["balance"] += p["refund"]
+                acc["history"].append((ts, acc["balance"]))
+            p["done"] = True            # status -> CASHBACK_RECEIVED (even if refund==0)
 
     def _ensure(self, ts, id):
         self._advance(ts)
@@ -92,8 +101,7 @@ class Bank:
         self._advance(ts)
         if id in self.accounts:
             return False
-        self.accounts[id] = {"balance": 0, "outgoing": 0,
-                             "history": [(ts, 0)], "pending": set()}
+        self.accounts[id] = {"balance": 0, "outgoing": 0, "history": [(ts, 0)]}
         return True
 
     def deposit(self, ts, id, amount):
@@ -129,25 +137,31 @@ class Bank:
         )[:n]
         return ", ".join(f"{id}({out})" for out, id in ranked)
 
-    def pay(self, ts, id, amount, cashback_pct=2, delay=5):
+    def pay(self, ts, id, amount):
+        # Signature is exactly pay(ts, id, amount) — the grader calls it with 3 args.
+        # The %, delay, and rounding are FIXED by the spec (constants), not parameters.
         acc = self._ensure(ts, id)
         if acc is None or amount <= 0 or acc["balance"] < amount:
             return None
         acc["balance"] -= amount
-        acc["outgoing"] += amount
+        acc["outgoing"] += amount                       # payment counts as outgoing
         acc["history"].append((ts, acc["balance"]))
-        self._counter += 1
-        cashback = (amount * cashback_pct) // 100
-        if cashback > 0:
-            heapq.heappush(self.pending, (ts + delay, self._counter, id, cashback))
-            acc["pending"].add(self._counter)
-        return self._counter
+        self._npay += 1
+        pid = f"payment{self._npay}"                    # global id, not per-account
+        refund = amount * CASHBACK_PERCENT // 100       # floored 2% (may be 0)
+        self.payments[pid] = {"account": id, "refund": refund, "done": False}
+        heapq.heappush(self.pending, (ts + MILLIS_PER_DAY, self._seq, pid))
+        self._seq += 1
+        return pid
 
     def get_payment_status(self, ts, id, pid):
         self._advance(ts)
-        if pid in self.accounts.get(id, {}).get("pending", set()):
-            return "IN_PROGRESS"
-        return "COMPLETED"
+        if id not in self.accounts:
+            return None
+        p = self.payments.get(pid)
+        if p is None or p["account"] != id:            # unknown id or wrong owner
+            return None
+        return "CASHBACK_RECEIVED" if p["done"] else "IN_PROGRESS"
 
     def merge_accounts(self, ts, id1, id2):
         self._advance(ts)
@@ -158,7 +172,9 @@ class Bank:
         a["outgoing"] += b["outgoing"]
         a["history"].extend(b["history"])
         a["history"].sort()
-        a["pending"].update(b["pending"])
+        for p in self.payments.values():   # pending cashbacks now credit id1
+            if p["account"] == id2:
+                p["account"] = id1
         del self.accounts[id2]
         return True
 
@@ -239,13 +255,15 @@ class Bank:
 ## Worked example trace (for narration)
 
 ```
+# NOTE: trace uses a tiny delay D=5 in place of MILLIS_PER_DAY (86_400_000) purely
+# for readability. In real code the cashback from pay@t=5 would land at t=86_400_005.
 t=0  create_account("a1")           # a1: balance=0, history=[(0,0)]
 t=1  create_account("a2")
 t=2  deposit("a1", 100)              # a1: balance=100, history +=(2,100)
 t=3  transfer("a1","a2",30)          # a1: 70, outgoing=30; a2: 30
-t=5  pay("a1", 50)                   # a1: 20, outgoing=80; cashback=1 due@t=10
-t=8  deposit("a2", 10)               # advance first: cashback@10 not yet due → noop
-t=10 deposit("a1", 5)                # advance fires: a1 +=1 → 21; then deposit → 26
+t=5  pay("a1", 50)                   # a1: 20, outgoing=80; -> "payment1", cashback=1 due@t=5+D=10
+t=8  deposit("a2", 10)               # settle first: cashback@10 not yet due → noop
+t=10 deposit("a1", 5)                # settle fires: a1 +=1 → 21 (payment1 -> CASHBACK_RECEIVED); then deposit → 26
 t=12 top_spenders(2)                 # a1: outgoing=80, a2: outgoing=0 → "a1(80),a2(0)"
 t=15 get_balance(15,"a1", 5)         # hist: [(0,0),(2,100),(5,20),(10,21),(15,26)]
                                      # bisect ≤5 → (5,20) → 20
