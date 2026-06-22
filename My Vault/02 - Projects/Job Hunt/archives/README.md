@@ -2,7 +2,7 @@
 tags: [job-hunt, archives, index, notion-inbox]
 title: "Archives — processed Notion inbox log"
 purpose: "Log of items digested from the Notion 'brain → 00 — Inbox' and where they landed. Prevents re-processing on weekly runs."
-updated: 2026-06-19
+updated: 2026-06-22
 ---
 
 # Archives — Processed Inbox Log
@@ -20,7 +20,7 @@ Record of Notion **brain → 📥 00 — Inbox** items processed into this Job H
 ## Left in inbox (not processed)
 | Date | Notion item | Reason |
 |---|---|---|
-| 2026-06-19 | (untitled Xiaohongshu link) | Not accessible (see [[shared_link]] → Pending). Re-try when content can be pasted. |
+| 2026-06-19 | (untitled Xiaohongshu link) | Not accessible (see [[shared_link]] → Pending). Re-try when content can be pasted. Re-checked 2026-06-22 (weekly run): still the same unprocessed item, xhslink domain still blocked — left as-is, no other new inbox items this week. |
 
 ## Other digested sources (pasted in chat, not the Notion inbox)
 | Date | Source | Digested into |
