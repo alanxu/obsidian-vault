@@ -47,6 +47,9 @@ Cold-start latency on a tail model · GPU fragmentation (can't fit a request) ·
 - "Cold starts?" → warm pool + fast weight load + local NVMe cache + predictive pre-warm.
 - "Multi-tenant LoRA?" → one base + adapter swap per request; per-tenant quotas.
 - "Serverless vs dedicated?" → serverless for bursty/cheap; dedicated for steady/SLA.
+- "Cold-start numbers — walk the load path." → NVMe→CPU RAM ~2–5 GB/s, PCIe→GPU ~25–60 GB/s: a 14 GB 7B model ≈ 3–8s from local NVMe, minutes from remote object store → tiered cache (GPU-resident > CPU RAM > NVMe > S3), stream layers so first layers compute during later-layer load.
+- "GPU bin-packing?" → it's a 2D packing problem (weights + KV headroom per model); leave decode headroom or long generations OOM the co-tenant; big models get dedicated GPUs, smalls pack; defrag by draining, not killing.
+- "How do you bill?" → per-token (prefill/decode priced separately) with high floor-utilization assumptions; unit economics: $/GPU-hr ÷ tokens/hr at achieved utilization — say that utilization *is* the margin, everything in this design serves it.
 
 ## Related
 [[06-llm-inference-serving-platform]] · [[15-multi-tenant-finetuning-service]] · [[D0-areas-map]] Area 2.

@@ -47,6 +47,9 @@ Sim-to-real gap (passes sim, fails road) · missing edge-case coverage · non-de
 - "Sim-to-real gap?" → calibrate sensor models, domain randomization, validate sim predictivity vs road.
 - "Scale?" → parallel cloud execution, deterministic replay, petabyte log pipeline.
 - "Know the stack is safe to ship?" → regression scenario suite gate on every change.
+- "How do you validate the *simulator* (not the stack)?" → replay logged real drives through sim and compare stack behavior sim-vs-road on the same scenarios; sim predictivity (agreement rate) is the meta-metric that licenses every other sim result — without it, million-scenario suites prove nothing.
+- "Scenario mining from the fleet?" → the best rare events are real: mine disengagements/near-misses from fleet logs → parameterize into scenario families → fuzz variations; closes the loop between road and sim.
+- "Neural/generative simulation (2026)?" → learned world models and neural sensor rendering (Waabi's bet) replace hand-built assets — cheaper scenario diversity, but realism becomes a *learned* property needing its own eval; know both the promise and that circularity risk (testing a learned stack inside a learned sim).
 
 ## Related
 [[18-llm-eval-harness]] (eval analogue) · [[16-pretraining-data-pipeline]] (data scale) · [[D0-areas-map]] Area 6.

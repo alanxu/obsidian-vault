@@ -139,6 +139,9 @@ class StreamingAggregator:
   - **Real-time alert** — "alert if any user exceeds 1M tokens in 1 min."
   - **CSV vs pipe-delimited** — make the delimiter configurable.
   - **Negative or zero tokens** — clamp / reject / log.
+  - **Cost attribution** — extend tokens → dollars with a per-model price table (prompt vs completion tokens priced differently); the [[../llm-system-design/31-llm-observability-cost]] connection in 20 lines.
+  - **Exact percentiles without storing all values?** → you can't — O(1)-memory percentile needs a sketch (t-digest / fixed histogram buckets); saying "approximate with a histogram, exact needs the data" beats hand-waving a running p99.
+  - **Two-pass vs streaming top-K trap** — top-K users needs *totals* first, so pure single-pass heap-on-lines is wrong (a user's total accumulates); heap applies after aggregation, or over the dict — interviewers plant this.
 - **Tips:**
   - **Ask about malformed-line policy** (skip vs error vs log) before coding. Most teams say "skip + count."
   - **Mention streaming early** — even if not asked, offer it as a follow-up design point.

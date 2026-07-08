@@ -34,6 +34,8 @@ How do you choose chunk size? Why is chunk overlap useful?
 - *"Tune chunk size?"* → empirically, via **Recall@k** on a golden set — there's no universal number.
 - *"Tables/code/PDFs?"* → layout-aware parsing; don't split tables; preserve offsets for citations.
 - *"Overlap downside?"* → duplicate near-identical chunks → dedup at context assembly (MMR).
+- *"Contextual retrieval (Anthropic-style)?"* → prepend an LLM-generated situating sentence to each chunk before embedding ("This chunk is from X's Q3 filing, discussing…") — big recall gains on ambiguous chunks; ingest-time LLM cost, made cheap by prompt caching.
+- *"Late chunking?"* → embed the full document through a long-context embedder first, *then* pool per-chunk — chunk vectors inherit document context without any header engineering.
 
 ## Pitfalls
 - Naïve fixed-size splitting that cuts mid-sentence / mid-table.

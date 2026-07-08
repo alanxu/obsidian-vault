@@ -36,6 +36,8 @@ Why use multiple agents? What is a supervisor agent? How do you avoid agent conf
 - *"Worth the complexity?"* → only for genuinely parallel/specialized subtasks; otherwise single-agent + tools.
 - *"Stop them ping-ponging?"* → global step/cost budget + cross-agent progress detection + supervisor.
 - *"Design it?"* → [[llm-system-design/11-multi-agent-system]]; code a small one → [[practical-coding/34-multi-agent-orchestration]].
+- *"When does multi-agent demonstrably win?"* → read-heavy, parallelizable research (Anthropic's multi-agent research system: orchestrator + parallel searchers beat single-agent on breadth) — vs write/edit tasks, where shared mutable state makes single-agent safer.
+- *"Context isolation as the real benefit?"* → each worker gets a *clean, focused* context instead of one polluted 100K-token window — often the quality win matters more than the parallelism; the cost is re-briefing overhead (token multiplier ~3–15× a single agent).
 
 ## Pitfalls
 - Reaching for multi-agent by default (coordination cost + propagated errors usually outweigh the benefit).

@@ -4,8 +4,9 @@ title: "LLM / ML System Design — Question Bank"
 scope: "Concrete design prompts for AI/ML system-design rounds (master-plan Track D §6). One file per question. Framework lives in D0; this bank is the worked prompt set."
 location: "Under `/question-bank/llm-system-design/`."
 related: ["[[track-D-ml-llm-system-design/D0-areas-map]]", "[[track-D-ml-llm-system-design/D1-rag-with-citations]]", "[[interview-prep-master-plan-2026]]", "[[ai-ipo-interview-guide]]"]
-count: 31
+count: 38
 created: 2026-06-18
+updated: 2026-07-09 (added 38 multimodal RAG + fundamentals 25). Prior: 2026-07-08 audit fill 32–37; see [[question-bank/README]] §Audit & evidence
 ---
 
 # LLM / ML System Design — Question Bank
@@ -20,7 +21,7 @@ created: 2026-06-18
 Mostly **live system design** (45–60 min, whiteboard/CoderPad-doc) and **take-home design write-ups**. A few (training, safety) also appear as **ML-depth/research rounds**. Difficulty ★1–5 = staff-readiness effort.
 
 ## Fundamentals / Concept Q&A (sub-bank)
-The ML/LLM round also probes **fundamentals** ("explain attention / KV cache / RLHF / chunking / the agent loop"). Fundamentals are **not a separate interview format** — they're tested *inside this round* — so they live as a concept-Q&A **sub-bank in this area**: **[[fundamentals/README|/llm-system-design/fundamentals]]** (21 enriched cards: LLM basics, RAG concepts, agent concepts, production & safety concepts). Drill those as rapid-fire 2-min answers; the **design prompts** below are the whiteboard set.
+The ML/LLM round also probes **fundamentals** ("explain attention / KV cache / RLHF / chunking / the agent loop"). Fundamentals are **not a separate interview format** — they're tested *inside this round* — so they live as a concept-Q&A **sub-bank in this area**: **[[fundamentals/README|/llm-system-design/fundamentals]]** (25 enriched cards: LLM basics, RAG concepts, agent concepts, production & safety concepts). Drill those as rapid-fire 2-min answers; the **design prompts** below are the whiteboard set.
 
 ---
 
@@ -34,6 +35,7 @@ The ML/LLM round also probes **fundamentals** ("explain attention / KV cache / R
 | 03 | [[03-web-answer-engine]] | Perplexity | ★★★★☆ |
 | 04 | [[04-legal-document-qa]] | Harvey | ★★★★☆ |
 | 05 | [[05-semantic-hybrid-search]] | general, Cohere | ★★★☆☆ |
+| 38 | [[38-multimodal-document-rag]] *(2026-07 fill)* | Harvey (verified); Glean/Cohere inferred — see card `evidence` | ★★★★☆ |
 
 ## Area 2 — Inference & Serving
 *Prefill compute-bound, decode memory-bound. KV cache, batching, p99, cost.* Framework: [[D0-areas-map]] Area 2.
@@ -53,6 +55,10 @@ The ML/LLM round also probes **fundamentals** ("explain attention / KV cache / R
 | 10 | [[10-autonomous-coding-agent]] | Anysphere, Cognition | ★★★★☆ |
 | 11 | [[11-multi-agent-system]] | general, agent-platform cos | ★★★★☆ |
 | 12 | [[12-customer-support-agent]] | Robinhood, Sierra, Decagon | ★★★☆☆ |
+| 32 | [[32-llm-memory-system]] *(2026-07 fill)* | OpenAI, Anthropic, Anysphere, Robinhood | ★★★★☆ |
+| 33 | [[33-deep-research-agent]] *(2026-07 fill)* | OpenAI, Anthropic, Perplexity, Cohere | ★★★★☆ |
+| 34 | [[34-realtime-voice-agent]] *(2026-07 fill)* | OpenAI, Sierra/Decagon, voice-AI | ★★★★☆ |
+| 37 | [[37-mcp-tool-platform]] *(2026-07 fill)* | Anthropic, OpenAI, Anysphere, Robinhood | ★★★★☆ |
 
 ## Area 4 — Training & Fine-tuning Infrastructure
 *Your infra flex. Parallelism by bottleneck + fault-tolerant checkpointing.* Framework: [[D0-areas-map]] Area 4.
@@ -86,6 +92,7 @@ The ML/LLM round also probes **fundamentals** ("explain attention / KV cache / R
 | 25 | [[25-ctr-ad-prediction]] | Google, Meta, big-tech | ★★★★☆ |
 | 26 | [[26-data-labeling-pipeline]] | Scale, data/eval cos | ★★★☆☆ |
 | 27 | [[27-av-simulation-scenario-generation]] | Waabi, Waymo | ★★★★☆ |
+| 36 | [[36-structured-output-extraction]] *(2026-07 fill)* | Harvey, Glean, Cohere, enterprise applied-AI | ★★★★☆ |
 
 ## Area 7 — Safety, Guardrails & Governance
 *Defense-in-depth; injection has no full fix → limit blast radius.* Framework: [[D0-areas-map]] Area 7.
@@ -102,6 +109,7 @@ The ML/LLM round also probes **fundamentals** ("explain attention / KV cache / R
 |---|---|---|---|
 | 30 | [[30-llm-gateway-router]] | applied-AI everywhere | ★★★★☆ |
 | 31 | [[31-llm-observability-cost]] | applied-AI everywhere | ★★★☆☆ |
+| 35 | [[35-semantic-caching]] *(2026-07 fill)* | applied-AI everywhere | ★★★☆☆ |
 
 ---
 

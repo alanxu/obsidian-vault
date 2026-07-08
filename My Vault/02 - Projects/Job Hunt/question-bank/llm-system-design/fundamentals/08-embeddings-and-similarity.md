@@ -29,6 +29,9 @@ An **embedding** maps text (or any input) to a **dense vector** in a learned spa
 - *"Why not keyword search?"* → embeddings handle **paraphrase/synonyms**; keywords (BM25) handle exact terms/IDs → use **both** ([[13-hybrid-search]]).
 - *"Pick an embedding model?"* → by **Recall@k on your own corpus**, not a leaderboard; same model+version for query and corpus (version skew = garbage similarity).
 - *"Cross-encoder vs bi-encoder?"* → bi-encoder embeds independently (cheap, pre-computable); cross-encoder scores a (query,doc) pair jointly (accurate, used for re-ranking → [[12-reranking]]).
+- *"Matryoshka embeddings?"* → trained so prefixes of the vector are usable embeddings — truncate 3072→256 dims for a cheap first pass, full dims to refine; one model, tiered cost.
+- *"How do you migrate embedding models on a live index?"* → dual-write new vectors, backfill in batches, A/B Recall@k old vs new, cut over per-collection — never mix versions in one similarity space.
+- *"Is similarity symmetric for queries and docs?"* → not necessarily: retrieval models often train with instruction prefixes ("query: …" / "passage: …"); dropping them at inference silently degrades recall.
 
 ## Pitfalls
 - Mixing embedding **model versions** in one index (incomparable vectors).

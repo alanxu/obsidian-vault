@@ -33,6 +33,8 @@ So you don't pick one K — you use a **big K for recall, then a small K for pre
 - *"Right metric?"* → **Recall@k** for retrieval, **nDCG/MRR** for ranking, faithfulness for the end answer.
 - *"Going above 100 candidates?"* → rarely helps, adds reranker latency.
 - *"Order in the context?"* → put the best chunks first/last (lost-in-the-middle).
+- *"Should K be fixed?"* → better: **similarity/score thresholding or adaptive K** — easy queries need 2 chunks, hard ones 10; fixed K wastes tokens or starves recall. Calibrate the threshold on the golden set.
+- *"What if recall is high but answers are still wrong?"* → precision problem downstream: distractor chunks outrank gold in the LLM's attention → rerank harder, dedup near-duplicates (MMR), shrink final K.
 
 ## Pitfalls
 - One K for everything (conflating recall and precision stages).

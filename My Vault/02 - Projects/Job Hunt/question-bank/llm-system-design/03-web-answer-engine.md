@@ -45,6 +45,12 @@ Hallucinated citations (kills trust) · stale answer on breaking news · crawler
 - "Crawl billions of pages?" → prioritized recrawl, dedup, quality filter, sharded frontier.
 - "Verify a cited source in real time?" → NLI/judge entailment of claim vs cited span; tier by stakes.
 - "p99 < 2s with verification?" → stream the answer, verify async/inline on the top claims, cache hot queries.
+- "SEO spam / content farms polluting answers?" → source-quality score (domain authority, spam classifier, historical citation-click rate) as a *retrieval feature* and a generation-time trust hint; demote, don't just filter (recall on long-tail queries).
+- "Same query, breaking news 10 min ago?" → query classifier routes 'fresh' intents to a hot index + live search API fallback; blend recency into rank; show timestamps so staleness is visible rather than silent.
+- "Multi-step questions ('compare X and Y's earnings')?" → decompose → parallel retrieval per sub-question → synthesis over notes; this is the boundary where the answer engine becomes [[33-deep-research-agent]].
+
+## Numbers
+Index: ~10⁹–10¹⁰ pages, hot tier recrawled in minutes, cold in days–weeks · latency budget: retrieve ~100–200ms, rerank ~50–100ms, TTFT ~300ms, verify inline on top-3 claims · cache hit on head queries 30–50% (news queries barely cache — freshness invalidates).
 
 ## Related
 [[01-rag-with-citations]] · practical-coding [[practical-coding/12-multithreaded-web-crawler]] (the crawler component) · [[D0-areas-map]] Area 1.

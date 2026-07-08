@@ -167,6 +167,8 @@ The reported answer had the standard architecture + an async downloader with `Cl
   7. **Failure handling** — what if `get_urls` raises? Retry with backoff? Mark URL as failed?
   8. **Result aggregation** — return ordered crawl vs just visited set; BFS order vs DFS.
   9. **URL canonicalization edge cases** — case sensitivity, default ports, encoded characters.
+  10. **Crawler traps / infinite URL spaces** — calendar pages, session-id query params generate unbounded distinct URLs → depth cap, per-path-pattern budget, strip tracking params in normalize; dedup alone can't save you when every URL is genuinely new.
+  11. **Free-threaded Python (no-GIL, 3.13+)** — if raised: threads become real parallelism for CPU too, but *this* problem is I/O-bound so the answer barely changes; knowing the GIL story is version-dependent now is a currency signal.
 - **Tips:**
   - **Get single-thread correct + deduped first.** Don't reach for threads until the base works.
   - Introduce the lock only when you parallelize and **say why** (race on `visited`).

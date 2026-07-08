@@ -30,7 +30,8 @@ The cost is **memory**: cache size = `2 × layers × kv_heads × head_dim × seq
 ## Follow-ups
 - *"Shrink the KV cache?"* → **GQA/MQA** (fewer KV heads), **quantize** the cache (int8), **PagedAttention** (no fragmentation + sharing), **prefix caching** (reuse a shared system-prompt's KV).
 - *"What's prefill vs decode?"* → prefill processes the prompt in one parallel pass (compute-bound); decode generates tokens serially, each reloading the KV cache (memory-bound).
-- *"Memory math for a 70B at 8k context?"* → walk the formula; it lands in the tens of GB per sequence-batch.
+- *"Memory math for a 70B at 8k context?"* → walk it concretely: 80 layers × 8 KV heads (GQA) × 128 head-dim × 8192 tokens × 2 (K+V) × 2 bytes (fp16) ≈ **2.7 GB per sequence** → batch 16 ≈ 43 GB, which crowds the weights on an 80GB GPU. Without GQA (64 heads) it's 8× worse — that's *why* GQA exists.
+- *"Speculative decoding and the cache?"* → draft tokens are verified in one parallel pass; accepted tokens append their K/V — decode becomes partially parallel with identical outputs.
 
 ## Pitfalls
 - Saying it "caches the output tokens" — it caches **K and V activations**, not tokens/logits.

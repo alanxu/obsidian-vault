@@ -120,6 +120,8 @@ class OutOfOrderExclusive:
   - **Detect N consecutive identical events** — debounce: don't re-emit the same state N times in a row.
   - **Per-thread aggregation** — multiple threads, each with its own stack.
   - **Visualize** — render as a flamegraph using the same data.
+  - **Async functions (one id suspends/resumes)** — START/END no longer nest as a stack (interleaved awaits) → per-task stacks keyed by task-id, or explicit SUSPEND/RESUME events; the "stack assumption breaks" escalation.
+  - **Streaming totals while calls are open** — "report exclusive times *now*, mid-execution" → credit the open frame up to current ts; forces you to separate finalized vs provisional counters.
 - **Tips:**
   - **Narrate half-open timing and the tie-break** — make the convention audible.
   - **Dry-run nested calls** on a 3-event example.

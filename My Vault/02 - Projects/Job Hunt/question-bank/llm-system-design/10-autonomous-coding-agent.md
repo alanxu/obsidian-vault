@@ -47,6 +47,10 @@ No/flaky tests (weak verifier) · context too narrow (wrong edit) · sandbox esc
 - "100k-file repo?" → index (embeddings + symbol graph), retrieve per step.
 - "Safety of running code?" → sandbox (container, no prod creds, egress rules, resource caps).
 - "Sub-100ms completions too?" → that's a *separate* serving path ([[07-code-completion-serving-sub100ms]]).
+- "No tests in the repo — now what?" → weaker verifiers in order: have the agent *write* characterization tests first, then type-check/lint/build as gates, then LLM code review as last resort; be explicit that autonomy should shrink as verifier strength drops.
+- "How do you eval the agent itself?" → SWE-bench-style: real issues + hidden gold tests, pass@k + cost/time per resolved issue; plus trajectory metrics (edit-locality, steps-to-green) to debug *why* it fails, not just how often.
+- "Long tasks blow the context — what's in it at step 40?" → not the transcript: compressed state = plan + current diff + last test output + retrieved files; summarize/evict old steps ([[fundamentals/18-agent-memory]]); the diff itself is the durable memory.
+- "Concurrent agents on one repo?" → each in its own branch/worktree + sandbox; merge conflicts surface at PR like humans; never share a mutable checkout.
 
 ## Related
 [[09-agent-platform]] · [[07-code-completion-serving-sub100ms]] · practical-coding [[practical-coding/16-minimal-agent-loop]] · [[D0-areas-map]] Area 3.

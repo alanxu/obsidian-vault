@@ -32,6 +32,8 @@ The staff framing is the **adaptation ladder** — start at the cheapest rung th
 - *"Fine-tune vs RAG for new knowledge?"* → **RAG** for fresh/changing/citable knowledge; fine-tuning for **style/format/latency** or baking in a fixed behavior. Default to prompting → RAG → tools **before** fine-tuning.
 - *"LoRA vs full fine-tune?"* → LoRA for cheap, many-adapter, fast; full for maximal/deep change (→ [[llm-system-design/15-multi-tenant-finetuning-service]]).
 - *"Catastrophic forgetting?"* → fine-tuning can erode general ability; mitigate with low LR, LoRA, mixing in general data.
+- *"Continued/domain-adaptive pretraining?"* → the missing middle rung: same self-supervised objective, domain corpora (legal/code/medical) — adds domain **knowledge** (unlike SFT, which shapes behavior); replay general data to avoid forgetting.
+- *"How much data to SFT?"* → quality ≫ quantity: hundreds–thousands of curated examples routinely beat 100k noisy ones (LIMA-style result); every example should teach an identifiable behavior.
 
 ## Pitfalls
 - Reaching for fine-tuning to inject **facts** (that's RAG's job; fine-tuning teaches *behavior*, not reliable recall).

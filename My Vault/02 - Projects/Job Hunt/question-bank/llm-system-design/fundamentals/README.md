@@ -5,7 +5,8 @@ scope: "Rapid-fire 'explain X' concept questions for AI-eng interviews. One enri
 source_seed: "Anthropic 100-question bank (Notion inbox, ChatGPT share, 2026-06-19)"
 related: ["[[llm-system-design/README]]", "[[track-D-ml-llm-system-design/D0-areas-map]]", "[[track-E-ml-llm-fundamentals/README]]", "[[plans/anthropic-oa-vs-onsite]]"]
 created: 2026-06-19
-status: building (Part 1 done; Parts 2–6 in progress)
+updated: 2026-07-08 (audit fill — added Part 7 cards 22–24; see [[question-bank/README]] §Audit & evidence)
+status: building (Part 1 done; Parts 2–6 in progress; Part 7 done)
 ---
 
 # LLM / ML Fundamentals — Concept Q&A Bank
@@ -57,6 +58,14 @@ Monitoring/tracing/cost/rollback/SLA/A-B/canary/prompt-versioning/timeouts/3p-fa
 
 ### Part 6 — Behavioral & AI Safety
 Behavioral (why Anthropic, Claude vs others, Responsible AI, safety-vs-innovation, refuse, future jobs) → **[[track-F-behavioral-staff-values/README]]** (story/values bank). Safety *design* (prompt-injection detect/defend, tool-use risk, agent DB-write, safety eval) → [[llm-system-design/29-guardrails-prompt-injection]]. Safety *concept* card: [[21-prompt-injection-concepts]].
+
+### Part 7 — 2026 senior-loop staples (audit fill, 2026-07-08; not in the source 100-Q)
+| # | Card | Why added |
+|---|---|---|
+| 22 | [[22-prompt-caching]] | prompt/prefix caching now a standard senior topic; only implicit in [[03-kv-cache]] |
+| 23 | [[23-mcp-a2a]] | "explain MCP / MCP vs function calling / A2A" — rapid-fire staple at agent shops |
+| 24 | [[24-structured-outputs]] | constrained decoding / JSON mode — previously zero coverage |
+| 25 | [[25-multimodal-embeddings]] | *(2026-07-09)* visual retrieval (CLIP vs ColPali vs describe-then-embed) — pairs with design card [[llm-system-design/38-multimodal-document-rag]] |
 
 ## Priority (per the source, RAG/AI-eng background)
 RAG ★★★★★ · AI System Design ★★★★★ · Production AI ★★★★★ · Agents ★★★★☆ · LLM Basics ★★★★☆ · Safety ★★★★☆.

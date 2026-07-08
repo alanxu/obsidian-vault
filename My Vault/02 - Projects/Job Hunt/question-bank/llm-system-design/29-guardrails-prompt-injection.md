@@ -46,6 +46,10 @@ Indirect prompt injection via tool/retrieval output · jailbreaks bypassing the 
 - "Stop prompt injection?" → no full fix; isolate untrusted input, least privilege, structured tool I/O, human-confirm destructive actions, injection eval suite.
 - "PII?" → detect+redact input, leak-check output, scrub logs, retention controls.
 - "Agent with tools safely?" → least privilege + sandbox + confirm destructive + treat tool output as untrusted.
+- "The lethal trifecta as a design rule?" → private data + untrusted content + exfiltration channel must never coexist in one agent context → express it as *policy*: session that has read private data loses external-send tools; the guardrail layer enforces capability downgrades, not just content filters.
+- "Dual-LLM / quarantine pattern?" → a privileged orchestrator never sees untrusted text; a quarantined model processes it and returns only *structured, validated* results (symbols, not prose) — the architectural (vs filter-based) answer to indirect injection; costs flexibility, use for high-stakes paths.
+- "How do you measure guardrail effectiveness?" → attack success rate on a maintained red-team suite (auto + human, refreshed as attacks evolve) *and* false-positive rate on benign traffic — a guardrail that blocks 2% of legitimate use is a product bug; report both numbers together.
+- "Latency budget for all these layers?" → run input checks in parallel with retrieval, use small fast classifier models (~10–30ms), reserve LLM-based checks for the output side / high-stakes routes — guardrails that double TTFT get turned off by product teams, which is the real failure mode.
 
 ## Related
 [[09-agent-platform]] (injection via tools) · [[28-content-moderation-at-scale]] · [[D0-areas-map]] Area 7.

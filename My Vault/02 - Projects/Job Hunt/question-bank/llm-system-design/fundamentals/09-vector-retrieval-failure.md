@@ -33,6 +33,8 @@ Common failure modes:
 - *"How do you know retrieval failed (not generation)?"* → **Recall@k** on a golden set isolates retrieval; faithfulness isolates generation.
 - *"Fix exact-match misses?"* → hybrid (dense + BM25) + RRF.
 - *"Fix asymmetry?"* → query rewriting, HyDE (embed a hypothetical answer), better chunk context headers.
+- *"Multi-hop questions?"* → single-shot retrieval fails on "compare X's policy to Y's" — decompose into sub-queries or iterate retrieve→read→retrieve (agentic RAG); a distinct failure class from the five above.
+- *"Time/freshness failures?"* → embeddings don't encode recency: "latest pricing" retrieves old-but-similar chunks → add metadata filters (date, version) as hard predicates alongside similarity.
 
 ## Pitfalls
 - Blaming the LLM for a hallucination that's really a **retrieval miss** (the #1 RAG misdiagnosis).

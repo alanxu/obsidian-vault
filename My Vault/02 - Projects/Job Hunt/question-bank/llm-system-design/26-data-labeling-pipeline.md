@@ -49,6 +49,9 @@ Bad/adversarial labelers · automation bias (rubber-stamping model pre-labels) �
 - "10M/day?" → model pre-label + active learning (humans on uncertain only).
 - "Ambiguous ground truth?" → capture distribution; escalate; measure agreement not just correctness.
 - "RLHF preference data?" → pairwise ranking + IAA + prompt sampling (see [[14-rlhf-pipeline]]).
+- "LLM as annotator (2026 reality)?" → LLMs pre-label or fully label the easy tier; humans move up-stack to hard cases + auditing the LLM's labels — QC machinery (gold tasks, agreement) now applies to the *model* annotator too, including its systematic biases (a bad human is random, a bad model is *correlated* across millions of labels — the scarier failure).
+- "Annotator disagreement is signal, not noise?" → for subjective tasks (toxicity, preference), high-IAA-by-construction means you've flattened real distributional truth → store per-annotator labels + demographics, train on soft labels where the product needs it.
+- "Expert domains (medical, legal)?" → scarce/expensive experts → tier: model + generalists filter and draft, experts adjudicate only contested/critical items; expert-time-per-label is the binding constraint to optimize.
 
 ## Related
 [[14-rlhf-pipeline]] · [[18-llm-eval-harness]] (golden sets) · [[D0-areas-map]] Area 6.

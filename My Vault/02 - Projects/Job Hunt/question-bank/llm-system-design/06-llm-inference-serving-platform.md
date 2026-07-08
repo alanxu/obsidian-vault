@@ -53,6 +53,9 @@ KV-cache OOM under long-context burst (→ admission control/preemption) · head
 - "Cut p99 tail?" → chunked prefill, admission control, separate latency-class queues, prefix caching.
 - "Multi-tenant?" → per-tenant token quotas + fair scheduler + dedicated pools for premium SLAs.
 - "When NOT to disaggregate?" → small scale / short prompts — added complexity loses.
+- "Walk me through where a token's latency goes." → queue wait → prefill (prompt_len × compute) → per-token decode (KV reload, HBM-bandwidth-bound) → detok/stream; know which stage each knob attacks: prefix cache→prefill, batching→throughput not latency, speculative→decode.
+- "How do you *benchmark* it?" → fixed workload traces (prompt/output length distributions from prod), report TTFT/TPOT p50/p99 at target QPS, sweep batch-size for the latency-throughput frontier; never a single number.
+- "Reasoning models change what?" → long autoregressive 'thinking' shifts the mix decode-heavy: KV grows for thousands of hidden tokens, TTFT-to-first-*visible*-token balloons → stream reasoning summaries, cap thinking budgets per tier, decode-optimized pools matter more.
 
 ## Related
 [[07-code-completion-serving-sub100ms]] · [[08-multi-model-inference-platform]] · [[D0-areas-map]] Area 2.

@@ -33,6 +33,8 @@ Typical: BM25 top-50 + dense top-50 → RRF → top-100 → cross-encoder rerank
 - *"Why RRF over weighted score fusion?"* → rank-based, no score calibration; robust. Weighted fusion works if you've calibrated scores.
 - *"Then rerank?"* → yes — RRF for recall, cross-encoder for precision (→ [[12-reranking]]).
 - *"Why k=60?"* → standard smoothing constant; dampens the influence of low ranks.
+- *"Learned sparse (SPLADE) vs BM25?"* → neural term-weighting with expansion — closes part of the paraphrase gap while keeping an inverted index; a third retriever to fuse where jargon dominates.
+- *"How do metadata filters interact with hybrid?"* → apply as pre-filter predicates *inside* both indexes (filtered ANN + filtered BM25), never post-filter — post-filtering after top-K silently destroys recall for narrow filters (same logic as ACL in [[llm-system-design/02-enterprise-search-acl]]).
 
 ## Pitfalls
 - Linearly adding a cosine (0–1) and a BM25 score (unbounded) without calibration → one dominates.

@@ -48,6 +48,10 @@ Silent quality regression with green dashboards · cost blowup undetected (retry
 - "Catch silent quality drops?" → quality-in-prod: sample + judge a stream; alert on faithfulness/feedback.
 - "Control cost?" → per-tenant token/cost attribution + spike alerts + budgets/circuit breakers.
 - "Ship a prompt safely?" → version it, canary, A/B with the regression gate, one-click rollback.
+- "Agent traces are 100× chat traces — what changes?" → hierarchical spans (task → steps → tool calls) with a trace tree, not a flat log; cost/latency roll up per level; sampling keeps *full* trajectories (a sampled 40% of steps is useless for replay) — sample at task granularity.
+- "What alerts page a human at 3am?" → cost-rate spike (agent loop, retry storm), error-rate on a provider, guardrail-block-rate spike (attack or regression), and *sustained* faithfulness drop; quality wobbles wait for morning — alert design = separating incidents from drift.
+- "Prompt/config drift across teams?" → central prompt registry with versions + owners + eval-gate status; the anti-pattern is prompts as inline strings in five services — you can't roll back what you can't enumerate.
+- "Unit economics dashboard?" → $/resolved-task (not $/request) per feature and tenant, trended across model swaps — the number the CFO and the staff engineer both need; requests hide agents that take 40 calls to finish.
 
 ## Related
 [[30-llm-gateway-router]] · [[18-llm-eval-harness]] (quality half) · [[D0-areas-map]] Area 8.

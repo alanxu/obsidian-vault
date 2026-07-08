@@ -37,6 +37,8 @@ The **Thought** makes the policy's reasoning explicit (better tool choice, debug
 - *"Why observation matters?"* → grounds the next reasoning step in real results → less hallucination than pure CoT.
 - *"ReAct vs CoT?"* → CoT reasons internally only; ReAct *acts* and *observes* between reasoning steps.
 - *"Stop it wandering?"* → planning + step caps + reflection + loop detection.
+- *"Is explicit Thought still needed with reasoning models?"* → o1/R1-style models internalize deliberation, so verbose ReAct-prompted 'Thought:' scaffolding matters less; the **Action→Observation grounding loop remains** — reasoning models still need tools and feedback, they just plan better between calls.
+- *"Parallel actions in ReAct?"* → classic ReAct is serial; modern function-calling emits **multiple tool calls per turn** for independent lookups — cuts latency roughly by the fan-out; keep observations order-stable in the history.
 
 ## Pitfalls
 - Describing ReAct as just "chain-of-thought" (it adds Act + Observe — the grounding).

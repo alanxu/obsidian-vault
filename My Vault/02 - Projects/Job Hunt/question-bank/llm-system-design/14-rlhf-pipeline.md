@@ -46,6 +46,9 @@ Preference data quality > quantity. KL coefficient tunes the helpfulness-vs-drif
 - "PPO or DPO?" → DPO by default (simpler, stable, no RM); PPO when you need control/exploration.
 - "Reward hacking?" → KL penalty, RM ensembles/freshness, human eval not RM score.
 - "Scale the human data?" → active sampling, RLAIF/Constitutional AI for cheap feedback, QC via IAA.
+- "RLVR / verifiable rewards?" → the 2025-26 shift: for math/code/agent tasks, replace the learned RM with **programmatic verifiers** (tests pass, answer checks) — no reward hacking of a proxy, enables o1/R1-style reasoning RL; the RM survives where 'good' isn't checkable (tone, helpfulness).
+- "Infra difference PPO vs SFT?" → PPO is a *serving+training hybrid*: policy generates online (inference engine) while training (trainer ranks), plus RM + reference model resident — 3–4 models in memory, generation usually the throughput bottleneck; that's why DPO's offline-only loop is operationally attractive.
+- "How much preference data?" → RMs train usably on ~50k–1M pairs; quality/diversity of *prompts* matters more than raw pair count; monitor RM accuracy on held-out pairs (~70–75% human-agreement ceiling — humans disagree with each other too).
 
 ## Related
 [[13-distributed-training-70b]] (the training infra) · [[26-data-labeling-pipeline]] (preference data) · [[D0-areas-map]] Area 4.

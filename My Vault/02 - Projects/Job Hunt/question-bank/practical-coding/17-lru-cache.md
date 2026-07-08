@@ -129,6 +129,9 @@ class LRUCache:
   - **Async** — async-safe variant with `asyncio.Lock`.
   - **Distributed cache** — shard by hash, gossip invalidations.
   - **Eviction policy alternatives** — FIFO, ARC, 2Q.
+  - **Cache stampede** — hot key expires, 1000 threads recompute simultaneously → per-key lock / single-flight (one computes, others wait), or probabilistic early refresh; the production follow-up behind "add TTL".
+  - **What breaks LRU in production?** → scans: one batch job touching a million keys evicts the entire hot set → scan-resistant policies (2Q/ARC/segmented LRU keep a probation segment); one sentence that turns the puzzle into systems judgment.
+  - **Sharded LRU for lock contention** — N independent LRU shards keyed by hash(key): global lock disappears, but LRU becomes approximate per-shard (eviction is no longer globally least-recent) — the concurrency-vs-exactness trade.
 - **Tips:**
   - **Ask if `OrderedDict` is allowed**; if not, hand-roll the DLL and narrate the pointer surgery.
   - For thread safety: name the lock (`threading.Lock`), say it's needed because of the read-modify-write.

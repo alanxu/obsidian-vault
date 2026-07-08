@@ -31,6 +31,8 @@ What's the difference between SFT and RLHF? Why does RLHF improve the user exper
 - *"DPO vs PPO?"* → DPO collapses RM+RL into one preference-optimization step — simpler, stabler, no separate RM (→ [[06-dpo]]).
 - *"Reward hacking?"* → policy games RM weaknesses (RM-score ↑ but human eval ↓) → KL penalty, RM ensembles/freshness, **evaluate with humans/judge, not RM score**.
 - *"RLAIF / Constitutional AI?"* → use AI feedback against a written constitution instead of human labels → cheaper, scalable.
+- *"How do you know RLHF worked?"* → **not** RM score (hackable): held-out human/judge **win rate vs the SFT baseline** + capability-regression evals (RLHF can tax reasoning/calibration — the "alignment tax").
+- *"Why not RL straight from the base model?"* → SFT first puts the policy in-distribution (instruction-following); RL from base is sample-inefficient and unstable — the stages are complementary, not alternatives.
 - The full pipeline / infra → [[llm-system-design/14-rlhf-pipeline]].
 
 ## Pitfalls

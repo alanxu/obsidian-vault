@@ -224,6 +224,9 @@ class Bank:
   - **Multi-currency / FX** — each account has a currency; conversion at transfer time.
   - **Audit log / replay** — append-only event log; full state rebuildable from log.
   - **Daily settlement file** — output all balances at end-of-day; tie into streaming.
+  - **Authorization holds (two-phase transfer)** — `hold(ts, id, amount) -> hold_id` reserves funds (available vs ledger balance split), then `capture`/`release`; the real card-payments model and a natural L5 — needs `available = balance − Σ holds`.
+  - **Overdraft policy** — allow negative to a limit with fee event scheduled? Shows you treat "reject on insufficient funds" as a policy choice, not a law.
+  - **Historical `top_spenders(ts, n, time_at)`** — ranking *as of a past time* needs outgoing history per account (same binary-search primitive as `get_balance`) — the composition interviewers escalate to.
 - **Tips:**
   - Narrate "I process events in time order via a heap, advanced on each op" — make the design audible.
   - Write a transfer + a `top_spenders` test and trace the output aloud.

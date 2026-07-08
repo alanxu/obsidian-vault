@@ -139,6 +139,8 @@ class KVStore:
   6. **TTL on values** — each value has an expiry; same `_active` logic as Q01 L3.
   7. **Range scan** — `scan(key, ts_start, ts_end)` returns the history in a window.
   8. **Memory compaction** — drop versions older than some horizon; rebuild on demand.
+  9. **`delete(key, ts)` semantics** — tombstone version (get_at before the delete still works) vs hard delete (history gone) — mirrors Q01's tombstone; interviewer wants you to *ask* which.
+  10. **Write-ahead durability** — append each `put` to the file *before* acking (fsync tradeoff), vs save-on-demand: crash-consistency question that bridges to the distributed bank.
 - **Tips:**
   - Get the **bisect right first**; verify with `put(a,1) put(a,2) put(a,3) get(a,1)` → 1.
   - For thread safety: **state the lock choice** (`RLock` for re-entrancy, `Lock` otherwise).

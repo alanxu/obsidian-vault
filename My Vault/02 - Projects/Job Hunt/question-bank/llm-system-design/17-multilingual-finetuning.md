@@ -46,6 +46,9 @@ High-resource languages dominating · low-resource overfitting · tokenizer unfa
 - "Uneven data?" → temperature/up-sampling to balance; exploit cross-lingual transfer.
 - "Know it works for all 50?" → per-language eval gates, not an aggregate.
 - "Tokenizer?" → balanced multilingual tokenizer; watch token-inflation cost for non-English.
+- "No eval data for 30 of the 50 languages?" → build it: translate a core eval set + native-speaker verification for the top tier; for the tail, use cross-lingual judge models calibrated against the verified tier + targeted native spot-checks — state the confidence difference between tiers honestly.
+- "Where does preference tuning fit?" → preferences are culture-specific (formality, directness, refusal style) — English preference data imposes English norms; collect per-locale preference pairs for major languages, or at minimum eval for norm-transfer damage.
+- "Code-switching users (Hinglish, Taglish)?" → real traffic mixes languages mid-sentence; naive per-language routing fails → include code-switched data in training + eval, don't treat languages as disjoint buckets.
 
 ## Related
 [[16-pretraining-data-pipeline]] · [[18-llm-eval-harness]] (per-language eval) · [[D0-areas-map]] Area 4.

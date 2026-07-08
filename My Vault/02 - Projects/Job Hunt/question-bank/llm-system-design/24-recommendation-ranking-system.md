@@ -48,6 +48,10 @@ Optimizing a proxy (clickbait) · feedback loop / filter bubble · cold start ·
 - "What objective?" → blend engagement + satisfaction + retention; beware clickbait from raw clicks.
 - "Cold start?" → content features + exploration.
 - "Real-time?" → streaming features + online ranking; A/B everything.
+- "Why does two-tower have no cross features, and what does it cost?" → user·item must factor into a dot product for ANN — no user×item interaction terms at retrieval; that's precisely what the ranking stage adds back (full cross-features), which is *why* the funnel has two stages and not one.
+- "Position bias in training data?" → users click what they see → log position, train with position as a feature (zeroed at serving) or IPW-debias; otherwise the ranker learns 'slot 1 is good' — same trap as [[25-ctr-ad-prediction]].
+- "LLMs in recsys (2026)?" → semantic IDs / LLM-embedded content features for cold start, LLM-generated user-interest summaries as features, and conversational recommendation on top; but the funnel architecture survives — LLMs feed it features, they don't replace ANN-at-millions.
+- "Watch-time optimization went wrong — debug the objective?" → symptom-check for degenerate maxima (long-video bias, autoplay farming); fix with per-impression normalized watch, satisfaction surveys as a calibration set, multi-task heads with retention as the north star.
 
 ## Related
 [[05-semantic-hybrid-search]] · [[25-ctr-ad-prediction]] · [[21-feature-store-realtime-serving]] · [[D0-areas-map]] Area 6.

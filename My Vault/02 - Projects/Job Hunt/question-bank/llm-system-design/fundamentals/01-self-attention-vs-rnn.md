@@ -35,6 +35,8 @@ Why is self-attention better than RNNs for large models? What is the time/space 
 - *"How does attention know token order?"* → it doesn't inherently; **positional encodings** (sinusoidal/RoPE/ALiBi) inject order.
 - *"How to beat O(n²)?"* → FlashAttention (same math, IO-aware, less HBM traffic — not lower complexity); sparse/linear attention; sliding-window; the KV cache (amortizes *decode*, → [[03-kv-cache]]).
 - *"GQA/MQA?"* → share K/V heads across query heads to shrink the KV cache, trading a little quality for big memory savings.
+- *"Are RNNs back (Mamba/SSMs, linear attention)?"* → state-space models get O(n) inference with recurrence + parallel training — attractive for long context; weakness is precise in-context recall (needle lookups) vs attention. Hybrid stacks (attention + SSM layers) are the pragmatic answer.
+- *"Where does the d in O(n²·d) come from?"* → QKᵀ is (n×d)·(d×n); at short n the O(n·d²) projections dominate — quadratic pain only kicks in when n ≫ d (thousands of tokens).
 
 ## Pitfalls
 - Saying attention is "faster" than RNN — it's more **parallel**, but **more expensive** per token (quadratic). Don't conflate the two.

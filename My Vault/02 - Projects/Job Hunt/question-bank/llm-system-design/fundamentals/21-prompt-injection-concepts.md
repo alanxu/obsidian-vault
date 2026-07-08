@@ -39,6 +39,8 @@ How do you detect prompt injection? How do you defend against it? How do you lim
 - *"Why no full fix?"* → instructions and data share one channel (the prompt); you can't perfectly separate them → contain impact instead.
 - *"Agent with DB write access — safe design?"* → least privilege + human-confirm writes + sandbox + audit + idempotent scoped calls.
 - *"Full system design?"* → [[llm-system-design/29-guardrails-prompt-injection]].
+- *"The lethal trifecta?"* → private-data access + untrusted content + an exfiltration channel: any two are survivable, all three in one agent context = data theft by design. Architect so no single context holds all three (policy: after reading private data, block external-posting tools).
+- *"MCP/tool-ecosystem angle?"* → tool *descriptions* and *results* from third-party servers are injection vectors too — review/pin server versions, provenance-tag tool output, filter at the gateway (→ [[llm-system-design/37-mcp-tool-platform]]).
 
 ## Pitfalls
 - Claiming a single defense "solves" injection (it can't — it's blast-radius limitation).

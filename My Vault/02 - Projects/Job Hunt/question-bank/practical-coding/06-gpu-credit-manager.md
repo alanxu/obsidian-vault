@@ -129,6 +129,8 @@ class GPUCreditManager:
   - **Distributed counter** — multi-node deployment; consistency story (leader-elected counter, CRDT, etc.). → Track C.
   - **Per-region budgets** — credits pinned to a region; cross-region allocation requires conversion.
   - **Burst / burstable quotas** — allow 2× the steady-state for short windows.
+  - **Same request_id, different args** — retry with `("r1", 50)` after `("r1", 30)`: cached-result blindly returned is wrong → idempotency key must bind the full request fingerprint; mismatch = error, not replay. The subtle idempotency probe.
+  - **allocate → use → release lifecycle** — split reservation from consumption (`commit(request_id)` converts allocated → spent); models real GPU billing (reserve at enqueue, bill at completion) and forces a 3-state machine.
 - **Tips:**
   - Implement idempotency with a `request_id → result` map and **narrate why** (network retries).
   - Separate `allocated` from `balance` in your data model — easy to conflate.

@@ -29,7 +29,9 @@ What is DPO, and how does it differ from PPO-based RLHF?
 ## Follow-ups
 - *"Where's the KL constraint in DPO?"* → implicit, via the **reference model** term (keeps the policy near the SFT model).
 - *"When still use PPO?"* → when you need online exploration, an explicit reward you can shape, or iterated/online preference collection.
-- *"DPO variants?"* → IPO, KTO, ORPO (different loss formulations / no-reference variants).
+- *"DPO variants?"* → IPO, KTO, ORPO (different losses / no-reference variants; KTO needs only good/bad labels, not pairs — much cheaper data).
+- *"Why can DPO underperform PPO at scale?"* → it's **offline/off-policy**: it optimizes on responses the current policy no longer generates, so data goes stale as the policy moves → **iterative/online DPO** (resample → re-label → retrain in rounds).
+- *"Known failure mode of the loss?"* → it can 'win' by pushing the **rejected** response's probability down rather than the preferred one up — chosen-logprob can actually fall; monitor it during training.
 
 ## Pitfalls
 - Saying DPO "has no reward model so it ignores preferences" — it **uses** the preference pairs directly; it just doesn't train a *separate* RM.

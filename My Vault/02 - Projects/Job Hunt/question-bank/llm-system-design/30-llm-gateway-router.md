@@ -48,6 +48,10 @@ Semantic-cache false positives (stale/wrong) · provider outage with no fallback
 - "Provider goes down?" → multi-provider fallback + circuit breaker + degrade to cached/smaller.
 - "Route smartly?" → classify difficulty → cheap default, escalate hard; route by capability.
 - "Cache safely?" → exact for identical; semantic with a high similarity threshold + monitoring.
+- "How does the difficulty classifier work and what if it's wrong?" → small model / heuristics (length, domain, code-detection, past-failure lookup) with ~10ms budget; misroutes show up as regeneration/thumbs-down on cheap-model answers → feed those back as router training data; keep an escalate-on-user-retry path so a misroute costs one bad answer, not a stuck user.
+- "Streaming through the gateway?" → SSE pass-through with token counting on the fly, mid-stream failover is ugly (provider dies at token 500 → restart on fallback and replay? dedupe by request-id, accept the latency hit) — mention that failover mid-generation is a design decision, not free.
+- "Semantic-cache design in depth?" → own card: [[35-semantic-caching]] (thresholds, false hits, invalidation).
+- "Data residency / compliance routing?" → routing is also a *policy* function: EU tenants → EU-region providers, no-training-clause providers for sensitive tenants, PII-detected requests pinned to self-hosted — the router is where compliance becomes enforceable code.
 
 ## Related
 [[06-llm-inference-serving-platform]] (the backends) · [[31-llm-observability-cost]] · [[D0-areas-map]] Area 8.

@@ -4,9 +4,9 @@ title: "Practical / OO Coding — Question Bank (canonical)"
 scope: "Self-contained practical/OO coding problems (master-plan Track B §3). Delivery-channel-agnostic. 34 files: multi-level ICA + Anthropic live bank + LeetCode Design warm-ups + agentic primitives."
 location: "Under `/question-bank/practical-coding/` (the umbrella question-bank folder)."
 related: ["[[track-B-practical-oo-coding/practical-oo-coding-deep-guide]]", "[[track-G-take-homes/README]]", "[[interview-prep-master-plan-2026]]", "[[openai-interview-guide]]", "[[anthropic-interview-guide]]", "[[cohere-interview-guide]]"]
-count: 35
+count: 40
 created: 2026-06-16
-updated: 2026-06-18 (all files enriched with full prompts, code, follow-ups, pitfalls, tips)
+updated: 2026-07-08 (audit fill — added 36–40; see [[question-bank/README]] §Audit & evidence. Prior: 2026-06-18 enrichment)
 ---
 
 # Practical / OO Coding — Question Bank
@@ -45,6 +45,7 @@ One object, 3–6 escalating levels, never break earlier levels.
 | 09 | [[09-cd-directory-navigation]] | — | Live | OpenAI | |
 | 10 | [[10-api-log-parser-token-aggregator]] | — | Live, Take-home | OpenAI | |
 | 11 | [[11-infection-spread-grid]] | 994-like | OA·GCA/HR, Live | OpenAI, general | |
+| 38 | [[38-dag-task-scheduler]] *(2026-07 fill)* | 210-like | Live, Take-home, Onsite·NR | OpenAI (reported), Anthropic, Databricks | ⭐ |
 
 ## Tier 2 — Anthropic live bank
 | # | Question | LC | Formats | Companies | ⭐ |
@@ -54,6 +55,7 @@ One object, 3–6 escalating levels, never break earlier levels.
 | 14 | [[14-exclusive-execution-time]] | 636 | Live, OA·GCA/HR | Anthropic | ⭐ |
 | 15 | [[15-duplicate-file-detection]] | 609 | Live, Take-home | Anthropic | ⭐ |
 | 35 | [[35-sliding-window-rate-limiter]] | — | Live, OA·GCA/HR | Anthropic (phone screen), Stripe, Cloudflare | ⭐ |
+| 36 | [[36-tokenizer-encode-decode]] *(2026-07 fill)* | — | Live, Code-review | Anthropic (reported: tokenize/detokenize review + streaming) | ⭐ |
 
 > *Agentic questions moved to their own **Tier 4** below. #35 is the general `should_allow` rate limiter (digested from an Anthropic case study); #23 is the simpler #359 logger variant.*
 
@@ -73,6 +75,7 @@ One object, 3–6 escalating levels, never break earlier levels.
 | 27 | [[27-encode-decode-tinyurl]] | 535 | OA·GCA/HR, Live | General / SD-lite | |
 | 28 | [[28-memory-allocator]] | 2502 | OA·GCA/HR, Live | NVIDIA-adjacent, general | |
 | 29 | [[29-range-module]] | 715 | OA·GCA/HR, Live | General | |
+| 40 | [[40-text-editor-buffer]] *(2026-07 fill)* | 2296 | Live, Onsite·NR | Anysphere/Cursor (reported), general | |
 
 > **#981 Time-Based KV** is folded into **07** (it's the LeetCode form of the same problem); see that file.
 
@@ -87,8 +90,10 @@ One object, 3–6 escalating levels, never break earlier levels.
 | 32 | [[32-streaming-response-handler]] | Live, Take-home | Anysphere, OpenAI, Anthropic | |
 | 33 | [[33-conversation-memory-manager]] | Live, Take-home | Anthropic, OpenAI | |
 | 34 | [[34-multi-agent-orchestration]] | Live, Whiteboard | agent-platform cos (also D3) | |
+| 37 | [[37-streaming-json-parser]] *(2026-07 fill)* | Live, Take-home | Anysphere/Cursor (reported), OpenAI, Anthropic | ⭐ |
+| 39 | [[39-llm-request-batcher]] *(2026-07 fill)* | Live, Take-home | Anthropic (reported), Fireworks, Together | ⭐ |
 
-> Numbering: 16 predates this tier; 30–34 added 2026-06-16. The six together are the agentic group.
+> Numbering: 16 predates this tier; 30–34 added 2026-06-16; 36–40 added 2026-07-08 (audit fill). The agentic group is now eight.
 
 ## Excluded (and why)
 - **Pure algorithmic** (top-k decoding, longest-substring, binary-string reduction, streaming top-k): Track A. Even when a coding round uses them, they're not "build a stateful object."

@@ -46,6 +46,10 @@ Point-in-time joins are *the* training-data correctness lever. Online reads must
 - "Avoid train/serve skew?" → single feature definition serving both stores; share transform code.
 - "Point-in-time correctness?" → as-of joins; never join future feature values to past labels.
 - "Freshness?" → streaming vs batch *per feature*, from the requirement.
+- "How do you *detect* skew you failed to prevent?" → log the features actually used at inference, replay the offline pipeline on the same entities/timestamps, diff distributions per feature (PSI/KS) — an automated parity audit, because shared-code parity still breaks via version lag and backfill bugs.
+- "Streaming aggregate correctness (late/out-of-order events)?" → event-time windows + watermarks, not processing-time; decide per feature whether late events revise the value or are dropped — and make training reconstruction follow the *same* policy or you've rebuilt skew in the offline store.
+- "Embeddings in the feature store?" → treat them as versioned features: model-version in the key, dual-write on upgrades, point-in-time applies (the embedding a model trained on, not today's) — bridges to [[23-embedding-pipeline-incremental]].
+- "On-demand features (computable only at request time)?" → e.g. distance-from-last-login: compute in a serving-side transform that's *also* registered/shared with training generation — the sneakiest skew source because it never touches either store.
 
 ## Related
 [[22-realtime-fraud-detection]] · [[24-recommendation-ranking-system]] · [[D0-areas-map]] Area 6.

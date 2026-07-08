@@ -30,6 +30,8 @@ A **chatbot** is a single-turn (or multi-turn) **text→text** function: prompt 
 - *"When NOT to use an agent?"* → if a fixed pipeline (retrieve→generate) solves it, do that — agents add cost + failure modes. Use agents when the path is **dynamic/unknown**.
 - *"How does the model call a tool?"* → typed tool schemas (function calling / **MCP**); validate args, dispatch, feed back the observation (→ [[practical-coding/30-function-calling-tool-handler]]).
 - *"Biggest agent challenge?"* → **reliability**, not capability (compounding error → [[16-agent-loops-and-control]]).
+- *"Workflow vs agent (Anthropic's distinction)?"* → workflow = LLM calls composed through **predefined code paths** (routing, chaining, parallelization); agent = the **LLM directs its own** process and tool usage. Most production 'agents' should be workflows — cheaper, testable, predictable.
+- *"What's the spectrum, not the binary?"* → autonomy is a dial: fixed chain → router → tool-using single-turn → bounded loop → open-ended agent. Pick the *lowest* autonomy that solves the task; each notch adds eval and safety burden.
 
 ## Pitfalls
 - Calling any LLM-with-RAG an "agent" — RAG is a fixed pipeline; an agent *decides* when/which to retrieve.

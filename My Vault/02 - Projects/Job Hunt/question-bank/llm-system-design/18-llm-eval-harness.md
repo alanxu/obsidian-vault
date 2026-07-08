@@ -48,6 +48,10 @@ Judge bias treated as truth · eval-set leak into training (contamination) · of
 - "Retrieval or generation broken?" → decompose: Recall@k isolates retrieval, faithfulness isolates generation.
 - "Trust LLM-judge?" → only after calibrating to humans; monitor judge drift.
 - "Ship a new model version?" → regression suite + canary + A/B before full rollout.
+- "Eval an *agent*, not a chat response?" → different problem: end-state task success (did the ticket resolve, do tests pass) + trajectory metrics (steps, cost, tool-error rate) + replayable environments; pass@k over stochastic runs — a single-response harness undersells you at agent shops.
+- "Evals are green but users complain — debug the harness itself?" → the eval set drifted from prod traffic (distribution mismatch), the judge is miscalibrated, or the metric saturated → periodically re-seed the golden set from *fresh* traffic and re-audit judge-human agreement; treat the harness as a system with its own failure modes.
+- "Who owns eval sets in a multi-team org?" → platform owns the harness + judge calibration; each product team owns its golden set with review like code (eval-set PRs); shared regression suites for cross-team dependencies (model upgrades). Ownership is the actual hard part at staff level.
+- "Statistical rigor on small sets?" → paired tests on identical inputs, bootstrap CIs, and honesty about detectable effect size — 200 samples can't confirm a 2% gain ([[fundamentals/20-prompt-regression-and-drift]] has the power math).
 
 ## Related
 [[20-llm-as-judge-system]] · [[19-ab-experimentation-platform]] · [[D0-areas-map]] Area 5.

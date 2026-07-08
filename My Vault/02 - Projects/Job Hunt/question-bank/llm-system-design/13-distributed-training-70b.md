@@ -48,6 +48,10 @@ Stragglers stalling sync all-reduce · node failure losing hours (→ checkpoint
 - "1000 GPUs, one dies?" → distributed checkpointing + auto-restart + elastic; bound lost work.
 - "Bottleneck?" → identify memory vs comms vs bubble vs data-loading; pick the parallelism mix accordingly.
 - "MoE?" → expert parallelism; more capacity/FLOP but routing/load-balance complexity.
+- "How do you know training is *healthy* at step 200k?" → watch loss vs a scaling-law-predicted curve (not just 'decreasing'), grad-norm spikes, per-layer activation stats, and MFU; a silent data-loader skew or fp8 overflow shows in these long before loss diverges.
+- "What's MFU and what's good?" → Model FLOPs Utilization = achieved FLOPs ÷ peak; well-tuned large runs hit ~40–55%; below ~30% you're comms-bound or input-bound — it's *the* single-number health metric for the infra.
+- "Checkpoint math?" → 70B ≈ 1+ TB of state; at 10 GB/s effective write that's ~2 min stalled per sync checkpoint → async/sharded checkpointing, and cadence from MTBF: with 10k GPUs failing ~daily-per-fleet, checkpoint every ~30–60 min bounds lost work to acceptable %.
+- "Loss spike at 3am — what do you do?" → automated: grad-clip + skip batch; if diverging: rollback to last checkpoint, skip the offending data shard (log it for forensics), optionally lower LR — the playbook must be automatic, humans are asleep.
 
 ## Related
 [[16-pretraining-data-pipeline]] · [[14-rlhf-pipeline]] · [[D0-areas-map]] Area 4.

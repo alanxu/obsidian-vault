@@ -47,6 +47,12 @@ ACL leak (the cardinal sin) · stale permissions after revocation · connector r
 - "Respect Slack + Salesforce ACLs simultaneously?" → normalize to a principal model; intersect at query.
 - "Real-time freshness?" → webhooks/change-feeds + incremental upsert; tombstone on delete.
 - "Someone loses access mid-session?" → short-TTL membership cache + query-time re-check.
+- "Group expansion is expensive — a user in 500 nested groups?" → precompute flattened membership offline (transitive closure), cache per-user principal set with TTL + event-driven invalidation on group change; query filter is then one set-intersection, not a graph walk.
+- "How do you *test* zero-leak?" → adversarial eval set: (user, doc-they-must-NOT-see) pairs per connector; run on every index/ranking change as a hard CI gate — treat like a security regression suite, not a quality metric.
+- "RAG answer synthesized from 5 docs — what ACL does the answer have?" → intersection: every source doc must be visible to the requester *at generation time*; cache answers keyed by principal-set, never share across users with different access.
+
+## Numbers
+Connector fan-out: 10–100+ SaaS apps · ACL metadata often 10–30% of index size · membership cache TTL 1–5 min (leak window vs lookup cost) · webhook lag: Slack seconds, Drive minutes, some connectors poll-only (hours) — state per-connector freshness SLAs, not one number.
 
 ## Related
 [[01-rag-with-citations]] (retrieval core) · [[D0-areas-map]] Area 1 + §3 (ACL cross-cutting).

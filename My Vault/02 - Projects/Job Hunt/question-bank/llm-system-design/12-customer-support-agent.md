@@ -48,6 +48,10 @@ Unauthorized/incorrect account action · hallucinated policy · prompt injection
 - "When to escalate?" → confidence + sensitive-topic detection → human with context.
 - "Stop it inventing policy?" → RAG-grounded + abstain; never answer un-retrieved.
 - "Fintech compliance?" → audit every action, human-in-loop for money movement, ACL on account data.
+- "How do you measure *deflection* honestly?" → resolution ≠ user-gave-up: count resolved only if no reopen/human-contact within N days + CSAT sample; deflection-rate-maxxing creates rage-quits that look like wins — name the metric gaming risk.
+- "Multi-turn state (user changes topic mid-flow)?" → explicit dialog state (active workflow, filled slots, pending confirmation) outside the transcript; on topic switch, park the workflow and confirm resumption — don't let a refund flow silently die because the model chatted.
+- "Adversarial users ('you promised me a refund — see above')?" → transcript is untrusted input: policy checks against the *actual* account/policy records, never the model's memory of the conversation; social-engineering red-team suite in the eval gate.
+- "Voice channel?" → same brain, new constraints: latency ≤1s turn, barge-in, ASR-error tolerance on entities → [[34-realtime-voice-agent]].
 
 ## Related
 [[09-agent-platform]] · [[01-rag-with-citations]] · [[D0-areas-map]] Areas 3 + 7.

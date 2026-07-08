@@ -47,6 +47,10 @@ Latency blowing the auth budget · feedback-loop bias (blocked frauds never labe
 - "Labels are delayed?" → train on delayed + weak labels; manage feedback-loop bias.
 - "Set the threshold?" → cost of FP vs FN (business), per-segment, with step-up auth.
 - "Fraudsters adapt?" → drift monitoring + frequent retrain + champion/challenger.
+- "Graph features — why and how fast?" → fraud rings share devices/cards/addresses; degree/community features are top predictors but expensive → precompute graph aggregates near-real-time (streaming upserts to the feature store), full graph algorithms offline nightly; know which features tolerate staleness.
+- "Extreme class imbalance (1:10³–10⁴)?" → PR-AUC not ROC-AUC (ROC flatters at imbalance), score calibration so thresholds mean something, downsample negatives at train + reweight — and per-segment metrics, because aggregate hides that new-account fraud recall is terrible.
+- "Model explains a decline?" → regulatory + support reality: reason codes from the model (top features/SHAP-lite) logged per decision; a pure black box fails compliance review in fintech — say this before being asked at Robinhood/Stripe.
+- "Cold start on a new fraud pattern?" → rules bridge the gap (analyst writes a rule today, model learns it in weeks), which is *the* argument for the hybrid rules+ML architecture — rules are the fast path for adversarial novelty.
 
 ## Related
 [[21-feature-store-realtime-serving]] · [[D0-areas-map]] Area 6.

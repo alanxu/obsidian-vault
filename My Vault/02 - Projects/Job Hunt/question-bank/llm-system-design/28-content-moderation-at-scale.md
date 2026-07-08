@@ -48,6 +48,10 @@ Missing high-harm content (recall failure) · over-blocking (precision failure /
 - "Thresholds?" → asymmetric per category from harm cost (CSAM recall ≫ precision), not F1.
 - "Evasion?" → robust/multi-modal features + continual retraining.
 - "Latency?" → inline for severe categories, async review elsewhere.
+- "Moderating LLM *outputs* vs user content — what changes?" → you're policing your own model: streaming means checking partial text (classify incrementally, cut the stream on violation), and the model can be *induced* to violate (jailbreaks) → moderation + jailbreak-resistance are coupled systems, tie to [[29-guardrails-prompt-injection]].
+- "Cross-language fairness?" → classifier quality is wildly uneven across languages → per-language eval slices, native-labeled data for major locales, and honest degraded-tier handling (escalate more where the cheap model is weak) — aggregate metrics hide that Tagalog recall is 30 points lower.
+- "Policy changes weekly — how does the system keep up?" → policy-as-versioned-artifact: policy text drives labeling guidelines + few-shot prompts + eval sets together; on change, re-label a delta set, re-gate, re-ship — moderation is a *policy compiler*, not a static classifier.
+- "Reviewer wellbeing as a design constraint?" → blur/limit graphic exposure, rotation caps, model-first triage of the worst content — mention it unprompted; it's a real ops cost and an values signal at Anthropic.
 
 ## Related
 [[29-guardrails-prompt-injection]] · [[18-llm-eval-harness]] · [[D0-areas-map]] Areas 7 + 5.

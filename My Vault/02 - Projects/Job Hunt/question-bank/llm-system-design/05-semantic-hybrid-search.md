@@ -45,6 +45,12 @@ Vocabulary mismatch (pure dense) · exact-ID misses · stale index · feedback l
 - "Dense or sparse?" → hybrid + RRF; dense for paraphrase, sparse for exact tokens/IDs.
 - "Personalize?" → user/context features into the stage-2 ranker; careful with cold start.
 - "Type-ahead <100ms?" → prefix structure + cache + lightweight ranker.
+- "Where does the training data for LTR come from?" → clicks with **position-bias correction** (inverse propensity weighting or randomization buckets) — raw clicks teach the ranker to reproduce the current ranking, not relevance.
+- "Query understanding layer?" → spell-correct → intent/category classify → entity extraction → (optional) LLM rewrite for tail queries; head queries skip straight to cache. Tail is where semantic retrieval earns its keep — head queries are memorized anyway.
+- "Filters + ANN (price < $50, in-stock)?" → pre-filtered ANN (filter-aware HNSW / partitioned indexes), never post-filter top-k — narrow filters silently empty your results (same principle as ACL in [[02-enterprise-search-acl]]).
+
+## Numbers
+Two-stage economics: ANN+BM25 over 10⁸ items ~20–50ms → 500 candidates → LTR ~10–20ms → top 20 · type-ahead: <100ms end-to-end, so trie/FST + cache only (no ANN in the hot path) · index refresh: full nightly + incremental upserts ([[23-embedding-pipeline-incremental]]).
 
 ## Related
 [[01-rag-with-citations]] · [[24-recommendation-ranking-system]] (same retrieve-then-rank) · [[23-embedding-pipeline-incremental]].

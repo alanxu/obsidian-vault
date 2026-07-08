@@ -37,6 +37,8 @@ Use offline as a **regression gate**, online as the final arbiter.
 - *"Trust LLM-as-judge?"* → only after calibrating vs a human-audited sample; control length/position bias (→ [[llm-system-design/20-llm-as-judge-system]]).
 - *"Detect hallucination automatically?"* → claim-vs-source **entailment** (NLI/judge); flag uncited claims.
 - *"Ship a new embedder?"* → run Recall@k offline + online A/B before rollout.
+- *"Real regression or noise on a 100-sample eval?"* → (reported Cohere probe) — paired comparison on the *same* queries + significance test (bootstrap/McNemar); 100 samples detect only large deltas → grow the set or accept wide error bars; never ship/block on a 2% wiggle.
+- *"Eval multi-turn RAG?"* → per-turn faithfulness plus conversation-level task success; retrieval queries depend on rewritten context, so eval the query-rewriter as its own stage (three-layer decomposition).
 
 ## Pitfalls
 - A single end-to-end score that hides whether retrieval or generation is at fault.

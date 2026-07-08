@@ -47,6 +47,10 @@ Trillion-token scale → distributed dedup (MinHash/LSH). Data quality > quantit
 - "Ensure quality?" → dedup (exact+near) + quality classifier + decontaminate; quality > quantity.
 - "Avoid contamination?" → remove eval-set overlap before training; track provenance.
 - "Don't starve the GPUs?" → tokenize/shard/prefetch pipeline; measure loader throughput vs consumption.
+- "How do you *choose* the data mixture?" → not by vibes: train small proxy models on candidate mixtures, extrapolate via scaling laws, and weight domains by downstream-eval marginal value (code and math punch above their token share); mixture is a tuned hyperparameter with its own eval loop.
+- "Synthetic data in the mix?" → increasingly yes (textbooks-style, rephrased web, reasoning traces) — but guard against model-collapse feedback loops (training on your own outputs) with provenance tags + caps on synthetic fraction + freshness of the generator.
+- "Dedup at trillion-token scale — actual mechanics?" → MinHash signatures per doc → LSH banding to bucket candidates → union-find clusters → keep one per cluster; embarrassingly parallel map stages + one giant shuffle — it's a classic big-data join, say it in those terms.
+- "Multi-epoch or fresh data?" → repeating data degrades quality measurably after ~4 epochs (diminishing then negative returns) — another reason dedup + acquiring fresh sources matters more than pipeline micro-optimizations.
 
 ## Related
 [[13-distributed-training-70b]] · [[26-data-labeling-pipeline]] (labeled/preference data) · [[D0-areas-map]] Areas 4 + 6.

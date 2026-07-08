@@ -32,6 +32,8 @@ So long context is **expensive and has diminishing/negative returns** — which 
 - *"Long context vs RAG — when which?"* → RAG for large/fresh/changing corpora + citability; long context for a single document/coherent reasoning where retrieval would fragment it.
 - *"How do models extend context (RoPE scaling)?"* → position interpolation / NTK-aware scaling + continued training; quality often drops at the extreme.
 - *"Cut long-context cost?"* → GQA/MQA (smaller KV), paged attention, prefix caching, chunked prefill.
+- *"How do you measure long-context quality?"* → needle-in-a-haystack is necessary-but-weak (pure lookup); RULER-style multi-needle/aggregation tasks expose the real gap — **effective context < advertised**, degrading gradually ("context rot"), not at a cliff.
+- *"Million-token windows exist — is RAG dead?"* → no: you pay the whole window per call (cost + latency scale with tokens), and freshness/ACL/citability still need retrieval. Long context raises the RAG cutoff; it doesn't remove it.
 
 ## Pitfalls
 - Claiming "bigger context = better" — ignores cost and lost-in-the-middle.

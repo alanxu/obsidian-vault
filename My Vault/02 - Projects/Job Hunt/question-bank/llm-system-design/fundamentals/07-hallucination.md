@@ -35,6 +35,8 @@ Why do LLMs hallucinate? How do you reduce hallucination in production?
 - *"Detect hallucination?"* → claim-vs-source **entailment** (NLI/LLM-judge); flag uncited claims; track faithfulness; user feedback.
 - *"Retrieval miss vs generation error?"* → decompose: Recall@k isolates retrieval, faithfulness isolates generation; fix the layer the metric indicts.
 - *"High-stakes domain?"* → block unverified claims, mandatory abstention, span-level audit trail (→ [[llm-system-design/04-legal-document-qa]]).
+- *"Does scale fix it?"* → bigger models hallucinate less but never to zero — the objective still rewards plausibility, and better fluency makes the remaining errors *more* convincing; verification matters more as models improve, not less.
+- *"Uncertainty-based detection?"* → sample k answers, check agreement (self-consistency / semantic entropy): disagreement flags low-confidence claims cheaply with no external source — complements, doesn't replace, entailment checks.
 
 ## Pitfalls
 - Claiming a single fix ("just use RAG") — RAG with a retrieval miss still hallucinates. It's layered.

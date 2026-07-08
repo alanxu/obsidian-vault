@@ -47,6 +47,12 @@ Confident wrong answer (liability) · missed material clause · hallucinated cit
 - "Errors have legal liability — how?" → verify every claim, abstain on low confidence, span-level audit trail.
 - "100k-page doc?" → clause chunking + small-to-big + retrieval (not whole-doc stuffing).
 - "High precision, low false positive on clauses?" → standard-clause library + classifier + threshold by review cost.
+- "Legal reasoning needs cross-references ('as defined in Section 2.1')?" → resolve defined terms and internal references at parse time into a document graph; retrieval pulls the clause *plus* its definitions — a clause alone is often legally meaningless.
+- "Lawyer disagrees with the model — who wins?" → the lawyer, always; capture the correction as labeled data, feed the golden set, and track model-vs-expert agreement over time as the trust metric that earns autonomy.
+- "Tables and scanned exhibits in filings?" → layout-aware parse + OCR fallback; extraction discipline from [[36-structured-output-extraction]]; charts/figures → [[38-multimodal-document-rag]].
+
+## Numbers
+Matter corpus: 10³–10⁵ docs, single contracts to 100k-page discovery sets · clause library: 10²–10³ standard clauses · precision bar on flags ≥0.9 (each FP costs lawyer minutes; each FN is unpriced risk — say the asymmetry) · expert labels $$$ → golden set hundreds, not tens of thousands.
 
 ## Related
 [[01-rag-with-citations]] · [[29-guardrails-prompt-injection]] (governance) · [[D0-areas-map]] Areas 1 + 7.

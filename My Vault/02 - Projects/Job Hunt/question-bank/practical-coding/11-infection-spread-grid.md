@@ -121,6 +121,8 @@ def grid_after_k(grid, k):
   - **Multiple end-states** — return minutes-to-each-cell instead of just max.
   - **Animation / render** — `grid_at_time(t)` to support playback.
   - **Reverse** — given a final grid, find all possible initial configurations.
+  - **"Where should we place k vaccines/walls to save the most cells?"** — the optimization flip: greedy by saved-count with re-simulation, or BFS from each candidate; exact optimal is exponential — say greedy + why it's a heuristic.
+  - **Incremental updates** — "cells get cured / new infections appear between queries" → re-running BFS per query vs maintaining distances (hard: BFS invalidation) — a good discussion of when recompute-from-scratch is honestly better.
 - **Tips:**
   - **Narrate why multi-source BFS** — all sources advance together.
   - **State the −1 condition** explicitly before coding.

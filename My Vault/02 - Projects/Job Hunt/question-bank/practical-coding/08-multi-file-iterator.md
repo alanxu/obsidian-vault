@@ -165,6 +165,8 @@ class AsyncMultiFileIterator:
   - **Encoding handling** — `open(path, "r", encoding="utf-8")` + `errors="replace"`.
   - **Cancellation** — `__anext__` checks a `cancel_event` between yields.
   - **Stats** — `lines_yielded`, `files_skipped`, `bytes_read`.
+  - **Merge instead of concatenate** — "files are each sorted by timestamp; yield globally sorted" → k-way merge with a heap of (line_key, file_idx); the classic escalation from iterator to merge-iterator (LC 23 in disguise).
+  - **Why not just a generator function?** → `yield`-based version is 5 lines but can't do `get_state`/`set_state` (generator state isn't serializable) — the class exists *because* of resumability; saying this unprompted shows you know both forms.
 - **Tips:**
   - Implement the iterator protocol **cleanly** so resumable/async bolt on without rewrite.
   - **Clarify "skip empty" semantics** at L1 — three plausible interpretations.

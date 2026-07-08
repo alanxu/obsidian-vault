@@ -47,6 +47,9 @@ Bias (length/position/self-preference) treated as truth · judge drift on model 
 - "Trust the judge?" → calibrate vs human sample; monitor drift; control biases.
 - "Reduce bias?" → pairwise + order-swap, length control, different judge family, CoT-then-score.
 - "Cost?" → cheap judge for bulk + frontier for spot-check + cache.
+- "When does LLM-judge fundamentally break?" → (reported Cohere probe) when judging exceeds the judge's own competence: deep domain correctness (medicine, law, niche code), subtle factuality the judge can't verify, and anything adversarially optimized *against* the judge — for those, tier up to humans/experts or programmatic verifiers; a judge can check *groundedness to a source* far more reliably than *truth*.
+- "Jury over judge?" → ensemble of 3+ diverse smaller judges + majority/mean beats one frontier judge on bias and cost (Cohere-style result); disagreement rate itself is a useful uncertainty signal → route high-disagreement cases to humans.
+- "Judge score inflation over time?" → outputs optimize toward the judge (direct or indirect Goodhart) → freeze a judge version per experiment, track judge-human agreement quarterly, rotate rubrics/anchors when agreement decays.
 
 ## Related
 [[18-llm-eval-harness]] (the harness that uses it) · [[D0-areas-map]] Area 5.

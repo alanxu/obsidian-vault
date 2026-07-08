@@ -46,6 +46,9 @@ related: ["[[01-rag-with-citations]]", "[[05-semantic-hybrid-search]]", "[[D0-ar
 - "Model upgrade?" → offline rebuild + dual-write + cut over; never mix versions.
 - "Daily updates?" → change-feed → re-embed changed docs → upsert; tombstone deletes.
 - "100M docs?" → batched GPU embed, quantize, shard, checkpoint the backfill.
+- "Cost of the migration itself?" → 800M chunks × ~500 tok ≈ 4×10¹¹ tokens; at API pricing that's real money (~$40k at $0.1/M) vs self-hosted GPU-days — quantify before promising 'just re-embed'; this is why teams skip embedder upgrades longer than they should.
+- "HNSW updates degrade over time?" → heavy upsert/delete churn fragments the graph and recall decays → periodic segment rebuild/compaction (Lucene-style merge policies); monitor recall-vs-groundtruth on a probe set as the index-health metric.
+- "Chunk IDs stable across re-chunking?" → content-hash IDs break on any edit; positional IDs break on insertion → use doc_id + semantic-anchor (heading path) + hash for drift detection; stable IDs are what make upserts idempotent and citations durable.
 
 ## Related
 [[01-rag-with-citations]] (consumer) · [[05-semantic-hybrid-search]] · [[D0-areas-map]] Area 6.

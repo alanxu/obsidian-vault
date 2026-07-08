@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "500f4365ac41a28d",
+        "id": "4d0b469752e9959b",
         "type": "tabs",
         "children": [
           {
-            "id": "4f09cc69f755d401",
+            "id": "66648ceebb760a33",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "02 - Projects/Job Hunt/question-bank/llm-system-design/03-web-answer-engine.md",
+                "file": "02 - Projects/Job Hunt/question-bank/llm-system-design/38-multimodal-document-rag.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "03-web-answer-engine"
+              "title": "38-multimodal-document-rag"
             }
           }
         ]
@@ -176,12 +176,11 @@
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 5
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -195,43 +194,43 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "4f09cc69f755d401",
+  "active": "66648ceebb760a33",
   "lastOpenFiles": [
+    "02 - Projects/Job Hunt/plans/question-bank-audit-2026-07-08.md",
+    "02 - Projects/Job Hunt/question-bank/llm-system-design/38-multimodal-document-rag.md",
+    "02 - Projects/Job Hunt/question-bank/llm-system-design/25-ctr-ad-prediction.md",
+    "02 - Projects/Job Hunt/question-bank/llm-system-design/fundamentals/25-multimodal-embeddings.md",
+    "02 - Projects/Job Hunt/question-bank/practical-coding/40-text-editor-buffer.md",
+    "02 - Projects/Job Hunt/question-bank/practical-coding/39-llm-request-batcher.md",
+    "02 - Projects/Job Hunt/question-bank/practical-coding/38-dag-task-scheduler.md",
+    "02 - Projects/Job Hunt/question-bank/practical-coding/37-streaming-json-parser.md",
+    "02 - Projects/Job Hunt/question-bank/practical-coding/36-tokenizer-encode-decode.md",
+    "02 - Projects/Job Hunt/question-bank/llm-system-design/fundamentals/24-structured-outputs.md",
+    "02 - Projects/Job Hunt/question-bank/llm-system-design/fundamentals/23-mcp-a2a.md",
+    "02 - Projects/Job Hunt/question-bank/llm-system-design/fundamentals/22-prompt-caching.md",
+    "02 - Projects/Job Hunt/question-bank/llm-system-design/37-mcp-tool-platform.md",
+    "02 - Projects/Job Hunt/question-bank/llm-system-design/36-structured-output-extraction.md",
+    "02 - Projects/Job Hunt/inbox-digest-playbook.md",
+    "02 - Projects/Job Hunt/question-bank/llm-system-design/35-semantic-caching.md",
+    "02 - Projects/Job Hunt/question-bank/llm-system-design/34-realtime-voice-agent.md",
+    "02 - Projects/Job Hunt/question-bank/llm-system-design/33-deep-research-agent.md",
+    "02 - Projects/Job Hunt/plans/interview-prep-master-plan-2026.md",
+    "02 - Projects/Job Hunt/question-bank/llm-system-design/32-llm-memory-system.md",
+    "02 - Projects/Job Hunt/plans/practical-coding-tools-platforms-2026-06-16.md",
+    "02 - Projects/Job Hunt/question-bank/llm-system-design/10-autonomous-coding-agent.md",
+    "02 - Projects/Job Hunt/question-bank/llm-system-design/03-web-answer-engine.md",
     "02 - Projects/Job Hunt/track-D-ml-llm-system-design/D0-areas-map.md",
     "02 - Projects/Job Hunt/track-E-ml-llm-fundamentals/README.md",
     "02 - Projects/Job Hunt/question-bank/practical-coding/33-conversation-memory-manager.md",
-    "02 - Projects/Job Hunt/question-bank/practical-coding/30-function-calling-tool-handler.md",
-    "02 - Projects/Job Hunt/question-bank/practical-coding/34-multi-agent-orchestration.md",
-    "02 - Projects/Job Hunt/question-bank/practical-coding/16-minimal-agent-loop.md",
-    "02 - Projects/Job Hunt/question-bank/practical-coding/02-banking-system.md",
-    "02 - Projects/Job Hunt/source-code/02-banking-system/README.md",
     "02 - Projects/Job Hunt/source-code/02-banking-system/test_banking_system.py",
     "02 - Projects/Job Hunt/source-code/02-banking-system/banking_system.py",
     "02 - Projects/Job Hunt/source-code/02-banking-system",
     "02 - Projects/Job Hunt/source-code",
-    "02 - Projects/Job Hunt/question-bank/practical-coding/01-in-memory-key-value-database.md",
-    "02 - Projects/Job Hunt/question-bank/practical-coding/05-expiring-credit-ledger.md",
-    "02 - Projects/Job Hunt/question-bank/practical-coding/07-versioned-time-based-kv-store.md",
-    "02 - Projects/Job Hunt/question-bank/practical-coding/06-gpu-credit-manager.md",
     "02 - Projects/Job Hunt/source-code/01-in-memory-key-value-database/__pycache__/in_memory_db.cpython-310.pyc",
     "02 - Projects/Job Hunt/source-code/01-in-memory-key-value-database/__pycache__",
-    "02 - Projects/Job Hunt/source-code/01-in-memory-key-value-database/README.md",
     "02 - Projects/Job Hunt/source-code/01-in-memory-key-value-database/test_in_memory_db.py",
     "02 - Projects/Job Hunt/source-code/01-in-memory-key-value-database/in_memory_db.py",
     "02 - Projects/Job Hunt/source-code/01-in-memory-key-value-database",
-    "02 - Projects/Job Hunt/plans/practical-coding-tools-platforms-2026-06-16.md",
-    "02 - Projects/Job Hunt/coding-practice/problems/demo-xyz/test_solution.py",
-    "02 - Projects/Job Hunt/coding-practice/problems/demo-xyz/PROBLEM.md",
-    "02 - Projects/Job Hunt/coding-practice/problems/_template/PROBLEM.md",
-    "02 - Projects/Job Hunt/coding-practice/problems/in-memory-db/PROBLEM.md",
-    "02 - Projects/Job Hunt/coding-practice/README.md",
-    "02 - Projects/Job Hunt/question-bank/llm-system-design/31-llm-observability-cost.md",
-    "02 - Projects/Job Hunt/question-bank/practical-coding/35-sliding-window-rate-limiter.md",
-    "02 - Projects/Job Hunt/question-bank/llm-system-design/fundamentals/README.md",
-    "02 - Projects/Job Hunt/question-bank/llm-system-design/fundamentals/21-prompt-injection-concepts.md",
-    "02 - Projects/Job Hunt/question-bank/llm-system-design/fundamentals/20-prompt-regression-and-drift.md",
-    "02 - Projects/Job Hunt/question-bank/llm-system-design/fundamentals/19-multi-agent.md",
-    "02 - Projects/Job Hunt/question-bank/llm-system-design/fundamentals/18-agent-memory.md",
-    "02 - Projects/Job Hunt/question-bank/llm-system-design/fundamentals/17-react.md"
+    "02 - Projects/Job Hunt/coding-practice/problems/demo-xyz/test_solution.py"
   ]
 }

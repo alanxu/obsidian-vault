@@ -198,6 +198,8 @@ class CloudStorage:
   - **Compression** — `add_file(name, content) -> name`; on dedupe, count saved bytes.
   - **Pagination** — `get_n_largest(prefix, n, page)` for very large result sets.
   - **Migration** — move a user's files to another user with progress tracking.
+  - **Restore vs later merges** — "backup u1, merge u2 into u1, restore u1 — what happens to u2's files?" → forces you to define whether restore rewinds ownership or only u1's original files; there's no right answer, only a *stated* one — the probe tests spec discipline.
+  - **`get_n_largest` called 1000× more than writes?** → flip the structure: maintain a per-prefix sorted index (or SortedList keyed (−size, name)) and pay at write time — the read/write-ratio question generalizes to every query method.
 - **Tips:**
   - Narrate the **two-map design** (files vs users).
   - **Clarify merge semantics** (capacity sum? file overwrite? rename?) — different specs change the implementation.

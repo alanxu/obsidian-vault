@@ -46,6 +46,10 @@ Latency spikes from large context assembly · cold model load · cache invalidat
 - "Sub-100ms?" → small GPU-resident model + prefix cache on open file + speculative decoding + tight context.
 - "100k-file repo context?" → index (embeddings + symbol graph), retrieve a small relevant slice, precompute/cache.
 - "Cancellation?" → debounce + cancel-previous; design tools to be cheap to abort.
+- "How do you *eval* completion quality?" → offline: exact/prefix match on held-out repos + compilation/type-check rate; online the real KPI is **acceptance rate** (and chars-retained-after-30s — accepted-then-deleted is a false positive). Latency and acceptance trade against each other; plot both.
+- "Fill-in-the-middle vs left-to-right?" → completions need *suffix* context (the code after the cursor) → FIM-trained models (prefix+suffix→middle); without FIM the model duplicates code that already exists below the cursor.
+- "Privacy for proprietary code?" → on-prem/self-hosted tier, no-retention API contracts, client-side context filtering (secrets/keys never leave editor), per-org model isolation if fine-tuning on their code.
+- "Edit-prediction ('tab-tab-tab') vs completion?" → next-*edit* prediction is a different task: model sees recent edit history + cursor, predicts a diff; tighter latency budget, trained on edit sequences, not code corpus.
 
 ## Related
 [[06-llm-inference-serving-platform]] (Area 2 base) · [[10-autonomous-coding-agent]] (the agent half) · [[D0-areas-map]] Areas 2+3.

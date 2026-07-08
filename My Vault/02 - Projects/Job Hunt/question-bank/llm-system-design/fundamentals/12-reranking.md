@@ -29,6 +29,8 @@ The first stage (bi-encoder + ANN, or BM25) embeds query and document **independ
 - *"Latency?"* → reranking is often the 2nd-biggest online cost after the LLM; cache hot queries, distill a smaller reranker, or cap N.
 - *"Which reranker?"* → bge-reranker, Cohere Rerank, Jina — pick by Recall@k on your corpus.
 - *"Late interaction (ColBERT)?"* → token-level multi-vector; middle ground between bi- and cross-encoder (more storage, better quality).
+- *"LLM-as-reranker?"* → prompt an LLM to score/listwise-rank candidates — strongest quality, highest cost/latency; practical as a distillation teacher for a small cross-encoder rather than in the hot path.
+- *"When does reranking NOT help?"* → when stage-1 recall is the bottleneck (gold chunk not in the candidate set — reranker can't rank what isn't there) or candidates are near-duplicates; measure Recall@50 before buying precision.
 
 ## Pitfalls
 - Trying to run a cross-encoder over the whole corpus (intractable — it's a *second* stage).

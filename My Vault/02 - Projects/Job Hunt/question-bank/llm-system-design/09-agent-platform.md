@@ -49,6 +49,10 @@ Compounding errors · context overflow / lost-in-the-middle · infinite loops ·
 - "Make it reliable?" → verify each step, constrain tools, retries+reflection, replayable traces, trajectory eval.
 - "Multi-agent worth it?" → only for genuinely parallel/specialized subtasks; default single-agent + tools.
 - "Security?" → treat tool outputs as untrusted; sandbox; least privilege; human-confirm destructive actions.
+- "What does the platform give a team that a raw agent loop doesn't?" → the platform answer: shared tool registry + auth ([[37-mcp-tool-platform]]), trace store + replay, eval harness + regression gates, cost metering/quotas, guardrail policies — teams bring a prompt and tools, platform owns reliability. If you only describe one agent's loop, you've answered the wrong question.
+- "How do you *debug* a bad trajectory?" → replay from the trace with pinned model/prompt versions; bisect the first bad step; counterfactual re-run from that step with a fix. Non-determinism means you invest in replay tooling like classic infra invests in debuggers.
+- "Durable execution for long tasks?" → checkpoint agent state (plan, memory, pending calls) to a store; crash/deploy → resume, not restart; idempotency keys on world-changing tools make resume safe.
+- "Model upgrade breaks agents?" → agents are *more* version-sensitive than chat (tool-call formats, loop behavior) → shadow-run the new model on recorded trajectories + agent-eval suite before cutover, per-agent canary.
 
 ## Related
 [[practical-coding/16-minimal-agent-loop]] (code the loop) · [[10-autonomous-coding-agent]] · [[11-multi-agent-system]] · [[D0-areas-map]] Area 3.

@@ -104,6 +104,8 @@ def cd(current_dir, change, soft_links=None, home="/home/user", max_depth=32):
   - **Permissions / access checks** — reject if segment isn't readable.
   - **Glob expansion** — `cd /foo/*` resolves all matching dirs (advanced).
   - **Validate input** — reject paths with NUL bytes, `..` segments in non-traversal context (security).
+  - **Path-traversal security framing** — "an agent's file tool calls this — how do you jail it?" → resolve *first*, then check the result is under the sandbox root (`resolved.startswith(jail + '/')`); checking before resolution is bypassable via `..` and symlinks — the agent-tool skin of this question is rising at AI shops.
+  - **`realpath` vs `normpath` semantics** — normpath collapses `a/b/../c` textually (wrong across symlinks: `b` may be a link, so `..` doesn't undo it); your resolver is realpath-like — knowing the difference is the depth signal.
 - **Tips:**
   - **Narrate the stack approach** — say "I'll keep a list of path components, and process one segment at a time."
   - **Enumerate the special segments** (`.`, `..`, `~`, `""`) **before coding**. This is the signal.

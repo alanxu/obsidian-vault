@@ -37,6 +37,8 @@ Why do agents get stuck in loops? How do you bound an agent's behavior? What's t
 - *"Detect a stuck agent?"* → repeated action / no state change / step cap + progress check.
 - *"Why does reliability matter more than model IQ?"* → 0.95^10 ≈ 0.6 → per-step verification beats a slightly smarter model.
 - *"Plan-then-execute vs ReAct?"* → predictable-but-brittle vs flexible-but-wanders (→ [[17-react]]).
+- *"Does the compounding math actually hold?"* → it assumes independent, unrecoverable errors — the point of **verification + retry/reflection** is to break both assumptions: a detected error becomes a retry, not a failure, so effective per-step reliability rises above raw model reliability. That's *why* verification beats a smarter model.
+- *"Checkpoint/resume for long tasks?"* → persist state at plan boundaries (sub-task done + artifacts); on crash or bad step, resume from last good checkpoint instead of restarting — turns a 60%-success 10-stepper into near-reliable batches.
 
 ## Pitfalls
 - No step/budget cap (runaway loops + cost — the classic production incident).

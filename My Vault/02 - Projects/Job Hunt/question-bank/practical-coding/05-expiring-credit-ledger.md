@@ -120,6 +120,8 @@ class CreditLedger:
   - **Cap vs reject on overdraw** — when `use_credit` exceeds available, do you cap (use what's there) or reject (return false)?
   - **Time-range query** — "credits that expire between ts_a and ts_b".
   - **Concurrency** — multiple writers; lock or per-user mutex.
+  - **Retroactive event changes history** — "the late `use_credit` at ts=5 makes an *already-answered* `balance(ts=8)` wrong — is that OK?" → name it: event-sourced systems give *eventual* read consistency on retroactive writes; if answered queries must stay valid, you need a compensation/adjustment event instead — this is exactly bitemporal accounting, and saying so is the staff move.
+  - **Snapshot + replay-suffix optimization** — checkpoint state every K events; `balance(ts)` = nearest snapshot ≤ ts + replay of the suffix; but a late event *before* a snapshot invalidates it → snapshot invalidation is the follow-up's follow-up.
 - **Tips:**
   - **Ask early:** "Can events arrive out of order?" Most interviewers say yes; some say no. Your trade-off framing only lands if you ask.
   - **Name the eager-vs-replay trade-off out loud** before coding. Mention memory vs compute.

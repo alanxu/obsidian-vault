@@ -47,6 +47,10 @@ Adapter cache thrash on cold tenants · cross-tenant data leak in training · a 
 - "Serve many fine-tunes cheaply?" → one base + LoRA adapter multiplexing; hot resident, cold cached.
 - "Per-customer isolation?" → data isolation in training, per-tenant quotas + ACL on adapters, residency.
 - "LoRA vs full?" → LoRA for cost/density; full only when quality demands deep change.
+- "Batching across adapters — how does that work?" → S-LoRA/punica-style: base-model matmuls batch normally; per-request adapter deltas applied via gathered/batched LoRA kernels — tenants share one forward pass. Without this, per-adapter batches fragment and utilization dies; it's the key serving trick, name it.
+- "Base model upgrade with 5,000 live adapters?" → adapters are coupled to base weights: keep old base serving, auto-retrain/re-eval adapters against the new base (customer data permitting), migrate per-tenant on green evals, deprecate on a timeline — a fleet migration problem, not a flag flip.
+- "Customer data quality is garbage — whose problem?" → the platform's: ingestion validation (format, dedup, contamination against their own eval split), auto-generated eval set from held-out data, and a 'your fine-tune did not beat the base model' report — refusing to ship a regression is a feature.
+- "GDPR delete for a tenant?" → delete training data, adapters, *and* eval artifacts + any cached generations; adapters are derived data — provenance tracking makes the purge provable.
 
 ## Related
 [[08-multi-model-inference-platform]] (serving) · [[13-distributed-training-70b]] (training infra) · [[D0-areas-map]] Area 4.

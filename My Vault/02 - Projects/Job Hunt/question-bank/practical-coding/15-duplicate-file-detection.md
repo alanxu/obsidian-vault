@@ -160,6 +160,8 @@ def dedupe_hardlinks(duplicate_groups):
   - **Symlinks** — don't follow (avoid cycles); or follow with `--follow` flag.
   - **Memory pressure** — at 1M files, the index is ~hundreds of MB; spill to disk.
   - **Error handling** — file disappears between stat and read; permission denied; long paths.
+  - **Near-duplicate detection** — "95% identical files (logs with one extra line)?" → exact hashing fails by design → chunk-level dedup (fixed or content-defined chunking / rolling hash, rsync-style) or similarity sketches (MinHash) — a different problem family; naming CDC is the depth signal.
+  - **TOCTOU on the dedupe step** — file modified between hash and hard-link → re-verify (size+mtime or rehash) immediately before linking, or link-then-verify; the race is small but the data loss is real.
 - **Tips:**
   - **Lead with the funnel** and **why** (avoid hashing unique-size files).
   - **Handle `OSError` gracefully** — file vanished, permission denied. Don't crash.

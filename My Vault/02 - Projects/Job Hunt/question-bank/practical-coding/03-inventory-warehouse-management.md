@@ -171,6 +171,8 @@ class Warehouse:
   - **Merge two warehouses** — dedupe by `(name, attrs)`; capacity sum.
   - **Concurrency** — multi-worker picker; `threading.Lock` or per-location locks.
   - **Bulk move** — transactional move of N items at once.
+  - **Reservations with timeout** — `reserve(item, ts, ttl)` holds an item for a checkout flow; expired reservations release capacity lazily (the [[02-banking-system]] `_advance` pattern reappears).
+  - **Attribute index maintenance** — after adding "query by attribute," probe: what happens on `update_item`? → the inverted index must be updated transactionally with the item (delete-old-entry bugs are the trap).
 - **Tips:**
   - **Clarify the exact suffix scheme up front** by asking "if I copy `apple` then copy `apple.dupe`, what should I get?" — silence here = wrong answer.
   - Narrate the counter approach; mention that you only scan when the counter is invalid.

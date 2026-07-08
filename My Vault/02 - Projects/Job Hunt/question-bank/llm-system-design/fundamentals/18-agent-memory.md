@@ -34,6 +34,8 @@ What are short-term and long-term memory in an agent? How do you implement agent
 - *"Long context vs memory retrieval?"* → retrieval scales better and is cheaper than stuffing everything (→ [[02-context-window-limits]]).
 - *"What to remember?"* → importance/utility, not everything; summarize; avoid memory bloat.
 - *"Implement it in code?"* → [[practical-coding/33-conversation-memory-manager]] (token-budget truncation + summary buffer).
+- *"Memory as attack surface?"* → memory poisoning: injected text gets *written* to long-term memory and re-injected forever after — sanitize on write, keep provenance, treat recalled memories as data, not instructions (→ [[21-prompt-injection-concepts]]).
+- *"Full production design (write path, contradictions, deletion)?"* → [[llm-system-design/32-llm-memory-system]] — the design-round version of this concept.
 
 ## Pitfalls
 - Dropping the system prompt / latest user turn when truncating.

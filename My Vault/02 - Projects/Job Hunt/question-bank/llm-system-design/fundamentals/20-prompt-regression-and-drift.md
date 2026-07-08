@@ -33,6 +33,8 @@ The core problem: **quality regresses silently** — no error, no exception, jus
 - *"How do you *know* a new model version is safe to ship?"* → regression suite + canary + online A/B before full rollout.
 - *"Green dashboards but users unhappy?"* → latency/error SLOs miss quality → add **quality-in-prod** monitoring (sample + judge).
 - *"Roll back?"* → versioned prompts/models/indexes + one-click rollback (minutes).
+- *"Provider deprecates your model version?"* → forced migration is a scheduled drift event: re-run the full suite on the successor early, budget prompt re-tuning time (prompts overfit to a model), and keep a second provider integration warm as fallback.
+- *"How big must the golden set be to catch an X% regression?"* → power math, not vibes: detecting a 5-point drop at 95% confidence needs several hundred paired samples; small sets only catch collapses — say this before quoting suite results.
 
 ## Pitfalls
 - Monitoring only latency/errors (silent quality regression slips through).

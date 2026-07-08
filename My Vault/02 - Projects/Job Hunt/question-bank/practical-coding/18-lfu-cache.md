@@ -109,6 +109,7 @@ class LFUCache:
   - **Persistent / distributed** — Redis-style cluster with sharded freq tables.
   - **Window-LFU** — keep last N accesses only; bounded memory.
   - **Per-key cost** — some keys are more expensive to recompute; weight by cost.
+  - **Why do real systems rarely use exact LFU?** → new items enter at freq 1 and are instantly evicted before proving themselves (no admission grace), and history never ages without decay → production uses TinyLFU (frequency sketch + admission filter, e.g. Caffeine) or LRU variants; naming this shows systems taste beyond the puzzle.
 - **Tips:**
   - **Narrate the freq-bucket structure** before coding.
   - **Reset `min_freq = 1` on every new insert** — common slip.
@@ -138,9 +139,9 @@ put(2, 2)        # freq: {1:1, 2:1}, min=1
 get(1)           # freq: {1:2, 2:1}, min=1
 put(3, 3)        # evict: lowest freq = 1, oldest in that bucket = key 2
                  # freq: {1:2, 3:1}, min=1
-get(3)           # freq: {1:2, 3:2}, min=1
-put(4, 4)        # evict: lowest freq = 1, oldest in bucket = key 1
-                 # freq: {3:2, 4:1}, min=1
+get(3)           # freq: {1:2, 3:2}; bucket-1 empties → min=2
+put(4, 4)        # evict from min_freq=2 bucket: oldest there = key 1 (bumped before 3)
+                 # freq: {3:2, 4:1}, min=1 (new insert resets)
 ```
 
 ## Related

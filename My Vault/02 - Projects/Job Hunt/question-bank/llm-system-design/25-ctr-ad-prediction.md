@@ -47,6 +47,9 @@ Miscalibration (breaks the auction economics) · feedback loop (shown ads get cl
 - "Billions of sparse IDs?" → embeddings + hashing + sharded param server.
 - "Drift?" → online/continual training on recent data; monitor calibration + log-loss.
 - "Position bias?" → model position as a feature / debias.
+- "How do you *measure* calibration?" → reliability diagram + expected calibration error, sliced by segment (new ads, small advertisers) — global calibration with per-slice miscalibration still misprices the tail; recalibrate per-slice or add slice features.
+- "Delayed clicks (conversion arrives hours later)?" → naive online training labels recent impressions negative-then-flips → delayed-feedback modeling (importance weighting, fake-negative correction) — the CTR-specific version of fraud's label-latency problem.
+- "Exploration in ads?" → new ads have no history and the feedback loop starves them → explicit exploration budget (ε or Thompson on pCTR uncertainty) priced against short-term revenue loss; without it the marketplace ossifies.
 
 ## Related
 [[24-recommendation-ranking-system]] · [[21-feature-store-realtime-serving]] · [[D0-areas-map]] Area 6.

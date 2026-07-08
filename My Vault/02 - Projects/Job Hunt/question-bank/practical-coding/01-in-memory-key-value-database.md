@@ -213,6 +213,9 @@ class InMemoryDB:
   - **Compaction** — at L4 you'll see memory grow; offer to drop expired versions on snapshot or under a memory threshold.
   - **Snapshot the whole history** vs **diff against previous backup** — bandwidth / I/O trade-off.
   - **Bulk imports** — `multi_set(keys, fields)` transactional semantics (all or nothing).
+  - **Out-of-order timestamps** — the spec guarantees monotonic `ts`; if the interviewer drops that guarantee, `append` breaks the sorted invariant → `bisect.insort` (O(V) worst) or sort-on-read; *ask* whether ts is monotonic before assuming.
+  - **Prefix scan at scale** — sort-per-scan is O(F log F) every call; for millions of fields offer a sorted container (`SortedDict`) or trie ([[22-add-search-word-trie]]) for O(prefix + k) scans.
+  - **Memory cap / eviction** — bound total records with LRU eviction on top ([[17-lru-cache]] composed with this) — the "what if it grows forever" answer beyond compaction.
 - **Tips:**
   - State the version-list interface **before** writing code; draw the data structure on the shared doc.
   - Write 2–3 test calls and **narrate** the expected output as you go.

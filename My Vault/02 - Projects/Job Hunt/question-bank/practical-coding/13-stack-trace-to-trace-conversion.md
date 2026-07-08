@@ -129,6 +129,8 @@ def stable_events(samples, n=3):
   - **Visualization** — render as a flamegraph (rectangles per frame, width = time).
   - **Streaming** — yield events as samples arrive, not at the end.
   - **Hash-cons frames** — use a stable integer id per frame name to save memory.
+  - **What does sampling fundamentally miss?** → anything shorter than the sample interval (a 1ms call between 10ms samples never appears), and a frame present in two consecutive samples may have exited-and-reentered between them — the events you emit are a *plausible reconstruction*, not truth. Saying this shows you understand sampling profilers, which is the question's real subject.
+  - **Sampling vs instrumented tracing** — samples: cheap, statistical, misses short calls; instrumentation: exact start/end but overhead + skew. This conversion bridges the two representations — one sentence of context that frames the whole problem.
 - **Tips:**
   - **Work a tiny example by hand first** (2–3 samples) — the LCP rule emerges from writing it out.
   - **Narrate** "bigger prev ⇒ ends, bigger new ⇒ starts" while coding.

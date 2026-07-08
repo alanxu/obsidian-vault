@@ -46,6 +46,9 @@ Peeking → false positives · interference between variants · novelty effect m
 - "Significance with noisy ML output?" → effect size + CI + sequential tests + guardrails; pre-register metric.
 - "Recsys interference?" → cluster/geo randomization; watch network effects.
 - "Roll out a new model safely?" → offline gate → canary → A/B with guardrail auto-stop → full.
+- "What's sample-ratio mismatch and why is it the first check?" → observed split ≠ configured split (e.g. 48/52 on huge N) means assignment/logging is broken — every downstream number is invalid; automate an SRM test on every experiment readout.
+- "LLM products: what's the primary metric even?" → explicit thumbs are sparse/biased → use behavioral proxies (regeneration rate, copy/accept rate, session continuation, task completion) validated against periodic human eval; pre-register *which* proxy before launch or you'll pick the one that flatters the variant.
+- "Interleaving for ranking changes?" → mix results from both rankers in one list and count wins — same-user comparison kills between-user variance, 10–100× more sensitive than A/B for search/recsys; the follow-up trap is that it doesn't measure absolute business impact.
 
 ## Related
 [[18-llm-eval-harness]] (offline half) · [[24-recommendation-ranking-system]] · [[D0-areas-map]] Area 5.
