@@ -102,6 +102,8 @@ class FileSystem:
   - **Watch** — pub/sub on path changes.
   - **Find** — `find(prefix)` — recursive walk.
   - **Persistence** — serialize the tree.
+  - **Content as one string breaks at scale** — `content += chunk` is O(existing) per append (string immutability) → list-of-chunks joined on read, or block storage (fixed-size blocks + index) once "seek/read N bytes" appears; the append-performance probe is the most common escalation here.
+  - **Hard links** — two paths, one content node → separate the *name tree* (dentries) from *content nodes* (inodes) with refcounts; one sentence of real-FS vocabulary (inode vs dentry) reframes your whole design as informed, not improvised.
 - **Tips:**
   - **One `Node` class with a children dict** — uniform code path.
   - **A single `_walk(path, create=False)` helper** powers every op.

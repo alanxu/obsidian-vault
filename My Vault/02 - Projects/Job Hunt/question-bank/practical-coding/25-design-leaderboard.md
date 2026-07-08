@@ -98,6 +98,8 @@ class Leaderboard:
   - **Score decay** — old scores count less; weighted by recency.
   - **Tournament-style** — elimination brackets, head-to-head.
   - **Distributed** — shard players; aggregate top per shard, then global top.
+  - **`rank(playerId)` at scale is the real question** — sorted list gives O(log U) via index; Redis ZRANK does exactly this; for millions of players, approximate rank via score-histogram buckets (count players above score s) is the production dodge — exact global rank is expensive, say when approximation is acceptable.
+  - **Score updates are deltas, not sets** — with a SortedList you must remove-old-then-insert-new (can't update in place); forgetting the remove leaves ghost entries — the #1 implementation bug in Approach C.
 - **Tips:**
   - **Discuss the heap-vs-sorted-structure trade-off** based on read/write mix.
   - For rank: `(score, playerId)` tuple with a stable tie-break (playerId asc).

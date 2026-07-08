@@ -111,6 +111,8 @@ class ToolHandler:
   - **Argument redaction** — log call without sensitive args; redact keys marked `secret: true`.
   - **Tracing** — emit a span per dispatch with timing + error class.
   - **Async dispatch** — same interface but `async def dispatch` for async tools.
+  - **Output-size discipline** — a tool returning 2MB of JSON floods the context → truncate/paginate at the handler (`max_result_tokens` per tool, "result truncated, use page=2"), don't trust tools to self-limit; the context-economy angle interviewers increasingly probe.
+  - **MCP framing** — this handler is what an MCP *client* does (discovery→validate→dispatch across servers); if the interviewer says MCP, map registry→`tools/list`, dispatch→`tools/call`, and add the trust boundary (third-party server output is untrusted → [[../llm-system-design/37-mcp-tool-platform]]).
 - **Tips:**
   - **Return errors as data the model can act on** — never `raise` out of dispatch.
   - Keep the **registry + dispatch tiny and testable**; resist feature creep.

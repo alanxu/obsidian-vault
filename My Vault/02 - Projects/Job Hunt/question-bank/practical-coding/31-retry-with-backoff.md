@@ -88,6 +88,9 @@ def with_retry(fn, *,
   - **Observability** — log every retry with attempt #, sleep duration, error class.
   - **Token budget interaction** — if the retry also costs tokens, total budget may be exceeded.
   - **Poison pill** — a request that will always fail; retries just waste time. Detect and bail.
+  - **Retry amplification in layered systems** — agent retries × gateway retries × SDK retries = 3×3×3 = 27 calls from one user action → retry at **one** layer (usually the outermost that owns the semantics), pass a retry-budget header down; the staff-level answer to "where do retries live?"
+  - **LLM-specific: is a *bad answer* retryable?** → distinguish transport failures (retry identical) from quality failures (retry with *changed* prompt/temperature — that's reflection, [[16-minimal-agent-loop]], not this wrapper); blurring the two double-spends tokens.
+  - **Hedged requests** — for latency (not errors): fire a second identical request after p95 delay, take the first response, cancel the loser — costs ~5% extra calls, cuts tail latency; only for idempotent reads.
 - **Tips:**
   - **Separate retryable vs fatal errors explicitly** — different exception types is clearest.
   - **Mention jitter up front** — explains the design before they ask.

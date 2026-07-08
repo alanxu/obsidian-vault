@@ -111,6 +111,8 @@ class RangeModule:
   - **Multi-dimensional** — rectangles instead of intervals.
   - **Lazy propagation** — for segment tree.
   - **Streaming** — process intervals as they arrive.
+  - **Booking-system skin** — "reserve [start, end) if fully free" = `queryRange`-then-`addRange` as one atomic op (`bookRange`); the calendar/meeting-room reskin (LC 729–731) is how this actually gets asked at product companies.
+  - **Boundary-map alternative** — store sorted boundary points with open/close markers instead of interval pairs; simpler removes, trickier queries — knowing two representations lets you pick per operation mix.
 - **Tips:**
   - **Draw the intervals**; narrate the merge-on-add and split-on-remove cases explicitly.
   - For multi-dimensional: interval tree or R-tree.
@@ -142,8 +144,9 @@ query(8, 10)     # False (8 not covered, 10 starts a new interval)
 remove(4, 6)     # splits [1,8) → [(1,4), (6,8)]
                  # intervals: [(1, 4), (6, 8), (10, 12)]
 query(2, 5)      # False (4 to 5 not covered)
-query(5, 6)      # False
-query(5, 7)      # True (covered by [6, 8))
+query(5, 6)      # False (5 is in the removed gap [4,6))
+query(5, 7)      # False (5 not covered — [6,8) starts at 6)
+query(6, 8)      # True (exactly [6, 8))
 ```
 
 ## Related

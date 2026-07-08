@@ -116,6 +116,8 @@ class RandomizedCollection:
   - **Snapshot** — serialize state for persistence.
   - **Range sample** — `getRandomRange(k)` — sample k distinct elements; reservoir sampling.
   - **Concurrent set** — multiple writers, eventual consistency.
+  - **Why not `random.choice(list(my_set))`?** → the conversion is O(n) per call — the whole point is avoiding it; also `set` iteration order isn't uniform-random. Interviewers plant this as the naive baseline; dismiss it with the complexity argument.
+  - **Weighted random in depth** — prefix-sum array + `bisect` is O(log n) per sample but O(n) on weight *update*; the **alias method** gives O(1) sampling after O(n) build (static weights); for dynamic weights, a Fenwick tree gives O(log n) both — pick by mutation rate.
 - **Tips:**
   - **Narrate why list + map** gives O(1) random (contiguous array) vs a set (no O(1) random).
   - For weighted: accept `weight` on insert; prefix-sum on query.

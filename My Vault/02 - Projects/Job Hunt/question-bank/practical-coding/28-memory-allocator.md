@@ -154,6 +154,8 @@ class Allocator:
   - **Garbage collection** — mark-and-sweep, refcount.
   - **NUMA-aware** — pin allocations to memory locality.
   - **Huge pages** — large contiguous blocks for databases/ML.
+  - **GPU/KV-cache framing (AI shops)** — PagedAttention is exactly this problem: fixed-size pages kill *external* fragmentation at the cost of *internal* (last page half-used) — if interviewing at an inference shop, connect allocator → paged KV cache unprompted ([[../llm-system-design/06-llm-inference-serving-platform]]).
+  - **Internal vs external fragmentation** — define both (waste inside a block vs unusable holes between) and which each strategy trades: buddy = internal, first-fit = external, pages = internal-bounded; interviewers reward the precise vocabulary.
 - **Tips:**
   - **Start with the array**, then offer the free-list/interval upgrade and **coalescing** on free.
   - Mention the alignment requirement (often 8 or 16 bytes).

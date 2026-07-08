@@ -5,7 +5,7 @@ scope: "Rapid-fire 'explain X' concept questions for AI-eng interviews. One enri
 source_seed: "Anthropic 100-question bank (Notion inbox, ChatGPT share, 2026-06-19)"
 related: ["[[llm-system-design/README]]", "[[track-D-ml-llm-system-design/D0-areas-map]]", "[[track-E-ml-llm-fundamentals/README]]", "[[plans/anthropic-oa-vs-onsite]]"]
 created: 2026-06-19
-updated: 2026-07-08 (audit fill — added Part 7 cards 22–24; see [[question-bank/README]] §Audit & evidence)
+updated: 2026-07-10 (enrichment pass: all 21 original cards gained 2–3 interviewer-extension follow-ups). Prior: 2026-07-08 Part 7 fill; see [[question-bank/README]] §Audit & evidence
 status: building (Part 1 done; Parts 2–6 in progress; Part 7 done)
 ---
 

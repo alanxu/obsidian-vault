@@ -91,6 +91,8 @@ class Agent:
   - **Eval / observability** — log every step; compute success rate, steps-per-task, cost-per-task → Track D5.
   - **Reflection / self-critique** — after a final answer, ask the model to check itself; loop back if not satisfied.
   - **Plan-then-execute** — separate "make a plan" step from "execute each step" steps.
+  - **Context assembly per turn** — what exactly goes into `policy(history)` at step 30? Full transcript is wrong (cost + window) → compressed state: system + plan + recent turns + summarized older ([[33-conversation-memory-manager]]); asking "what's my context policy" unprompted is a 2026 differentiator.
+  - **Pause/resume (durable agent)** — serialize `(history, budgets, seen)` so the loop can survive a restart or await human approval mid-task; needs idempotent tools on resume — the durable-execution probe.
 - **Tips:**
   - **Mock the model** so it runs; `policy = lambda h: next_action` is enough.
   - Build the 3 stops + loop guard **first**; happy path is trivial.

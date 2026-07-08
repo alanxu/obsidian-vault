@@ -80,6 +80,8 @@ class UndergroundSystem:
   - **Persistence** — serialize the totals map.
   - **Real-time tracking** — current location of in-flight passengers; add to inflight map.
   - **Cancellation** — `cancel(id)` clears inflight without contributing to totals.
+  - **Double check-in (retry or forgot to check out)** — overwrite silently loses the first session; policy choices: reject, overwrite + count as abandoned, or auto-close at max-duration — the "what does a dangling session mean" question is the same as web-analytics session timeout.
+  - **Running average vs storing trips — when does it break?** → the moment they ask for median/p95 or time-windowed stats, the O(1) `[sum, count]` is insufficient → per-pair reservoir sample or t-digest bounds memory while answering percentiles; name the upgrade path before they force it.
 - **Tips:**
   - **The in-flight + totals pattern** — say it once and it generalizes.
   - Mention it generalizes to **session/metrics tracking**.

@@ -81,6 +81,8 @@ For the coding round, the **blackboard** is enough. Mention the bus as the produ
   - **Hierarchical** — a coordinator of coordinators (tree of agents).
   - **Cyclic dependencies** — agents depending on each other's outputs.
   - **Eval** — measure which agent composition succeeds most often.
+  - **Typed handoff contract** — replace free-text state with a schema per handoff (researcher emits `{claims: [...], sources: [...]}`) → validation at each hop catches drift early; the structured-outputs discipline ([[../llm-system-design/fundamentals/24-structured-outputs]]) applied between agents.
+  - **DAG execution under the hood** — fixed role-chains are a linear DAG; "writer needs researcher AND fact-checker" makes the coordinator exactly [[38-dag-task-scheduler]] with agents as tasks — say the reduction, then reuse that machinery (parallelism, skip-cascade on failure).
 - **Tips:**
   - **Reuse the single-agent loop** per role — don't reinvent.
   - **Make handoff explicit** — return `next_role` from `step`.

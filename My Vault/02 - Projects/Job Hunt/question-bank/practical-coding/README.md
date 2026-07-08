@@ -6,7 +6,7 @@ location: "Under `/question-bank/practical-coding/` (the umbrella question-bank 
 related: ["[[track-B-practical-oo-coding/practical-oo-coding-deep-guide]]", "[[track-G-take-homes/README]]", "[[interview-prep-master-plan-2026]]", "[[openai-interview-guide]]", "[[anthropic-interview-guide]]", "[[cohere-interview-guide]]"]
 count: 40
 created: 2026-06-16
-updated: 2026-07-08 (audit fill — added 36–40; see [[question-bank/README]] §Audit & evidence. Prior: 2026-06-18 enrichment)
+updated: 2026-07-10 (enrichment pass: all 35 pre-audit cards gained escalation follow-ups + production probes; 2 trace errors fixed in 18/29). Prior: 2026-07-08 audit fill 36–40; see [[question-bank/README]] §Audit & evidence; 2026-06-18 enrichment
 ---
 
 # Practical / OO Coding — Question Bank

@@ -125,6 +125,8 @@ class Codec:
   - **QR code generation** — for the short URL.
   - **Bulk encode** — paste a list, get a list.
   - **Privacy** — long URL may contain sensitive query params; warn the user.
+  - **Hash + dedup interaction trap** — md5-truncation collides eventually; "retry with salt" breaks determinism, so hash-based + dedup-by-content are mutually exclusive goals past a scale point — walk the birthday math (6 base62 chars ≈ 57B space; collisions expected ~√ ≈ 240k entries).
+  - **Read:write ratio drives the design** — shorteners are ~100:1 reads → decode path gets the cache/CDN; encode can be slow — the one-liner that pivots cleanly into the Track C version.
 - **Tips:**
   - **Discuss key-generation trade-offs** (counter vs random vs hash) up front.
   - **Discuss collision handling** (retry with longer code).

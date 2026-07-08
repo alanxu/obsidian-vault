@@ -65,6 +65,8 @@ Solid progression, but a stronger candidate would also: (1) **clarify** the wind
 ## By format
 ### Live · CoderPad — *primary (Anthropic phone screen)*
 - **Follow-ups:** the L2–L4 arc above; per-endpoint vs per-user limits; different limits per tier; fail-open vs fail-closed when Redis is down.
+  - **LLM twist — token-based limits:** "limit tokens/min, not requests/min" → each request consumes a *variable* weight, and output tokens aren't known until completion → reserve estimated tokens at admission, reconcile after ([[39-llm-request-batcher]] pairing); the AI-platform version of this question.
+  - **What should a rejected caller receive?** → 429 + `Retry-After` computed from the oldest in-window timestamp — connects to [[31-retry-with-backoff]]'s client side; designing both halves is the senior framing.
 - **Tips:** narrate the clarify step; build L1 cleanly, then *volunteer* the memory/thread/distributed extensions; for distributed, **describe** the Redis+Lua pattern, don't code Redis live.
 - **Pitfalls:** wrong window boundary; global lock (too slow); forgetting Redis TTL; assuming monotonic timestamps; counting the current request on the wrong side of the check.
 

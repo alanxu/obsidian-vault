@@ -6,7 +6,7 @@ location: "Under `/question-bank/llm-system-design/`."
 related: ["[[track-D-ml-llm-system-design/D0-areas-map]]", "[[track-D-ml-llm-system-design/D1-rag-with-citations]]", "[[interview-prep-master-plan-2026]]", "[[ai-ipo-interview-guide]]"]
 count: 38
 created: 2026-06-18
-updated: 2026-07-09 (added 38 multimodal RAG + fundamentals 25). Prior: 2026-07-08 audit fill 32–37; see [[question-bank/README]] §Audit & evidence
+updated: 2026-07-10 (enrichment pass: cards 02–31 + all fundamentals gained staff-signal follow-ups w/ answers, numbers, failure modes). Prior: 2026-07-09 card 38 + fundamentals 25; 2026-07-08 audit fill 32–37; see [[question-bank/README]] §Audit & evidence
 ---
 
 # LLM / ML System Design — Question Bank

@@ -129,6 +129,8 @@ class FileSystem:
   - **Move that creates cycles** — `mv(/a, /a/b)`; reject.
   - **Delete a non-empty dir** — usually recursive; spec varies.
   - **Concurrent modifications** — locks per path.
+  - **The dict-vs-trie decision, quantified** — dict: O(|path|) ops, O(1) per-path storage, but `ls` is O(all paths) scan; trie: `ls` is O(children), delete-subtree is O(subtree), shared prefixes stored once. State the read/write mix that flips the choice — that's the answer they want, not "trie is better."
+  - **Path normalization as a security question** — `createPath("/a/../b", v)`: reject or resolve? If this backs an agent/file API, resolve-then-validate ([[09-cd-directory-navigation]] jail logic); if a pure store, reject non-canonical input — say which contract you're implementing.
 
 ### Onsite · NR (Google-style)
 - **Tips:** Define the path-splitting logic; trace `createPath('/a/b/c', 5)` step by step.

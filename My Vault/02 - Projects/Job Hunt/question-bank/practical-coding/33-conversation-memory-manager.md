@@ -93,6 +93,9 @@ class Memory:
   - **Persistence** — serialize messages; reload on startup.
   - **Multi-user / multi-conversation** — namespacing, isolation.
   - **Privacy / redaction** — scrub PII before adding to context.
+  - **Prompt-cache-aware eviction** — evicting from the *middle* of history invalidates the KV prefix cache for everything after it → prefer trimming strategies that keep the prefix stable (drop-from-one-boundary, summarize into a stable block) — the 2026 twist that connects this card to [[../llm-system-design/fundamentals/22-prompt-caching]].
+  - **Tool-call pairs are atomic** — dropping an assistant tool-call message while keeping its tool-result (or vice versa) produces API-invalid history → evict in call/result pairs; a real bug every agent team has shipped.
+  - **What must the summary preserve for an *agent*?** → open commitments, decisions, file/entity IDs, error states — not conversational flavor; give the summarizer a schema, not "summarize this."
 - **Tips:**
   - **Pin system + most recent** — both are sacred.
   - **Make `token_fn` injectable** — passes the testability point.

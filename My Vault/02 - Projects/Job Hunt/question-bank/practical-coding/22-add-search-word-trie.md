@@ -91,6 +91,8 @@ class WordDictionary:
   - **Concurrency** — multi-thread adds/searches; locks per node or global.
   - **Persistence** — serialize the trie to disk.
   - **Compressed / DAWG** — directed acyclic word graph; same content with shared suffixes.
+  - **Wildcard-heavy workloads** — if most queries are like `..a.b`, the trie DFS degenerates → precompute inverted indexes by (position, char) and intersect sets, or bucket words by length first (a `.`-only query is just a length check); shows you adapt the structure to the query distribution.
+  - **Memory: dict-per-node vs array[26] vs bytes** — Python dict nodes are ~200B+ each; array[26] wastes on sparse fans; production tries flatten into arrays (double-array trie) — worth one sentence when "millions of words" comes up.
 - **Tips:**
   - **Build the plain trie, then add the wildcard DFS branch.**
   - **Narrate the branching factor on `.`** — set context for complexity analysis.

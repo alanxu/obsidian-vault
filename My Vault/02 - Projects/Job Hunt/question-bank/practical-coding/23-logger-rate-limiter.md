@@ -64,6 +64,8 @@ class Logger:
   - **Distributed rate limiting** — Redis with `INCR` + `EXPIRE`, or sliding-window via Lua. → Track C.
   - **Async** — `asyncio.Lock` for thread-safe access.
   - **Atomic batch** — flush N messages at once, returning which were allowed.
+  - **What did we lose vs sliding-window-log?** → this "fixed cooldown" allows at most 1 per 10s but *resets* the window on each allowed print — it can't express "N per window" at all; naming which limiter semantics you've built (cooldown vs fixed-window vs sliding) is the maturity signal → full taxonomy in [[35-sliding-window-rate-limiter]].
+  - **Message normalization** — "same message" with variable parts (`user 123 failed`) never dedupes → template extraction / fingerprinting before keying — the real-logging wrinkle interviewers add.
 - **Tips:**
   - **Mention the unbounded-memory issue** and how you'd evict (TTL, LRU on the map).
   - **Offer the token-bucket extension** — common follow-up.

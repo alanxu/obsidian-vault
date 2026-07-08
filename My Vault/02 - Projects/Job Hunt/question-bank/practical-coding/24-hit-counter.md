@@ -84,6 +84,8 @@ class HitCounter:
   - **Percentile / p95** — keep individual hits in a sliding window; compute percentile.
   - **Decay** — exponential moving average instead of hard window.
   - **Top-K** — which endpoints / users have the most hits.
+  - **Millisecond timestamps / arbitrary window** — buckets stop mapping 1:1 to seconds → choose bucket granularity = window/precision-tolerance (300 buckets of window/300 each); the answer generalizes from "300 array slots" to a precision-vs-memory dial.
+  - **Bucket version accuracy caveat** — at the window edge it's exact only at second granularity; with coarser buckets you over/under-count the boundary bucket → say "bounded error of one bucket" before being caught on it.
 - **Tips:**
   - **Lead with the 300-bucket** circular array as the senior answer.
   - **Discuss thread safety** — `threading.Lock` around all ops; per-bucket locks for fine-grained parallelism.

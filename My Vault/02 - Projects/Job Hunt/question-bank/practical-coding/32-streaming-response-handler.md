@@ -93,6 +93,9 @@ async def stream_handler(chunks, on_text, cancel_event=None):
   - **Cancellation cleanup** — close the HTTP connection, mark task cancelled, propagate to the model provider if possible.
   - **Render strategy** — debounce text updates to a UI; coalesce N tokens into one render call.
   - **Encoding** — UTF-8, surrogate pairs, emoji ZWJ sequences (sometimes split mid-grapheme).
+  - **Robust partial-JSON parsing** — the brace-depth heuristic here breaks on braces *inside strings* (`{"code": "if (x) {"`); the string-aware FSM version is its own card → [[37-streaming-json-parser]]; know which rigor level the interviewer wants.
+  - **Guardrails on a stream** — content policy must check text *before* the user sees it, but you're rendering as it arrives → incremental classification with a small look-ahead buffer + ability to retract/stop mid-stream; the safety×streaming collision is a real design point at labs.
+  - **Usage accounting mid-stream** — tokens are billed even if the user cancels at token 500 → count deltas as they arrive, report usage on cancel — ties streaming to the cost story ([[../llm-system-design/31-llm-observability-cost]]).
 - **Tips:**
   - **Make the consumer a generator** so cancellation and incremental render fall out.
   - **Check the cancel flag every chunk.**
