@@ -4,9 +4,9 @@ title: "Practical / OO Coding — Question Bank (canonical)"
 scope: "Self-contained practical/OO coding problems (master-plan Track B §3). Delivery-channel-agnostic. 34 files: multi-level ICA + Anthropic live bank + LeetCode Design warm-ups + agentic primitives."
 location: "Under `/question-bank/practical-coding/` (the umbrella question-bank folder)."
 related: ["[[track-B-practical-oo-coding/practical-oo-coding-deep-guide]]", "[[track-G-take-homes/README]]", "[[interview-prep-master-plan-2026]]", "[[openai-interview-guide]]", "[[anthropic-interview-guide]]", "[[cohere-interview-guide]]"]
-count: 40
+count: 41
 created: 2026-06-16
-updated: 2026-07-10 (enrichment pass: all 35 pre-audit cards gained escalation follow-ups + production probes; 2 trace errors fixed in 18/29). Prior: 2026-07-08 audit fill 36–40; see [[question-bank/README]] §Audit & evidence; 2026-06-18 enrichment
+updated: 2026-07-10 (added 41 debugging/bug-squash card — its own round type; researched. Prior: enrichment pass — all 35 pre-audit cards gained escalation follow-ups + production probes; 2 trace errors fixed in 18/29; 2026-07-08 audit fill 36–40; see [[question-bank/README]] §Audit & evidence; 2026-06-18 enrichment)
 ---
 
 # Practical / OO Coding — Question Bank
@@ -17,7 +17,7 @@ updated: 2026-07-10 (enrichment pass: all 35 pre-audit cards gained escalation f
 >
 > **Why top-level:** this is a shared resource. A problem's *delivery channel* (OA / live / async timed assessment) is **not** its track — these problems are Track B content no matter how a company delivers them. Round mechanics + worked walk-through: [[practical-oo-coding-deep-guide]].
 >
-> **Runnable code (outside the vault):** these cards are the *study notes*. Runnable solutions + tests live in the connected git repo **`/Users/alanxu/projects/interview-questions/practical-coding/<problem>/`** (run with `python3`; Claude writes there directly). Card ↔ folder map by the same name/number, e.g. `01-in-memory-key-value-database` → `…/interview-questions/practical-coding/01-in-memory-key-value-database/`. **Done: all 40** (01–40), each folder = `README.md` + `<solution>.py` (with a `__main__` self-check demo) + `test_<solution>.py` (stdlib `unittest`, one class per level/phase). Stdlib-only, Python 3.10+; 278 tests, all green. Run one with `python3 test_<solution>.py`, or the whole set with a per-folder `python3 -m unittest`.
+> **Runnable code (outside the vault):** these cards are the *study notes*. Runnable solutions + tests live in the connected git repo **`/Users/alanxu/projects/interview-questions/practical-coding/<problem>/`** (run with `python3`; Claude writes there directly). Card ↔ folder map by the same name/number, e.g. `01-in-memory-key-value-database` → `…/interview-questions/practical-coding/01-in-memory-key-value-database/`. **Done: all 41** (01–41, incl. the debugging drills), each folder = `README.md` + `<solution>.py` (with a `__main__` self-check demo) + `test_<solution>.py` (stdlib `unittest`, one class per level/phase). Stdlib-only, Python 3.10+; 288 tests, all green. Run one with `python3 test_<solution>.py`, or the whole set with a per-folder `python3 -m unittest`.
 
 ## Format legend (used in every file's "By format" section)
 - **OA · ICA** — CodeSignal Industry Coding Assessment: 1 project, 4 progressive levels, auto-graded on hidden tests, 90 min.
@@ -94,6 +94,15 @@ One object, 3–6 escalating levels, never break earlier levels.
 | 39 | [[39-llm-request-batcher]] *(2026-07 fill)* | Live, Take-home | Anthropic (reported), Fireworks, Together | ⭐ |
 
 > Numbering: 16 predates this tier; 30–34 added 2026-06-16; 36–40 added 2026-07-08 (audit fill). The agentic group is now eight.
+
+## Tier 5 — Debugging (a whole round, not one problem)
+Dropped into unfamiliar code with a failing test; find and fix the bug. Graded on *how* you debug (reproduce → hypothesize → localize → minimal fix → regression test), not prior codebase knowledge. Most famous as Stripe's **Bug Squash**.
+
+| # | Question | LC | Formats | Companies | ⭐ |
+|---|---|---|---|---|---|
+| 41 | [[41-debugging-broken-code]] *(2026-07 add)* | — | Live (Bug Squash), Onsite·NR, OA | Stripe, Retool, Meta, Anysphere/Cursor, Anthropic | ⭐ |
+
+> Runnable companion: `…/interview-questions/practical-coding/41-debugging-broken-code/` — 10 classic planted bugs (one per taxonomy row) with regression tests; reintroduce the buggy line to drill.
 
 ## Excluded (and why)
 - **Pure algorithmic** (top-k decoding, longest-substring, binary-string reduction, streaming top-k): Track A. Even when a coding round uses them, they're not "build a stateful object."
