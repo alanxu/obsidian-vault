@@ -3,7 +3,8 @@ title: Inventory / Warehouse Management
 slug: inventory-warehouse-management
 type: multi-level-stateful
 leetcode: null
-companies: [Anthropic, Roblox, Shopify, Amazon, Stripe-fulfillment, CodeSignal cos, "DoorDash-style logistics"]
+companies: ["Anthropic (verified: .dupe/ADD_DUPLICATE_ITEMS variant reported)", "CodeSignal ICA cos (the format's natural home)", "Roblox/Shopify (inferred, unverified)"]
+evidence: "Corrected 2026-07-10: Amazon REMOVED — its OA is LeetCode-style algorithmic; reported Amazon 'warehouse/inventory' questions (Warehouse Shipment Allocation, Inventory Optimizer) are algorithm puzzles with a warehouse skin, not this multi-level stateful problem (leetcode.com/discuss, aonecode 2026). DoorDash was style-inference, removed. Anthropic variant A remains the verified anchor."
 difficulty: ★★★☆☆
 frequency: medium
 formats: [OA·ICA, Live]
@@ -183,9 +184,9 @@ class Warehouse:
 
 ## Company variants
 
-- **Anthropic** — Variant A `.dupe`/`ADD_DUPLICATE_ITEMS` skin.
-- **Roblox / Shopify / Amazon** — capacity + L4 move/reserve variant; sometimes weight/priority at L4.
-- **DoorDash-style logistics** — "fulfillment center" reskin (location = hub, capacity = shelf space).
+- **Anthropic (verified)** — Variant A `.dupe`/`ADD_DUPLICATE_ITEMS` skin.
+- **Roblox / Shopify (inferred, unverified)** — capacity + L4 move/reserve variant would fit their domains; no candidate report found.
+- **⚠️ Amazon does NOT ask this** — Amazon's OA is LeetCode-style; its reported "warehouse" questions (Shipment Allocation, Inventory Optimizer) are algorithmic puzzles with a logistics skin → those belong to Track A prep, not here. Don't let the shared vocabulary mislead your prep routing.
 - Otherwise a standard ICA — pattern is identical to Q01, so **drill Q01 first**.
 
 ## Worked example trace
