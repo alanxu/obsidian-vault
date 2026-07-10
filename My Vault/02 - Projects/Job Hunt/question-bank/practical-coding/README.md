@@ -6,7 +6,7 @@ location: "Under `/question-bank/practical-coding/` (the umbrella question-bank 
 related: ["[[track-B-practical-oo-coding/practical-oo-coding-deep-guide]]", "[[track-G-take-homes/README]]", "[[interview-prep-master-plan-2026]]", "[[openai-interview-guide]]", "[[anthropic-interview-guide]]", "[[cohere-interview-guide]]"]
 count: 41
 created: 2026-06-16
-updated: 2026-07-10 (added 41 debugging/bug-squash card — its own round type; researched. Prior: enrichment pass — all 35 pre-audit cards gained escalation follow-ups + production probes; 2 trace errors fixed in 18/29; 2026-07-08 audit fill 36–40; see [[question-bank/README]] §Audit & evidence; 2026-06-18 enrichment)
+updated: 2026-07-10 (EXECUTION VERIFICATION: every solution in every card extracted and RUN against its own traces + edge cases. 13 defects found & fixed — worst: 05 replay consumed the wrong grants, 06 double-counted holds, 12 parallel crawler deadlocked, 08 crashed on 2nd line, 09 missed cwd-symlinks/cycles, 25 heap summed player IDs not scores, 07 SyntaxError on Py≤3.11 f-string, 16 KeyError on tool actions, 30 missing import json, 04/10 tie-break bugs, 28 first-fit mislabeled best-fit, 02 trace format. All suites green. Same day: added 41 debugging card; enrichment pass; trace fixes 18/29. Prior: 2026-07-08 audit fill 36–40; see [[question-bank/README]] §Audit & evidence)
 ---
 
 # Practical / OO Coding — Question Bank

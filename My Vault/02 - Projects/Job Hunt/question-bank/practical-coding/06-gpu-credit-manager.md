@@ -31,9 +31,9 @@ Track per-user GPU credits with **two** concepts: *granted balance* (deposits wi
 
 ## Core approach (format-agnostic)
 
-Reuse Q05's expiring-credit core (earliest-expiry-first, lazy replay). Layer two bookkeeping items on top:
+Reuse Q05's event log + lazy replay, with one crucial semantic difference: **an allocation is a HOLD, not a spend.** It must never consume grants — `release` returns the full amount, so `available = live_grants − active_holds`, with the two tracked independently. (Consuming grants at allocate time double-counts: the hold reduces both terms. Actual consumption belongs to a `commit/settle` step — see follow-ups.) Layer two bookkeeping items on top:
 
-1. **`allocated` counter** — sum of currently-reserved credits; deducted on `release`, refunded on TTL expiry of the allocation.
+1. **`allocated` counter** — sum of currently-held credits; decreased on `release`. Grants are only reduced by *expiry*, never by `allocate`.
 2. **`seen_requests: dict[request_id → result]`** — idempotency cache. `allocate` first checks `seen`. If present, return cached result. Otherwise compute, cache, return.
 
 **TTL on allocations** — reservations should expire too. If a request reserves GPU but never releases, it should free after some timeout (e.g., 60s). This is a heap of `(expire_ts, request_id, amount)` advanced on each op.
@@ -79,44 +79,35 @@ class GPUCreditManager:
 
     # ---------- internal replay ----------
     def _replay(self, uid, ts):
+        # HOLDS, not spends: grants and holds are independent tallies.
+        # (Consuming grants inside "alloc" double-counts — the hold would
+        #  shrink both balance AND show up in allocated. Found by execution.)
         relevant = sorted(
             (e for e in self._events if e[0] <= ts),
             key=lambda e: (e[0], e[1]),
         )
-        grants = []                     # (exp, remaining)
-        allocated = 0
-        for _, _, kind, payload in relevant:
+        balance = 0                     # grants still alive at query time
+        allocated = 0                   # active holds
+        for ets, _, kind, payload in relevant:
             if kind == "add":
                 u, amt, exp = payload
-                if u != uid: continue
-                if exp <= ts: continue
-                heapq.heappush(grants, [exp, amt])
+                if u == uid and exp > ts:      # contributes iff alive at query ts
+                    balance += amt
             elif kind == "alloc":
                 u, amt, _rid = payload
-                if u != uid: continue
-                # consume earliest-expiring first
-                rem_amt = amt
-                while rem_amt > 0 and grants:
-                    exp, left = grants[0]
-                    if exp <= ts:
-                        heapq.heappop(grants); continue
-                    take = min(left, rem_amt)
-                    grants[0][1] -= take
-                    rem_amt -= take
-                    if grants[0][1] == 0:
-                        heapq.heappop(grants)
-                allocated += (amt - rem_amt)
-                # if rem_amt > 0, under-allocated (insufficient at this ts);
-                # spec usually means allocate returns false in that case
+                if u == uid:
+                    allocated += amt           # log only contains ACCEPTED allocs
             elif kind == "release":
                 u, amt = payload
-                if u != uid: continue
-                allocated = max(0, allocated - amt)
-        balance = sum(rem for _, rem in grants)
+                if u == uid:
+                    allocated = max(0, allocated - amt)
         return balance, allocated
+        # Edge worth naming: a grant can EXPIRE while held → balance−allocated
+        # can go negative; clamp at the call site or reject holds that outlive
+        # their backing grant (policy question — ask).
 ```
 
-**Complexity.** `add_credit` O(1). `allocate` O(N log G) where N is events for the user and G is grants — bounded in practice; consider per-user event compaction. `release` O(1) plus replay. `available` O(N log G).
+**Complexity.** `add_credit` O(1). `allocate`/`available` O(N log N) for the replay sort (N = events ≤ ts) — bounded in practice; consider per-user event compaction or snapshotting. `release` O(1) append.
 
 ## By format
 
@@ -139,7 +130,8 @@ class GPUCreditManager:
 - **Pitfalls:**
   - **Double-charging on retry** — the bug the question is designed to surface.
   - **Releasing more than allocated** — guard with `max(0, allocated - amount)`.
-  - **Allocating against soon-to-expire credit** — confirm policy (consume earliest-expiring is usually right).
+  - **Consuming grants at allocate time** — a hold is not a spend; consuming double-counts (hold shrinks balance AND allocated). Consumption belongs to `commit`; holds only gate admission.
+  - **A hold outliving its backing grant** — grant expires mid-hold → available can go negative; clamp or reject (ask which).
   - **Idempotency cache never expires** — bounded LRU or TTL on the cache.
   - **Replay skipping future events** — events with `ts > query_ts` must not affect state.
 

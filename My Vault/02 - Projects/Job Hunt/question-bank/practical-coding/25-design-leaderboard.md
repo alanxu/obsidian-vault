@@ -69,7 +69,10 @@ class Leaderboard:
         self.scores[playerId] = self.scores.get(playerId, 0) + score
 
     def top(self, K: int) -> int:
-        return sum(c for _, c in heapq.nlargest(K, [(s, p) for p, s in self.scores.items()]))
+        # Unpack the SCORE, not the playerId: tuples are (score, player).
+        # `sum(c for _, c in …)` here would sum player IDs — a wrong-answer
+        # bug that still runs happily (found by execution).
+        return sum(s for s, _p in heapq.nlargest(K, ((s, p) for p, s in self.scores.items())))
 
     def reset(self, playerId: int) -> None:
         self.scores.pop(playerId, None)

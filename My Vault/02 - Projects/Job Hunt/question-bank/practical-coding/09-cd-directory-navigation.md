@@ -38,31 +38,32 @@ Resolve a `cd` like a shell. Clean string/stack problem; the soft-links follow-u
 
 ## Core approach (format-agnostic)
 
-Build a `parts` stack — start empty if `change` is absolute or starts with `~`, else seeded from `current_dir`. Walk segments, applying the rules above. Soft-link resolution happens **after** each push: if the candidate path (root + current stack + new segment) is in `soft_links`, replace the stack with the target's segments. **Guard cycles** with a `visited` set + depth cap (default 32–64).
+Build a `parts` stack and walk segments applying the rules above. **The key structural decision: when `change` is relative, feed `current_dir`'s segments through the SAME loop** — a symlink can live inside the current directory (`cd("/a/link", "x")`), and seeding the stack raw misses it (and misses cycles reachable from it). Soft-link resolution happens **after** each push, repeatedly (a link can point at a link). **Guard cycles** with a global hop budget (or a visited set — the budget also bounds absurd-but-acyclic chains).
 
 ### Worked Python solution
 
 ```python
-def cd(current_dir, change, soft_links=None, home="/home/user", max_depth=32):
+def cd(current_dir, change, soft_links=None, home="/home/user", max_hops=32):
     soft_links = soft_links or {}
 
-    # 1. Resolve home expansion in change
+    # 1. Home expansion (only at the start of change)
     if change == "~":
         change = home
     elif change.startswith("~/"):
         change = home + change[1:]
 
-    # 2. Initialize parts stack
+    # 2. One uniform segment stream. Relative change ⇒ current_dir's own
+    #    segments go through the same resolution loop (links in the cwd!).
     if change.startswith("/"):
-        parts = []
         segments = [s for s in change.split("/") if s]
     else:
-        parts = [s for s in current_dir.split("/") if s]
-        segments = [s for s in change.split("/") if s]
+        segments = ([s for s in current_dir.split("/") if s]
+                    + [s for s in change.split("/") if s])
 
     # 3. Walk
+    parts, hops = [], 0
     for seg in segments:
-        if seg in ("", "."):
+        if seg == ".":
             continue
         if seg == "..":
             if not parts:
@@ -71,25 +72,21 @@ def cd(current_dir, change, soft_links=None, home="/home/user", max_depth=32):
             continue
         parts.append(seg)
 
-        # 4. Soft-link resolution (with cycle guard)
-        visited = set()
+        # 4. Resolve links at the current path, repeatedly
         while True:
             candidate = "/" + "/".join(parts)
-            if candidate in visited:
-                # Cycle; treat as error
-                return None
-            visited.add(candidate)
             if candidate not in soft_links:
                 break
+            hops += 1
+            if hops > max_hops:
+                return None              # cycle (A→B→A…) or absurd chain
             target = soft_links[candidate]
             parts = [s for s in target.split("/") if s]
-            if len(visited) > max_depth:
-                return None              # depth cap
 
     return "/" + "/".join(parts) if parts else "/"
 ```
 
-**Complexity.** O(|change| + |soft_links| × depth). Cycle guard makes it O(visited) per push — bounded.
+**Complexity.** O(total segments + hops). The global hop budget bounds all link resolution — a cycle burns through it and returns `None`.
 
 ## By format
 
@@ -115,7 +112,8 @@ def cd(current_dir, change, soft_links=None, home="/home/user", max_depth=32):
 - **Pitfalls:**
   - **Above-root handling** — `cd('/a', '../../..')` → `None`.
   - **Trailing slashes** — `'/foo/bar/'` should equal `'/foo/bar'`.
-  - **Soft-link cycles** — without `visited`, infinite loop or RecursionError.
+  - **Soft-link cycles** — without a hop budget / visited set, infinite loop or RecursionError.
+  - **Only resolving links in NEW segments** — if `current_dir` itself sits under a symlink (`cd("/a/link", "x")`), seeding the stack raw returns `/a/link/x` and never resolves; both the link-in-cwd case *and* cycle detection silently fail (found by execution 2026-07-10). Route current_dir through the same loop.
   - **`~` mid-path** — `'/foo/~/bar'` is NOT a home reference; only at the start.
   - Empty path `cd('/foo', '')` should return `/foo`, not `/`.
   - Relative symlinks — don't assume target is absolute.

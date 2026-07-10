@@ -55,7 +55,7 @@ class Agent:
             tokens += action.get("tokens", 0)
             if tokens > self.token_budget:
                 return {"status": "budget_exceeded", "history": history}
-            if action["type"] == "final":
+            if action.get("type") == "final":     # .get() — tool actions carry no "type" key
                 return {"status": "done", "answer": action["answer"], "history": history}
             key = (action["tool"], str(action.get("args", {})))
             if key in seen:
@@ -106,6 +106,7 @@ class Agent:
   - **Treating it as a full platform** — scope creep into D3.
   - **Off-by-one on `max_steps`** — `for _ in range(10)` allows 10 steps, not 11.
   - **Loop detection on stringified args** — `{"a": 1}` vs `{"a": 1.0}` vs `{"a": True}` may not dedupe. Normalize.
+  - **`action["type"]` on a tool action** — tool actions typically carry `{"tool": …, "args": …}` with no `"type"` key → KeyError crashes the loop on its very first tool call; use `.get("type")` (found by running the loop against its own trace).
 
 ### Whiteboard (when asked to "show the loop")
 - **Tips:**

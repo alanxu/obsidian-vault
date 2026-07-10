@@ -84,13 +84,15 @@ def per_minute(logs):
     return dict(sorted(agg.items()))
 
 def top_k(logs, k):
-    """Top-K users by total tokens."""
+    """Top-K users by total tokens — total desc, user_id asc on ties."""
     agg = defaultdict(int)
     for line in logs:
         rec = parse_line(line)
         if rec: agg[rec[0]] += rec[2]
-    # nlargest equivalent: heapq.nlargest
-    return heapq.nlargest(k, agg.items(), key=lambda x: (x[1], -ord(x[0][0]) if x[0] else 0))
+    # nsmallest on the composite key (-total, user) expresses BOTH directions;
+    # nlargest can't ("name ascending" has no negation for strings — the
+    # -ord(first_char) hack breaks the moment two names share a first letter).
+    return heapq.nsmallest(k, agg.items(), key=lambda x: (-x[1], x[0]))
 
 # ---------- streaming variant ----------
 def iter_records(lines):

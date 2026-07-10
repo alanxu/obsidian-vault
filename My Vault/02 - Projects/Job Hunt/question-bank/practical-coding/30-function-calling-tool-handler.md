@@ -31,6 +31,8 @@ The model emits a tool call as JSON: `{"name": "...", "arguments": {...}}` (some
 ## Core approach (format-agnostic)
 
 ```python
+import json
+
 class ToolHandler:
     def __init__(self): self.tools = {}     # name -> {"fn": callable, "schema": dict}
 

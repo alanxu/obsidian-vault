@@ -27,7 +27,11 @@ Given a stream of chunks (text deltas, or tool-call deltas), implement a handler
 4. Can be **cancelled** cooperatively (stop consuming, clean up).
 
 ```python
-async def stream_handler(chunks, on_text, cancel_event) -> (text, tool_calls)
+async def stream_handler(chunks, on_text, cancel_event) -> AsyncIterator[dict]
+# an async GENERATOR: yields {"type": "tool_call", ...} events as each call
+# completes, then {"type": "text_done", "text": ...} — callers `async for` it.
+# (A plain "return (text, tool_calls)" signature defeats the point: you'd be
+# buffering the stream you were asked to handle incrementally.)
 ```
 
 ## Core approach (format-agnostic)

@@ -70,40 +70,40 @@ class CreditLedger:
         self._events.append((ts, self._idx, "use", (uid, amount)))
 
     def balance(self, uid, ts):
-        # Replay events with ts <= query ts, in (ts, idx) order
+        # Replay events with ts <= query ts, in (ts, idx) order.
+        # CRITICAL: expiry is evaluated TWICE, at two different times —
+        #   (1) during replay, vs each event's OWN timestamp (a `use` at t=2
+        #       can consume a grant that expires at t=5), and
+        #   (2) at the end, vs the QUERY timestamp (expired remainders don't count).
+        # Filtering grants by query-time expiry up front silently reorders
+        # historical consumption onto the wrong grants — the subtlest bug here.
         relevant = [e for e in self._events if e[0] <= ts]
         relevant.sort(key=lambda e: (e[0], e[1]))
 
-        # user -> min-heap of (expiration, remaining)
-        grants = {}
-        used = 0
-        for _, _, kind, payload in relevant:
+        grants = []                       # min-heap of [expiration, remaining]
+        for ets, _, kind, payload in relevant:
             if kind == "add":
                 u, amt, exp = payload
                 if u != uid:
                     continue
-                if exp <= ts:
-                    continue              # already expired at query time
-                heapq.heappush(grants.setdefault(u, []), [exp, amt])
-            else:  # use
+                if exp <= ets:
+                    continue              # dead on arrival
+                heapq.heappush(grants, [exp, amt])
+            else:  # use — evaluated at ITS OWN time ets, not the query ts
                 u, amt = payload
                 if u != uid:
                     continue
-                # consume earliest-expiring first
-                h = grants.setdefault(u, [])
-                while amt > 0 and h:
-                    exp, rem = h[0]
-                    if exp <= ts:
-                        heapq.heappop(h)
-                        continue
-                    take = min(rem, amt)
-                    h[0][1] -= take
+                while grants and grants[0][0] <= ets:
+                    heapq.heappop(grants)          # expired as of this event
+                while amt > 0 and grants:
+                    take = min(grants[0][1], amt)
+                    grants[0][1] -= take
                     amt -= take
-                    if h[0][1] == 0:
-                        heapq.heappop(h)
-                if amt > 0:
-                    used += amt            # overdrawn — spec-dependent
-        return sum(rem for _, rem in grants.get(uid, []))
+                    if grants[0][1] == 0:
+                        heapq.heappop(grants)
+                # if amt > 0: overdrawn — cap vs reject is spec-dependent
+        # Final sum: only grants still alive at the QUERY time
+        return sum(rem for exp, rem in grants if exp > ts)
 ```
 
 **Complexity.** `add_credit` / `use_credit`: O(1). `balance(ts)`: O(N log N + G) where N = total events and G = grants for the user. For take-home: amortize by caching per-(user, max-ts) snapshots.
@@ -132,6 +132,7 @@ class CreditLedger:
   - **Expiry exactly at `ts`** — confirm half-open `[granted, expired)` convention.
   - **Using more than available** — clarify cap vs reject.
   - **Replay ignoring `ts > query_ts`** — events that haven't "happened yet" at the query time must be skipped.
+  - **Evaluating expiry at query time during replay** — a `use@2` must see grants as they were *at t=2*, even if they're expired by the query time; expiry applies per-event during replay and once more on the final sum. Getting this wrong reorders consumption silently.
   - **Float vs int** — use integer cents for money.
 
 ### Take-home / work-trial (async build)
@@ -157,17 +158,20 @@ class CreditLedger:
 ## Worked example trace
 
 ```
-t=0  add_credit("u1", 100, 0, 10)         # grant1: exp=10
+t=0  add_credit("u1", 100, 0, 100)        # grant1: exp=100
 t=1  add_credit("u1", 50, 1, 5)           # grant2: exp=5
-t=2  use_credit("u1", 30, 2)              # consume grant2 (exp=5): grant2=20
-t=20 use_credit("u1", 50, 20)             # OUT-OF-ORDER arrives late
-                                           # replay events ≤20: grants=20 (from g1)
-                                           # consume 20 from g1: g1=80
-                                           # need 30 more — grant1 left = 80, take 30 → g1=50
-balance("u1", 20) → 50 (from grant1)
+t=2  use_credit("u1", 30, 2)              # earliest-expiring first → g2: 50→20
+t=20 use_credit("u1", 50, 20)             # arrives late; replay orders it correctly
+
+balance("u1", 3)  → 120                    # historical view: g1=100 + g2=20
+balance("u1", 20) → 50
+  replay ≤20 in ts order:
+    use30@2:  g2 alive at ts=2 → consume g2 → 20
+    use50@20: g2 expired as of ts=20 → discard; consume g1 → 100−50=50
+  query-time filter: g1 (exp=100) alive → 50
 ```
 
-If processed eagerly: the late `use_credit` would either silently overdraw or be rejected.
+Note `balance("u1", 3)` and `balance("u1", 20)` disagree about g2 — correct: each query is a **view as of its own ts**. If processed eagerly instead, the late `use_credit` would deduct from whatever remains *now*, silently corrupting which grants were consumed. *(Trace numbers corrected + code replay bug fixed 2026-07-10 via execution testing — the old code filtered grants by query-time expiry before replay, making `use@2` consume the wrong grant.)*
 
 ## Related
 [[06-gpu-credit-manager]] (adds allocate/release + idempotency) · [[02-banking-system]] (time-ordered sibling) · [[10-api-log-parser-token-aggregator]] (token accounting).

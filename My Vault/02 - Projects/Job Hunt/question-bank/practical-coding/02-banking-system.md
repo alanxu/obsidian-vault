@@ -267,7 +267,7 @@ t=3  transfer("a1","a2",30)          # a1: 70, outgoing=30; a2: 30
 t=5  pay("a1", 50)                   # a1: 20, outgoing=80; -> "payment1", cashback=1 due@t=5+D=10
 t=8  deposit("a2", 10)               # settle first: cashback@10 not yet due → noop
 t=10 deposit("a1", 5)                # settle fires: a1 +=1 → 21 (payment1 -> CASHBACK_RECEIVED); then deposit → 26
-t=12 top_spenders(2)                 # a1: outgoing=80, a2: outgoing=0 → "a1(80),a2(0)"
+t=12 top_spenders(2)                 # a1: outgoing=80, a2: outgoing=0 → "a1(80), a2(0)"
 t=15 get_balance(15,"a1", 5)         # hist: [(0,0),(2,100),(5,20),(10,21),(15,26)]
                                      # bisect ≤5 → (5,20) → 20
 ```

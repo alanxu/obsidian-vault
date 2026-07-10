@@ -83,26 +83,33 @@ class MultiFileIterator:
         return self
 
     def __next__(self):
-        if not hasattr(self, "_pending") and self._fh is None:
+        # The pending check must be `is not None`, NOT hasattr() — after the
+        # pending line is consumed the attribute still exists (set to None),
+        # and hasattr would happily return None.rstrip → AttributeError on
+        # the very next call. (Found by execution.)
+        pending = getattr(self, "_pending", None)
+        if pending is not None:
+            self._pending = None
+            return pending.rstrip("\n")
+        if self._fh is None:
             raise StopIteration
-        if hasattr(self, "_pending"):
-            line, self._pending = self._pending, None
-            return line.rstrip("\n")
         line = self._fh.readline()
         if line:
             return line.rstrip("\n")
-        self._advance()
-        if self._fh is None:
+        self._advance()                       # may set a new _pending
+        if self._fh is None and getattr(self, "_pending", None) is None:
             raise StopIteration
         return self.__next__()
 
     # ---------- Part 2: Resumable ----------
     def get_state(self):
         pos = self._fh.tell() if self._fh else None
-        # Adjust for any pending line we haven't returned yet
-        if hasattr(self, "_pending") and self._pending is not None:
-            # pending line was already consumed from the file; back up by len+newline
-            pos = max(0, pos - len(self._pending) - 1)
+        # Adjust for a pending line not yet returned: readline() already
+        # advanced past it INCLUDING its newline, so back up by exactly
+        # len(pending) — it still carries the "\n" (stripped only on return).
+        pending = getattr(self, "_pending", None)
+        if pending is not None and pos is not None:
+            pos = max(0, pos - len(pending))
         return {"file_idx": self._file_idx, "pos": pos}
 
     def set_state(self, state):
@@ -175,6 +182,7 @@ class AsyncMultiFileIterator:
 - **Pitfalls:**
   - **Opening all files eagerly** — memory blowup for thousands of files.
   - **Losing position across save/restore** — pending line handling is the subtle bit.
+  - **`hasattr` as a "has pending" check** — the attribute survives after consumption (set to None) → `None.rstrip` crash on the next call; check `is not None`. Also note the pending line still contains its `\n` when adjusting `tell()` — back up by `len(pending)`, not `len(pending)+1`.
   - **Last line without newline** — `readline()` returns `""` then, not a line.
   - **File changed between save/restore** — declare as undefined behavior in code.
   - Forgetting `__aiter__` returns `self`; forgetting `raise StopAsyncIteration` (not `StopIteration`).

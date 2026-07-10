@@ -46,8 +46,14 @@ def normalize(url, base_host):
     path = p.path.rstrip("/") or "/"
     return urlunparse(("https", host, path, "", p.query, ""))
 
+def _base_host(seed):
+    # NOT .lstrip("www.") — lstrip strips a CHARACTER SET, so it mangles
+    # "web.foo.com" → "eb.foo.com". Classic footgun; use a prefix check.
+    host = urlparse(seed).netloc.lower()
+    return host[4:] if host.startswith("www.") else host
+
 def crawl(seed, get_urls):
-    base_host = urlparse(seed).netloc.lower().lstrip("www.")
+    base_host = _base_host(seed)
     visited = {seed}
     queue = deque([seed])
     while queue:
@@ -63,60 +69,44 @@ def crawl(seed, get_urls):
 ### Multithread version
 ```python
 from concurrent.futures import ThreadPoolExecutor
+from queue import Queue
 import threading
 
 def crawl_parallel(seed, get_urls, workers=8):
-    base_host = urlparse(seed).netloc.lower().lstrip("www.")
-    visited_lock = threading.Lock()
+    base_host = _base_host(seed)
     visited = {seed}
-    queue = deque([seed])
-    in_flight = 0
-    in_flight_lock = threading.Lock()
-    done_event = threading.Event()
+    lock = threading.Lock()
+    q = Queue()
+    q.put(seed)
 
-    def submit_more(executor):
-        nonlocal in_flight
+    def worker():
         while True:
-            with in_flight_lock:
-                if in_flight >= workers * 2:
-                    return
+            url = q.get()
             try:
-                url = queue.popleft()
-            except IndexError:
-                return
-            with visited_lock:
-                if url in visited:
-                    continue
-                visited.add(url)
-            with in_flight_lock:
-                in_flight += 1
-            executor.submit(worker, url)
-
-    def worker(url):
-        nonlocal in_flight
-        try:
-            for nxt in get_urls(url):
-                nu = normalize(nxt, base_host)
-                if not nu:
-                    continue
-                with visited_lock:
-                    if nu in visited:
+                if url is None:                 # poison pill → exit
+                    return
+                for nxt in get_urls(url):
+                    nu = normalize(nxt, base_host)
+                    if nu is None:
                         continue
-                    visited.add(nu)
-                queue.append(nu)
-        finally:
-            with in_flight_lock:
-                in_flight -= 1
-            if in_flight == 0 and not queue:
-                done_event.set()
+                    with lock:                  # atomic check-and-add
+                        if nu in visited:
+                            continue
+                        visited.add(nu)
+                    q.put(nu)                   # enqueue AFTER claiming it
+            finally:
+                q.task_done()
 
     with ThreadPoolExecutor(max_workers=workers) as ex:
-        submit_more(ex)
-        done_event.wait()
+        for _ in range(workers):
+            ex.submit(worker)
+        q.join()                                # ← the termination invariant
+        for _ in range(workers):
+            q.put(None)                         # release the blocked workers
     return visited
 ```
 
-**The termination invariant:** "done" = queue is empty **and** no worker is currently fetching. Track `in_flight` atomically; signal done when both are zero.
+**The termination invariant:** "done" = queue is empty **and** no worker is mid-fetch. `Queue.join()` encodes exactly that: it returns when every `put` item has had `task_done()` called — items being *processed* still count as outstanding. **Design note (learned by executing the naive version):** a coordinator that submits an initial batch and expects workers to signal completion deadlocks — workers discover new URLs after the coordinator has stopped submitting, and marking URLs visited at *discovery* vs at *dequeue* in two different places makes every queued item look "already seen." One rule fixes both: **claim (mark visited) exactly once, at enqueue time**, and let long-lived workers pull from a `Queue` that owns the lifecycle.
 
 ## Design half — full crawler architecture (Anthropic onsite often pairs design + coding)
 Reported as a mixed onsite round (half design, half coding): lead with the architecture, then drill one component in code.
@@ -180,7 +170,9 @@ The reported answer had the standard architecture + an async downloader with `Cl
   - **Crawling off-domain** — confirm normalization rules.
   - **Not normalizing URLs** — `http://Foo.com` and `https://foo.com/` are the same.
   - **Holding the lock during `get_urls`** — blocks all other workers on a slow fetch.
-  - **Race in `queue.append` from worker** — `deque.append` is thread-safe in CPython, but document the assumption.
+  - **Race in queue handling** — `queue.Queue` is the right primitive (thread-safe + `join()` for quiescence); a bare `deque` needs you to hand-roll both.
+  - **`.lstrip("www.")` on hosts** — strips a character *set*, not a prefix: "web.foo.com" → "eb.foo.com". Use `startswith`/`removeprefix`.
+  - **Two-place visited bookkeeping** — marking at discovery *and* re-checking at dequeue with a `continue` makes every queued URL look seen → crawls nothing, then hangs. Claim exactly once, at enqueue.
 
 ### Take-home / work-trial
 - **Tips:**

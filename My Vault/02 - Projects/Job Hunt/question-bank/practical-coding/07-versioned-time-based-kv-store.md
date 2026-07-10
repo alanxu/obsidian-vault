@@ -90,10 +90,15 @@ class KVStore:
 
     @staticmethod
     def _encode(key, ts, val):
-        # length-prefixed records: 4-byte big-endian ts, then key/val as
-        # escaped UTF-8 with our own delimiter.
         # Format: <ts>|<escaped key>|<escaped val>\n
-        return f"{ts}|{key.replace('|', '\\|')}|{val.replace('|', '\\|').replace(chr(10), '\\n')}\n"
+        # Escape order matters: backslash FIRST (else you double-escape),
+        # then the delimiter, then newline.
+        # NOTE: do the .replace() work OUTSIDE the f-string — f-string
+        # expressions can't contain a backslash before Python 3.12, and
+        # CoderPad/graders commonly run 3.10/3.11 (SyntaxError).
+        k = key.replace("\\", "\\\\").replace("|", "\\|")
+        v = val.replace("\\", "\\\\").replace("|", "\\|").replace("\n", "\\n")
+        return f"{ts}|{k}|{v}\n"
 
     def load(self, path=None):
         path = path or self.persist_path
@@ -109,10 +114,13 @@ class KVStore:
     @staticmethod
     def _decode_line(line):
         # Naive split is wrong if '|' appears in values — write a real parser.
+        # The escape walker must decode \n HERE (a trailing .replace("\\n")
+        # can't work: the walker already consumed the backslash).
         parts, buf, escaped = [], [], False
         for ch in line:
             if escaped:
-                buf.append(ch); escaped = False
+                buf.append("\n" if ch == "n" else ch)   # \n → newline, \| → |, \\ → \
+                escaped = False
             elif ch == "\\":
                 escaped = True
             elif ch == "|":
@@ -121,7 +129,7 @@ class KVStore:
                 buf.append(ch)
         parts.append("".join(buf))
         ts = int(parts[0]); key, val = parts[1], parts[2]
-        return ts, key, val.replace("\\n", "\n")
+        return ts, key, val
 ```
 
 **Complexity.** `put` O(1) amortized; `get` O(log n); `save`/`load` O(total entries).
@@ -149,7 +157,8 @@ class KVStore:
 - **Pitfalls:**
   - `bisect` **off-by-one** (largest ≤, not <). Trace `get(ts=before any put)` → `None`.
   - Same-timestamp ties — last-wins is the usual spec; confirm.
-  - Escaping the delimiter in custom serialization (the naive `split('|')` fails if values contain `|`).
+  - Escaping the delimiter in custom serialization (the naive `split('|')` fails if values contain `|`) — and **escape the backslash itself first**, or `\|` in a value round-trips wrong.
+  - **f-string + backslash = SyntaxError before Python 3.12** — build escaped strings in variables outside the f-string; interview runtimes are often 3.10/3.11 (caught by execution 2026-07-10).
   - `RLock` deadlock if a thread re-acquires after raising; prefer `Lock` when methods don't call each other.
   - Persistence ordering — versions must be re-loaded in order so the bisect stays sorted.
 

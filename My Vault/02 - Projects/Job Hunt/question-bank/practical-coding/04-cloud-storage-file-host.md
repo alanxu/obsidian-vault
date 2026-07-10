@@ -47,10 +47,10 @@ A single comparison `used + size ≤ capacity` — **before** any mutation.
 
 ### `get_n_largest(prefix, n)`
 Two viable approaches. Pick based on query frequency vs update frequency:
-- **Per-query scan + heap** — filter prefix, push into min-heap of size `n`, pop smallest when size > n. O(F log n) where F is matching files.
+- **Per-query `heapq.nsmallest(n, …)` on the composite key `(-size, name)`** — O(F log n) where F is matching files. ⚠️ The *manual* size-n min-heap of `(size, name)` tuples is a trap: its eviction keeps the **largest** name on size ties (you'd need reversed name order in the key, which strings don't support) — `nsmallest` on the negated-size key sidesteps the whole problem.
 - **Maintain a sorted structure** (SortedList from `sortedcontainers`, or a custom index) for O(log F) update + O(n) top.
 
-For ICA grading the **heap approach is fast enough** and simpler to write correctly. Reach for SortedList only if the interviewer asks for scale.
+For ICA grading the **nsmallest approach is fast enough** and simpler to write correctly. Reach for SortedList only if the interviewer asks for scale.
 
 ### Merge
 Decide and document the collision policy:
@@ -91,20 +91,12 @@ class CloudStorage:
 
     # ---------- L2 ----------
     def get_n_largest(self, prefix, n):
-        heap = []
-        for name, (size, _) in self.files.items():
-            if not name.startswith(prefix):
-                continue
-            # sort key: (-size, name) — we want size desc, name asc
-            if len(heap) < n:
-                heapq.heappush(heap, (size, name))
-            else:
-                # worst (smallest) is at root; size asc, name asc
-                if heap and (size, name) > heap[0]:
-                    heapq.heapreplace(heap, (size, name))
-        # Sort the result: size desc, name asc
-        result = sorted(heap, key=lambda x: (-x[0], x[1]))
-        return ", ".join(f"{n}({s})" for s, n in result)
+        # ONE composite key handles both sort directions: (-size, name) makes
+        # "smallest" = (largest size, earliest name) → nsmallest = the answer.
+        matches = ((-size, name) for name, (size, _) in self.files.items()
+                   if name.startswith(prefix))
+        top = heapq.nsmallest(n, matches)
+        return ", ".join(f"{name}({-neg})" for neg, name in top)
 
     # ---------- L3 ----------
     def add_user(self, uid, capacity):
@@ -182,7 +174,7 @@ class CloudStorage:
 - **How it appears:** 4 levels; L1/L2 trivial; L3/L4 is where most candidates lose time.
 - **Tips:**
   - Keep `used` **incrementally** — don't recompute by summing file sizes on every query.
-  - Exact tie-break (size desc, then name asc) for `get_n_largest`. The heap order matters; verify with a 3-element test.
+  - Exact tie-break (size desc, then name asc) for `get_n_largest`. **Verify with a same-size test** (`aa`, `mm`, `zz` all size 10 → expect `aa, mm` for n=2) — a hand-rolled `(size, name)` min-heap fails exactly this case (found by execution 2026-07-10).
   - For capacity, reject **before** mutating state — partial-update bugs are the #1 cause of failed hidden tests.
 - **Pitfalls:**
   - Over-capacity insert mutating before the check fails.

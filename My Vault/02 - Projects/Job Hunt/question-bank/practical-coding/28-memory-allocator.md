@@ -30,10 +30,11 @@ Allocate/free contiguous blocks in a fixed array — a low-level design with a f
 - `allocate`: scan for first run of `size` zeros. O(n) per call.
 - `free`: walk and zero out units owned by mID. O(n) per call.
 
-**Approach B — Sorted free-interval list / size-bucketed free list (senior):**
-- Maintain a list of free intervals `[start, end)`; first-fit or best-fit.
-- `allocate(size)`: pop the first interval large enough; split if there's a remainder.
-- `free`: append the freed interval; coalesce with adjacent neighbors.
+**Approach B — Sorted free-interval list (first-fit) + coalescing free (senior):**
+- Maintain intervals sorted by **start**; scanning in start order = **first-fit** (lowest address that fits).
+- `allocate(size)`: take the first interval large enough; split off the remainder.
+- `free`: return the interval; coalesce with adjacent neighbors.
+- **Best-fit** (smallest interval ≥ size) needs a *second* index sorted by length — say the difference; a start-sorted list alone cannot best-fit in O(log n).
 
 ### Worked Python solutions
 
@@ -68,7 +69,7 @@ class Allocator:
         return count
 ```
 
-**Sorted interval list (best-fit):**
+**Sorted interval list (first-fit):**
 ```python
 from sortedcontainers import SortedList
 
@@ -81,9 +82,9 @@ class Allocator:
         self.by_owner = {}                  # mID -> [(start, length)]
 
     def allocate(self, size: int, mID: int) -> int:
-        # best-fit: smallest interval that fits
-        idx = self.free_intervals.bisect_left((size, -1))  # lower bound trick
-        # search a window for an interval that fits
+        # FIRST-fit: intervals sorted by start → this scan takes the
+        # lowest-address interval that fits. (A bisect on (size, …) is a
+        # dead end here — the list is start-sorted, not length-sorted.)
         for i in range(len(self.free_intervals)):
             start, length = self.free_intervals[i]
             if length >= size:
