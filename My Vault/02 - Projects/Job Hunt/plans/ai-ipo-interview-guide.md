@@ -15,20 +15,21 @@ AI Search, Enterprise LLMs, Defense AI, Open LLMs, Legal AI, Enterprise Search.
 
 ## At-a-glance comparison
 
-| # | Company | Tier | IPO target | Rounds | Duration | Difficulty |
-|---|---------|------|------------|--------|----------|------------|
-| 1 | **Anthropic** | Foundation Model | Filing June 2026 | 6 | 4–12 weeks | ★★★★★ (5/5) |
-| 2 | **OpenAI** | Foundation Model | H2 2026 target | 5 | 3–8 weeks | ★★★★★ (5/5) |
-| 3 | **Databricks** | Data + AI Platform | H2 2026 target | 5 | 4–7 weeks | ★★★★ (4/5) |
-| 4 | **xAI (Grok)** | Foundation Model | 2027+ | 4 | 2–4 weeks | ★★★★★ (5/5) |
-| 5 | **Anysphere (Cursor)** | AI Coding | 2027+ | 4 | 3–5 weeks | ★★★★ (4/5) |
-| 6 | **Scale AI** | AI Data / RLHF | Q3–Q4 2026 | 4 | 3–6 weeks | ★★★★ (4/5) |
-| 7 | **Perplexity AI** | AI Search | 2027 | 3 | ~11 days (very fast) | ★★★ (3/5) |
-| 8 | **Cohere** | Enterprise LLMs | Q4 2026 | 4 | ~3–4 weeks | ★★★ (3/5) |
-| 9 | **Anduril** | Defense AI | 2027 | 5 | 4–8 weeks | ★★★★ (4/5) |
-| 10 | **Mistral AI** | Open LLMs | 2027+ | 4 | 3–5 weeks | ★★★★ (4/5) |
-| 11 | **Harvey AI** | Legal AI | 2027+ | 4 | 3–6 weeks | ★★★★ (4/5) |
-| 12 | **Glean** | Enterprise Search | 2027+ | 4 | 3–5 weeks | ★★★ (3/5) |
+| #   | Company                | Tier               | IPO target       | Rounds | Duration             | Difficulty  |
+| --- | ---------------------- | ------------------ | ---------------- | ------ | -------------------- | ----------- |
+| 1   | **Anthropic**          | Foundation Model   | Filing June 2026 | 6      | 4–12 weeks           | ★★★★★ (5/5) |
+| 2   | **OpenAI**             | Foundation Model   | H2 2026 target   | 5      | 3–8 weeks            | ★★★★★ (5/5) |
+| 3   | **Databricks**         | Data + AI Platform | H2 2026 target   | 5      | 4–7 weeks            | ★★★★ (4/5)  |
+| 4   | **xAI (Grok)**         | Foundation Model   | 2027+            | 4      | 2–4 weeks            | ★★★★★ (5/5) |
+| 5   | **Anysphere (Cursor)** | AI Coding          | 2027+            | 4      | 3–5 weeks            | ★★★★ (4/5)  |
+| 6   | **Scale AI**           | AI Data / RLHF     | Q3–Q4 2026       | 4      | 3–6 weeks            | ★★★★ (4/5)  |
+| 7   | **Perplexity AI**      | AI Search          | 2027             | 3      | ~11 days (very fast) | ★★★ (3/5)   |
+| 8   | **Cohere**             | Enterprise LLMs    | Q4 2026          | 4      | ~3–4 weeks           | ★★★ (3/5)   |
+| 9   | **Anduril**            | Defense AI         | 2027             | 5      | 4–8 weeks            | ★★★★ (4/5)  |
+| 10  | **Mistral AI**         | Open LLMs          | 2027+            | 4      | 3–5 weeks            | ★★★★ (4/5)  |
+| 11  | **Harvey AI**          | Legal AI           | 2027+            | 4      | 3–6 weeks            | ★★★★ (4/5)  |
+| 12  | **Glean**              | Enterprise Search  | 2027+            | 4      | 3–5 weeks            | ★★★ (3/5)   |
+|     |                        |                    |                  |        |                      |             |
 
 ---
 
@@ -292,12 +293,15 @@ AI Search, Enterprise LLMs, Defense AI, Open LLMs, Legal AI, Enterprise Search.
 **IPO**: 2027+  ·  **Duration**: 3–6 weeks  ·  
 **Rounds**: 4  ·  **Difficulty**: ★★★★ (4/5)
 
-**Interview process**
+**Interview process** *(2–4 wks; 4–5 rounds. Updated 2026-07-13 from Tier-1 reports.)*
 
-1. Recruiter screen — background, legal domain interest, applied AI experience
-2. Take-home or coding assessment — practical AI engineering task
-3. Technical onsite — LLM system design + domain-specific AI
-4. Mission and product vision conversation
+1. Recruiter screen — background, "why legal AI", logistics (have a crisp 2-min story)
+2. Hiring-manager screen (~45 min) — motivation, role fit
+3. Technical phone screen (~60 min) — a **medium coding** problem in a shared editor (narrate, test on a small example); some candidates get a practical applied-AI take-home instead
+4. Virtual onsite (4–5 rounds) — coding, **LLM/applied-AI system design** (legal domain), backend, and a **behavioral/culture** round weighted on *working with non-engineers (lawyers, product)* — ownership, ambiguity, shipping fast
+5. **Senior+ only: founder interview** — product vision, why legal AI, how you think about the company's bets (mutual-fit as much as eval)
+
+> **Staff note:** the differentiator is domain judgment — high-stakes accuracy, auditability/citations, and hallucination control in law — plus credibly collaborating with lawyers. Weight prep toward the LLM-system-design questions below over LeetCode grind.
 
 **Technical questions**
 

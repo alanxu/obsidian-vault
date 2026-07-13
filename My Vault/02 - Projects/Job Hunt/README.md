@@ -8,6 +8,7 @@ Active project. Goal: land an offer at a top AI/AI-adjacent company (priority: A
 - **Runnable code lives OUTSIDE the vault** — a git repo at **`/Users/alanxu/projects/interview-questions/`**, now a **connected folder Claude can read/write/run directly** (no more vault staging). Subfolders mirror the bank (e.g. `practical-coding/01-in-memory-key-value-database/` with `*.py` + tests; run with `python3`). Split: the **vault = notes/banks**, the **repo = runnable code**. Claude writes code straight into the repo and runs it to verify; **you `git commit`/push** (Claude doesn't run git for you).
 - Boundary: **Track B** = implement a stateful component (→ `question-bank/practical-coding/`). **Track G** = build a small project take-home (RAG/agent/doc-extraction). Delivery channel (OA/live/async) ≠ track.
 - Cite sources in-file; verify present-day facts before stating them.
+- **Memories/SOPs (read before the matching task):** [[question-sourcing-playbook]] — how to FIND questions from published sources (never conclude "not found" before sweeping Tier-1 candidate reports + 中文 面经); [[inbox-digest-playbook]] — how to digest inbox notes (understand → enrich → place; never copy/list).
 
 ## Status
 - **Focus target**: Anthropic (SWE / Applied AI / FDE)
