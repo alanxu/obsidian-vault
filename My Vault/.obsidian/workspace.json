@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "02 - Projects/Job Hunt/plans/ai-ipo-interview-guide.md",
+                "file": "02 - Projects/Job Hunt/question-bank/practical-coding/05-expiring-credit-ledger.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "ai-ipo-interview-guide"
+              "title": "05-expiring-credit-ledger"
             }
           }
         ]
@@ -197,11 +197,14 @@
   "active": "66648ceebb760a33",
   "lastOpenFiles": [
     "02 - Projects/Job Hunt/question-bank/practical-coding/04-cloud-storage-file-host.md",
+    "02 - Projects/Job Hunt/question-bank/practical-coding/03-inventory-warehouse-management.md",
+    "02 - Projects/Job Hunt/question-bank/practical-coding/02-banking-system.md",
+    "02 - Projects/Job Hunt/question-bank/practical-coding/01-in-memory-key-value-database.md",
+    "02 - Projects/Job Hunt/plans/ai-ipo-interview-guide.md",
     "02 - Projects/Job Hunt/plans/question-sourcing-playbook.md",
     "02 - Projects/Job Hunt/question-sourcing-playbook.md",
     "02 - Projects/Job Hunt/question-bank/practical-coding/42-bootloader-instruction-loop.md",
     "02 - Projects/Job Hunt/question-bank/practical-coding/36-bootloader-instruction-loop.md",
-    "02 - Projects/Job Hunt/question-bank/practical-coding/03-inventory-warehouse-management.md",
     "02 - Projects/Job Hunt/question-bank/llm-system-design/38-multimodal-document-rag.md",
     "02 - Projects/Job Hunt/question-bank/practical-coding/41-debugging-broken-code.md",
     "02 - Projects/Job Hunt/plans/question-bank-audit-2026-07-08.md",
@@ -219,9 +222,6 @@
     "02 - Projects/Job Hunt/question-bank/llm-system-design/36-structured-output-extraction.md",
     "02 - Projects/Job Hunt/inbox-digest-playbook.md",
     "02 - Projects/Job Hunt/question-bank/llm-system-design/35-semantic-caching.md",
-    "02 - Projects/Job Hunt/question-bank/llm-system-design/34-realtime-voice-agent.md",
-    "02 - Projects/Job Hunt/question-bank/llm-system-design/33-deep-research-agent.md",
-    "02 - Projects/Job Hunt/plans/interview-prep-master-plan-2026.md",
     "02 - Projects/Job Hunt/source-code/02-banking-system/test_banking_system.py",
     "02 - Projects/Job Hunt/source-code/02-banking-system/banking_system.py",
     "02 - Projects/Job Hunt/source-code/02-banking-system",
