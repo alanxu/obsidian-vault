@@ -4,7 +4,7 @@ title: "Practical / OO Coding — Question Bank (canonical)"
 scope: "Self-contained practical/OO coding problems (master-plan Track B §3). Delivery-channel-agnostic. 34 files: multi-level ICA + Anthropic live bank + LeetCode Design warm-ups + agentic primitives."
 location: "Under `/question-bank/practical-coding/` (the umbrella question-bank folder)."
 related: ["[[track-B-practical-oo-coding/practical-oo-coding-deep-guide]]", "[[track-G-take-homes/README]]", "[[interview-prep-master-plan-2026]]", "[[openai-interview-guide]]", "[[anthropic-interview-guide]]", "[[cohere-interview-guide]]"]
-count: 41
+count: 42
 created: 2026-06-16
 updated: 2026-07-10 (EXECUTION VERIFICATION: every solution in every card extracted and RUN against its own traces + edge cases. 13 defects found & fixed — worst: 05 replay consumed the wrong grants, 06 double-counted holds, 12 parallel crawler deadlocked, 08 crashed on 2nd line, 09 missed cwd-symlinks/cycles, 25 heap summed player IDs not scores, 07 SyntaxError on Py≤3.11 f-string, 16 KeyError on tool actions, 30 missing import json, 04/10 tie-break bugs, 28 first-fit mislabeled best-fit, 02 trace format. All suites green. Same day: added 41 debugging card; enrichment pass; trace fixes 18/29. Prior: 2026-07-08 audit fill 36–40; see [[question-bank/README]] §Audit & evidence)
 ---
@@ -17,7 +17,7 @@ updated: 2026-07-10 (EXECUTION VERIFICATION: every solution in every card extrac
 >
 > **Why top-level:** this is a shared resource. A problem's *delivery channel* (OA / live / async timed assessment) is **not** its track — these problems are Track B content no matter how a company delivers them. Round mechanics + worked walk-through: [[practical-oo-coding-deep-guide]].
 >
-> **Runnable code (outside the vault):** these cards are the *study notes*. Runnable solutions + tests live in the connected git repo **`/Users/alanxu/projects/interview-questions/practical-coding/<problem>/`** (run with `python3`; Claude writes there directly). Card ↔ folder map by the same name/number, e.g. `01-in-memory-key-value-database` → `…/interview-questions/practical-coding/01-in-memory-key-value-database/`. **Done: all 41** (01–41, incl. the debugging drills), each folder = `README.md` + `<solution>.py` (with a `__main__` self-check demo) + `test_<solution>.py` (stdlib `unittest`, one class per level/phase). Stdlib-only, Python 3.10+; 288 tests, all green. Run one with `python3 test_<solution>.py`, or the whole set with a per-folder `python3 -m unittest`.
+> **Runnable code (outside the vault):** these cards are the *study notes*. Runnable solutions + tests live in the connected git repo **`/Users/alanxu/projects/interview-questions/practical-coding/<problem>/`** (run with `python3`; Claude writes there directly). Card ↔ folder map by the same name/number, e.g. `01-in-memory-key-value-database` → `…/interview-questions/practical-coding/01-in-memory-key-value-database/`. **Done: all 42** (01–42, incl. the debugging drills and #42 Bootloader), each folder = `README.md` + `<solution>.py` (with a `__main__` self-check demo) + `test_<solution>.py` (stdlib `unittest`, one class per level/phase). Stdlib-only, Python 3.10+; 301 tests, all green. Run one with `python3 test_<solution>.py`, or the whole set with a per-folder `python3 -m unittest`.
 
 ## Format legend (used in every file's "By format" section)
 - **OA · ICA** — CodeSignal Industry Coding Assessment: 1 project, 4 progressive levels, auto-graded on hidden tests, 90 min.
@@ -56,8 +56,9 @@ One object, 3–6 escalating levels, never break earlier levels.
 | 15 | [[15-duplicate-file-detection]] | 609 | Live, Take-home | Anthropic | ⭐ |
 | 35 | [[35-sliding-window-rate-limiter]] | — | Live, OA·GCA/HR | Anthropic (phone screen), Stripe, Cloudflare | ⭐ |
 | 36 | [[36-tokenizer-encode-decode]] *(2026-07 fill)* | — | Live, Code-review | Anthropic (reported: tokenize/detokenize review + streaming) | ⭐ |
+| 42 | [[42-bootloader-instruction-loop]] *(2026-07 fill)* | — | Live, OA·GCA/HR | Anthropic (reported phone screen) | ⭐ |
 
-> *Agentic questions moved to their own **Tier 4** below. #35 is the general `should_allow` rate limiter (digested from an Anthropic case study); #23 is the simpler #359 logger variant.*
+> *Agentic questions moved to their own **Tier 4** below. #35 is the general `should_allow` rate limiter (digested from an Anthropic case study); #23 is the simpler #359 logger variant. #42 is the "Bootloader" instruction-VM — loop detection + one-swap repair — digested from a 1point3acres phone-screen report.*
 
 ## Tier 3 — LeetCode "Design" warm-ups (pattern primitives)
 | # | Question | LC | Formats | Companies | ⭐ |
