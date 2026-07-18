@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "02 - Projects/Job Hunt/question-bank/practical-coding/05-expiring-credit-ledger.md",
+                "file": "02 - Projects/Job Hunt/question-bank/practical-coding/04-cloud-storage-file-host.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "05-expiring-credit-ledger"
+              "title": "04-cloud-storage-file-host"
             }
           }
         ]
@@ -196,8 +196,17 @@
   },
   "active": "66648ceebb760a33",
   "lastOpenFiles": [
+    "02 - Projects/Job Hunt/question-bank/practical-coding/05-expiring-credit-ledger.md",
+    "02 - Projects/Job Hunt/question-bank/practical-coding/06-gpu-credit-manager.md",
     "02 - Projects/Job Hunt/question-bank/practical-coding/04-cloud-storage-file-host.md",
     "02 - Projects/Job Hunt/question-bank/practical-coding/03-inventory-warehouse-management.md",
+    "02 - Projects/Job Hunt/question-bank/practical-coding/13-stack-trace-to-trace-conversion.md",
+    "02 - Projects/Job Hunt/question-bank/practical-coding/12-multithreaded-web-crawler.md",
+    "02 - Projects/Job Hunt/question-bank/practical-coding/11-infection-spread-grid.md",
+    "02 - Projects/Job Hunt/question-bank/practical-coding/10-api-log-parser-token-aggregator.md",
+    "02 - Projects/Job Hunt/question-bank/practical-coding/09-cd-directory-navigation.md",
+    "02 - Projects/Job Hunt/question-bank/practical-coding/08-multi-file-iterator.md",
+    "02 - Projects/Job Hunt/question-bank/practical-coding/07-versioned-time-based-kv-store.md",
     "02 - Projects/Job Hunt/question-bank/practical-coding/02-banking-system.md",
     "02 - Projects/Job Hunt/question-bank/practical-coding/01-in-memory-key-value-database.md",
     "02 - Projects/Job Hunt/plans/ai-ipo-interview-guide.md",
@@ -213,15 +222,6 @@
     "02 - Projects/Job Hunt/question-bank/practical-coding/40-text-editor-buffer.md",
     "02 - Projects/Job Hunt/question-bank/practical-coding/39-llm-request-batcher.md",
     "02 - Projects/Job Hunt/question-bank/practical-coding/38-dag-task-scheduler.md",
-    "02 - Projects/Job Hunt/question-bank/practical-coding/37-streaming-json-parser.md",
-    "02 - Projects/Job Hunt/question-bank/practical-coding/36-tokenizer-encode-decode.md",
-    "02 - Projects/Job Hunt/question-bank/llm-system-design/fundamentals/24-structured-outputs.md",
-    "02 - Projects/Job Hunt/question-bank/llm-system-design/fundamentals/23-mcp-a2a.md",
-    "02 - Projects/Job Hunt/question-bank/llm-system-design/fundamentals/22-prompt-caching.md",
-    "02 - Projects/Job Hunt/question-bank/llm-system-design/37-mcp-tool-platform.md",
-    "02 - Projects/Job Hunt/question-bank/llm-system-design/36-structured-output-extraction.md",
-    "02 - Projects/Job Hunt/inbox-digest-playbook.md",
-    "02 - Projects/Job Hunt/question-bank/llm-system-design/35-semantic-caching.md",
     "02 - Projects/Job Hunt/source-code/02-banking-system/test_banking_system.py",
     "02 - Projects/Job Hunt/source-code/02-banking-system/banking_system.py",
     "02 - Projects/Job Hunt/source-code/02-banking-system",
