@@ -81,38 +81,38 @@ def samples_to_events(samples):
 
 ### ≥N-stable follow-up
 
-Track, per `(depth, frame)`, how many consecutive samples it's been on the stack. Emit `start` only when the streak reaches N; emit `end` when the streak breaks. Skip the LCP-diff logic entirely for frames that haven't earned a stable emission.
+Track how long each **live** frame has persisted — but a frame counts as continuing only while it stays inside the **LCP** with the previous sample. A call stack is a stack: if a shallower frame changes name, its caller returned, so every frame below it also returned — even if the same name reappears at the same depth. So key the streak by **depth** and reset it whenever the prefix above the frame changes, *not* just when its own `(depth, name)` disappears. (Keying independently by `(depth, name)` is the classic bug here — it would call a deep frame "stable" while its parent flickers, which is physically impossible.) Emit `start` when a streak reaches N; emit `end` when the frame drops out of the LCP.
 
 ```python
 def stable_events(samples, n=3):
     events = []
-    streak = {}                     # (depth, frame) -> count
-    active = set()                   # frames currently "stable"
-    last_ts = 0
+    prev = []
+    streak = {}        # depth -> [name, consecutive count]
+    active = {}        # depth -> name (has emitted a start)
+    last_ts = samples[0][0] if samples else 0
 
     for ts, curr in samples:
-        # End streaks that are no longer present
-        curr_set = {(i, f) for i, f in enumerate(curr)}
-        for key in list(active):
-            if key not in curr_set:
-                events.append((ts, "end", key[1]))
-                active.discard(key)
-        # Start or extend streaks
-        for i, f in enumerate(curr):
-            key = (i, f)
-            streak[key] = streak.get(key, 0) + 1
-            if streak[key] == n and key not in active:
-                events.append((ts, "start", f))
-                active.add(key)
-        # Decay streaks for absent frames (but don't emit end until next sample)
-        for key in list(streak.keys()):
-            if key not in curr_set:
-                streak.pop(key, None)
+        lcp = lcp_depth(prev, curr)
+        # Everything in prev at/below the divergence point is gone (deepest first)
+        for d in range(len(prev) - 1, lcp - 1, -1):
+            if d in active:
+                events.append((ts, "end", active[d]))
+                del active[d]
+            streak.pop(d, None)
+        # Present frames: extend the streak inside the LCP, start fresh below it
+        for d, name in enumerate(curr):
+            if d < lcp:
+                streak[d][1] += 1
+            else:
+                streak[d] = [name, 1]
+            if streak[d][1] == n and d not in active:
+                events.append((ts, "start", name))
+                active[d] = name
+        prev = curr
         last_ts = ts
 
-    # Close any active streaks at end
-    for key in active:
-        events.append((last_ts, "end", key[1]))
+    for d in sorted(active, reverse=True):   # deepest first
+        events.append((last_ts, "end", active[d]))
     return events
 ```
 
@@ -142,6 +142,7 @@ def stable_events(samples, n=3):
   - **Forgetting to close frames at the end** — leaks.
   - **Equal consecutive stacks** — LCP = full depth, no events; don't double-emit.
   - **Streak logic off-by-one** — emit at `streak == N`, not `streak > N`.
+  - **Streak keyed independently per `(depth, name)`** — a deep frame's streak must reset when any *shallower* frame changes (it falls out of the LCP), because its caller returned. Tracking each depth in isolation wrongly reports an inner frame as "stable" while its parent flickers.
   - **Off-by-one in end-timestamp** — frame `f` ended at the current sample's timestamp, not the previous one's.
 
 ### Take-home / work-trial
