@@ -180,7 +180,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -194,8 +194,10 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "66648ceebb760a33",
+  "active": "646df26cd91e4605",
   "lastOpenFiles": [
+    "03 - Areas/Career/Alan_Xu_Resume.md",
+    "03 - Areas/Career",
     "02 - Projects/Job Hunt/question-bank/practical-coding/05-expiring-credit-ledger.md",
     "02 - Projects/Job Hunt/question-bank/practical-coding/06-gpu-credit-manager.md",
     "02 - Projects/Job Hunt/question-bank/practical-coding/04-cloud-storage-file-host.md",
@@ -221,7 +223,6 @@
     "02 - Projects/Job Hunt/question-bank/llm-system-design/fundamentals/25-multimodal-embeddings.md",
     "02 - Projects/Job Hunt/question-bank/practical-coding/40-text-editor-buffer.md",
     "02 - Projects/Job Hunt/question-bank/practical-coding/39-llm-request-batcher.md",
-    "02 - Projects/Job Hunt/question-bank/practical-coding/38-dag-task-scheduler.md",
     "02 - Projects/Job Hunt/source-code/02-banking-system/test_banking_system.py",
     "02 - Projects/Job Hunt/source-code/02-banking-system/banking_system.py",
     "02 - Projects/Job Hunt/source-code/02-banking-system",
@@ -230,7 +231,6 @@
     "02 - Projects/Job Hunt/source-code/01-in-memory-key-value-database/__pycache__",
     "02 - Projects/Job Hunt/source-code/01-in-memory-key-value-database/test_in_memory_db.py",
     "02 - Projects/Job Hunt/source-code/01-in-memory-key-value-database/in_memory_db.py",
-    "02 - Projects/Job Hunt/source-code/01-in-memory-key-value-database",
-    "02 - Projects/Job Hunt/coding-practice/problems/demo-xyz/test_solution.py"
+    "02 - Projects/Job Hunt/source-code/01-in-memory-key-value-database"
   ]
 }
