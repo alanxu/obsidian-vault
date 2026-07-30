@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "03 - Areas/Career/Alan_Xu_Resume.md",
+                "file": "02 - Projects/Job Hunt/track-D-ml-llm-system-design/D1-rag-with-citations.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Alan_Xu_Resume"
+              "title": "D1-rag-with-citations"
             }
           }
         ]
@@ -196,11 +196,12 @@
   },
   "active": "66648ceebb760a33",
   "lastOpenFiles": [
+    "02 - Projects/Job Hunt/question-bank/llm-system-design/01-rag-with-citations.md",
+    "03 - Areas/Career/Alan_Xu_Resume.md",
     "03 - Areas/Career/Alan_Xu_Resume_cppib.pdf",
     "02 - Projects/Job Hunt/question-bank/practical-coding/04-cloud-storage-file-host.md",
     "03 - Areas/Career/Alan_Xu_Resume.pdf",
     "03 - Areas/Career/Alan_Xu_Resume_2607.pdf",
-    "03 - Areas/Career/Alan_Xu_Resume.md",
     "03 - Areas/Career",
     "02 - Projects/Job Hunt/question-bank/practical-coding/05-expiring-credit-ledger.md",
     "02 - Projects/Job Hunt/question-bank/practical-coding/06-gpu-credit-manager.md",
@@ -230,7 +231,6 @@
     "02 - Projects/Job Hunt/source-code/02-banking-system",
     "02 - Projects/Job Hunt/source-code",
     "02 - Projects/Job Hunt/source-code/01-in-memory-key-value-database/__pycache__/in_memory_db.cpython-310.pyc",
-    "02 - Projects/Job Hunt/source-code/01-in-memory-key-value-database/__pycache__",
-    "02 - Projects/Job Hunt/source-code/01-in-memory-key-value-database/test_in_memory_db.py"
+    "02 - Projects/Job Hunt/source-code/01-in-memory-key-value-database/__pycache__"
   ]
 }
