@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "03 - Areas/Agentic AI/Production Agent Handbook.md",
+                "file": "02 - Projects/Job Hunt/track-D-ml-llm-system-design/D1-rag-with-citations.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Production Agent Handbook"
+              "title": "D1-rag-with-citations"
             }
           }
         ]
@@ -196,8 +196,8 @@
   },
   "active": "66648ceebb760a33",
   "lastOpenFiles": [
-    "02 - Projects/Job Hunt/track-D-ml-llm-system-design/D1-rag-with-citations.md",
     "03 - Areas/Agentic AI/Production Agent Handbook.md",
+    "02 - Projects/Job Hunt/track-D-ml-llm-system-design/D1-rag-with-citations.md",
     "03 - Areas/Agentic AI",
     "02 - Projects/Job Hunt/question-bank/llm-system-design/01-rag-with-citations.md",
     "03 - Areas/Career/Alan_Xu_Resume.md",
