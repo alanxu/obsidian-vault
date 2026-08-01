@@ -514,12 +514,12 @@ Provider-specific. The MiniMax M-series models expose two protocol-compat endpoi
 
 ## E.1 Endpoints
 
-| Protocol | Endpoint |
-|---|---|
-| **Anthropic Messages** (intl) | `POST https://api.minimax.io/anthropic/v1/messages` |
-| **Anthropic Messages** (China) | `POST https://api.minimaxi.com/anthropic/v1/messages` |
-| **OpenAI Chat Completions** (intl) | `POST https://api.minimax.io/v1/chat/completions` |
-| **OpenAI Chat Completions** (China) | `POST https://api.minimaxi.com/v1/chat/completions` |
+| Protocol                            | Endpoint                                              |
+| ----------------------------------- | ----------------------------------------------------- |
+| **Anthropic Messages** (intl)       | `POST https://api.minimax.io/anthropic/v1/messages`   |
+| **Anthropic Messages** (China)      | `POST https://api.minimaxi.com/anthropic/v1/messages` |
+| **OpenAI Chat Completions** (intl)  | `POST https://api.minimax.io/v1/chat/completions`     |
+| **OpenAI Chat Completions** (China) | `POST https://api.minimaxi.com/v1/chat/completions`   |
 
 ## E.2 Authentication
 
@@ -548,32 +548,32 @@ If both are sent, `Authorization` wins.
 
 ## E.4 Anthropic-compat Request Schema
 
-| Field | Type | Required | Notes |
-|---|---|---|---|
-| `model` | enum | ✅ | See table above |
-| `messages` | array | ✅ | Alternating user / assistant |
-| `max_tokens` | int | | M3: rec **131072** / max **524288**. M2.x: rec **65536** / max **204800** |
-| `system` | string \| block[] | | Plain text OR `[{type:text, text, cache_control?}]` |
-| `temperature` | 0–2 | | default `1` |
-| `top_p` | 0–1 | | default `0.95` (M3) / `0.9` (M2.x) |
-| `stream` | bool | | default `false` |
-| `tools` | array | | `[{name, description, input_schema, cache_control?}]` |
-| `tool_choice` | object | | `type: auto \| none` only — **no forced-tool semantics** |
-| `thinking` | object | | `{type: disabled \| adaptive}`. M3 only; M2.x always thinks |
-| `service_tier` | enum | | `standard` (default) or `priority` (1.5× price, faster admission) |
-| `metadata.user_id` | string | | Per-user rate limit / billing |
+| Field              | Type              | Required | Notes                                                                     |
+| ------------------ | ----------------- | -------- | ------------------------------------------------------------------------- |
+| `model`            | enum              | ✅        | See table above                                                           |
+| `messages`         | array             | ✅        | Alternating user / assistant                                              |
+| `max_tokens`       | int               |          | M3: rec **131072** / max **524288**. M2.x: rec **65536** / max **204800** |
+| `system`           | string \| block[] |          | Plain text OR `[{type:text, text, cache_control?}]`                       |
+| `temperature`      | 0–2               |          | default `1`                                                               |
+| `top_p`            | 0–1               |          | default `0.95` (M3) / `0.9` (M2.x)                                        |
+| `stream`           | bool              |          | default `false`                                                           |
+| `tools`            | array             |          | `[{name, description, input_schema, cache_control?}]`                     |
+| `tool_choice`      | object            |          | `type: auto \| none` only — **no forced-tool semantics**                  |
+| `thinking`         | object            |          | `{type: disabled \| adaptive}`. M3 only; M2.x always thinks               |
+| `service_tier`     | enum              |          | `standard` (default) or `priority` (1.5× price, faster admission)         |
+| `metadata.user_id` | string            |          | Per-user rate limit / billing                                             |
 
 ## E.5 Request Content Blocks
 
-| `type` | Models | Notes |
-|---|---|---|
-| `text` | all | Plain text |
-| `image` | **M3 only** | `source: {type: base64\|url, ...}`, `detail: low\|default\|high` |
-| `video` | **M3 only** | `source` like image; `fps` 0.2–5 (default 1); `max_long_side_pixel` |
-| `tool_use` | all | Echo prior assistant tool call: `{id, name, input}` |
-| `tool_result` | all | Tool execution result: `{tool_use_id, content: string\|block[]}` |
-| `thinking` | all (echo) | Must include `signature` unchanged |
-| `mid_conv_system` | **M3 only** | System instructions inserted mid-conversation |
+| `type`            | Models      | Notes                                                               |
+| ----------------- | ----------- | ------------------------------------------------------------------- |
+| `text`            | all         | Plain text                                                          |
+| `image`           | **M3 only** | `source: {type: base64\|url, ...}`, `detail: low\|default\|high`    |
+| `video`           | **M3 only** | `source` like image; `fps` 0.2–5 (default 1); `max_long_side_pixel` |
+| `tool_use`        | all         | Echo prior assistant tool call: `{id, name, input}`                 |
+| `tool_result`     | all         | Tool execution result: `{tool_use_id, content: string\|block[]}`    |
+| `thinking`        | all (echo)  | Must include `signature` unchanged                                  |
+| `mid_conv_system` | **M3 only** | System instructions inserted mid-conversation                       |
 
 **File limits:** image ≤10MB, video ≤50MB (URL/base64), video ≤512MB (Files API via `mm_file://{file_id}`), request body ≤64MB.
 
