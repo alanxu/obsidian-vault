@@ -73,14 +73,14 @@ The agent is never the last gate. State this explicitly; it's the difference bet
 ## 2. Notable projects & platforms
 
 ### Open source / research
-| Project | What it is | Why it matters |
-|---|---|---|
-| **TradingAgents** (Tauric Research) | Multi-agent LLM trading framework mirroring a real trading desk: fundamental/sentiment/technical analysts → trader → risk team | The most-cited reference architecture for role-decomposed financial agents; good vocabulary source |
-| **FinRobot** (AI4Finance Foundation) | Open-source agent platform for financial applications, layered LLM foundation + multi-source data | The most complete open agentic-finance stack; integrates OpenBB |
-| **FinGPT** (AI4Finance) | Open financial LLMs — sentiment, forecasting, assistants | The open-weights baseline for finance-tuned models |
-| **OpenBB** | Open investment research data/terminal layer | The de facto open tool layer agents call; often the MCP/tool surface |
-| **AgenticTrading** (Open-Finance-Lab), **Agentic Trading Lab** | Backtest + paper-trade playgrounds with reasoning/decision logs | Useful precisely because they log trajectories — the thing you need for eval |
-| **awesome-trading-agents** (LLMQuant) | Curated index of LLM trading agents, MCP servers, agent skills | Fastest way to survey the space |
+| Project                                                        | What it is                                                                                                                     | Why it matters                                                                                     |
+| -------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------- |
+| **TradingAgents** (Tauric Research)                            | Multi-agent LLM trading framework mirroring a real trading desk: fundamental/sentiment/technical analysts → trader → risk team | The most-cited reference architecture for role-decomposed financial agents; good vocabulary source |
+| **FinRobot** (AI4Finance Foundation)                           | Open-source agent platform for financial applications, layered LLM foundation + multi-source data                              | The most complete open agentic-finance stack; integrates OpenBB                                    |
+| **FinGPT** (AI4Finance)                                        | Open financial LLMs — sentiment, forecasting, assistants                                                                       | The open-weights baseline for finance-tuned models                                                 |
+| **OpenBB**                                                     | Open investment research data/terminal layer                                                                                   | The de facto open tool layer agents call; often the MCP/tool surface                               |
+| **AgenticTrading** (Open-Finance-Lab), **Agentic Trading Lab** | Backtest + paper-trade playgrounds with reasoning/decision logs                                                                | Useful precisely because they log trajectories — the thing you need for eval                       |
+| **awesome-trading-agents** (LLMQuant)                          | Curated index of LLM trading agents, MCP servers, agent skills                                                                 | Fastest way to survey the space                                                                    |
 
 ### Commercial / in-house (the real deployments)
 - **JPMorgan — LLM Suite**: multi-model internal platform, reported live to 200k+ employees; ~$18B 2026 tech budget; 400+ AI use cases; publicly claimed $1.5–2B measurable value across fraud, trading, ops. Stated intent to deploy longer-running autonomous agents during 2026.

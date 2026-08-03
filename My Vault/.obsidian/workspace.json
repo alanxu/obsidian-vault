@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "03 - Areas/Agentic AI/harness/framework-evaluation.md",
+                "file": "03 - Areas/Agentic AI/topics/aws-agent-infra.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "framework-evaluation"
+              "title": "aws-agent-infra"
             }
           }
         ]
@@ -197,9 +197,11 @@
   "active": "66648ceebb760a33",
   "lastOpenFiles": [
     "03 - Areas/Agentic AI/topics/agentic-ai-in-finance.md",
+    "03 - Areas/Agentic AI/topics/aws-agent-infra.md",
+    "03 - Areas/Agentic AI/topics/26-aws-agent-infra.md",
+    "03 - Areas/Agentic AI/harness/framework-evaluation.md",
     "04 - Resources/W.md",
     "03 - Areas/Agentic AI/topics",
-    "03 - Areas/Agentic AI/harness/framework-evaluation.md",
     "03 - Areas/Agentic AI/Production Agent Handbook.md",
     "02 - Projects/Job Hunt/question-bank/llm-system-design/fundamentals/26-aws-agent-infra.md",
     "03 - Areas/Agentic AI/quality/further-reading.md",
@@ -221,8 +223,6 @@
     "03 - Areas/Agentic AI/harness/state-orchestration.md",
     "03 - Areas/Agentic AI/harness/tools.md",
     "03 - Areas/Agentic AI/harness/core-loop.md",
-    "03 - Areas/Agentic AI/harness/README.md",
-    "03 - Areas/Agentic AI/context/anti-patterns.md",
     "03 - Areas/Agentic AI/quality",
     "03 - Areas/Agentic AI/governance",
     "03 - Areas/Agentic AI/harness",

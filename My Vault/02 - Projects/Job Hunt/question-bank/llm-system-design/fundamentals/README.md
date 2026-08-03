@@ -66,7 +66,6 @@ Behavioral (why Anthropic, Claude vs others, Responsible AI, safety-vs-innovatio
 | 23 | [[23-mcp-a2a]] | "explain MCP / MCP vs function calling / A2A" — rapid-fire staple at agent shops |
 | 24 | [[24-structured-outputs]] | constrained decoding / JSON mode — previously zero coverage |
 | 25 | [[25-multimodal-embeddings]] | *(2026-07-09)* visual retrieval (CLIP vs ColPali vs describe-then-embed) — pairs with design card [[llm-system-design/38-multimodal-document-rag]] |
-| 26 | [[26-aws-agent-infra]] | *(2026-08-03)* AWS agent stack (Bedrock / Strands / AgentCore / Q), pros-cons, and a demo architecture for autonomous vs interactive agents — vendor-specific survey to anchor "design an agent on AWS" questions |
 
 ## Priority (per the source, RAG/AI-eng background)
 RAG ★★★★★ · AI System Design ★★★★★ · Production AI ★★★★★ · Agents ★★★★☆ · LLM Basics ★★★★☆ · Safety ★★★★☆.
