@@ -15,6 +15,7 @@ The runtime that wraps the model. Engineering substrate, not LLM magic.
 - [[state-orchestration|3.3 State & Orchestration]] — durability, checkpoints, event log
 - [[multi-agent|3.4 Multi-Agent (Implementation)]] — ownership, message schemas, failure isolation
 - [[errors-recovery|3.5 Errors & Recovery]] — retryable vs not, loops, partial completion
+- [[framework-evaluation|3.6 Framework Selection]] — LangGraph vs. Claude Agent SDK, when to use which
 
 ## Reference
 
