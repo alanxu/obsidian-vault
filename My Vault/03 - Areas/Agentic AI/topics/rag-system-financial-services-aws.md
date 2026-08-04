@@ -82,19 +82,19 @@ implementation; the runtime picks them up via Step Functions Map state.
 
 ### 1.2 Format catalogue and pre-processing
 
-| Format                | Examples                              | Pre-process on AWS |
-|-----------------------|---------------------------------------|---------------------|
-| PDF (text + scan)     | Prospectus, 10-K, contracts            | Textract (`DetectDocumentText` + `AnalyzeDocument` with `FORMS`/`TABLES`); fall back to PyMuPDF for text-native PDFs |
-| Scanned images        | KYC, signed paper forms               | Textract; flag low-confidence for human review |
-| Structured text       | CSV, XLSX, Parquet, JSON, XML         | Glue Crawler → Glue Data Catalog; schema inferred + versioned |
-| Unstructured text     | RTF, TXT, Markdown, log lines         | Glue / plain Lambda |
-| Email                 | EML, MSG                              | SES + `mailparser` / `email` lib; extract body + attachments |
-| Office                | DOCX, PPTX, XLSM                      | Convert via `LibreOffice` headless on Lambda or `mammoth` for DOCX |
-| HTML                  | News, portals                         | `trafilatura` / `BeautifulSoup` boilerplate strip |
-| Audio / video         | Earnings calls, compliance recordings | Transcribe (speaker diarisation on, custom vocabulary per ticker list) |
-| Images with charts    | Chart PDFs, heatmaps, dashboards       | Nova/Claude Vision (multimodal Bedrock) — extract data, table, narrative |
-| XBRL                  | Filings                               | Arelle + Glue ETL → relational facts |
-| FIX / SWIFT           | Trade and cash messages               | QuickFIX/J or simple `pyfix` parser → JSON canonical |
+| Format             | Examples                              | Pre-process on AWS                                                                                                   |
+| ------------------ | ------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| PDF (text + scan)  | Prospectus, 10-K, contracts           | Textract (`DetectDocumentText` + `AnalyzeDocument` with `FORMS`/`TABLES`); fall back to PyMuPDF for text-native PDFs |
+| Scanned images     | KYC, signed paper forms               | Textract; flag low-confidence for human review                                                                       |
+| Structured text    | CSV, XLSX, Parquet, JSON, XML         | Glue Crawler → Glue Data Catalog; schema inferred + versioned                                                        |
+| Unstructured text  | RTF, TXT, Markdown, log lines         | Glue / plain Lambda                                                                                                  |
+| Email              | EML, MSG                              | SES + `mailparser` / `email` lib; extract body + attachments                                                         |
+| Office             | DOCX, PPTX, XLSM                      | Convert via `LibreOffice` headless on Lambda or `mammoth` for DOCX                                                   |
+| HTML               | News, portals                         | `trafilatura` / `BeautifulSoup` boilerplate strip                                                                    |
+| Audio / video      | Earnings calls, compliance recordings | Transcribe (speaker diarisation on, custom vocabulary per ticker list)                                               |
+| Images with charts | Chart PDFs, heatmaps, dashboards      | Nova/Claude Vision (multimodal Bedrock) — extract data, table, narrative                                             |
+| XBRL               | Filings                               | Arelle + Glue ETL → relational facts                                                                                 |
+| FIX / SWIFT        | Trade and cash messages               | QuickFIX/J or simple `pyfix` parser → JSON canonical                                                                 |
 
 Every artefact lands in S3 with an **immutable, content-addressed key**:
 `s3://rag-raw-{region}/{source}/{tenant}/{yyyy}/{mm}/{dd}/{sha256}.{ext}`.
@@ -165,17 +165,18 @@ serving the documents that did succeed.
 There is no "best" chunker. The interview talking point is **strategy
 selection based on document structure and downstream query patterns**.
 
-| Doc type                  | Strategy                              | Why |
-|---------------------------|----------------------------------------|-----|
-| Regulatory filings (10-K) | **Hierarchical parent-child**: page = parent, paragraph = child, table = own chunk | Queries hit a specific clause; retrieval returns the child but the LLM gets the parent for context |
-| Prospectus / contract     | **Clause-aware** chunking (LangChain `RecursiveCharacterTextSplitter` over clause regex); never break a "Representations and Warranties" section mid-sentence | Cross-clause answers need the whole clause |
-| Tables (CSV/XLSX/PDF)     | **One row = one chunk** when ≤ 200 rows; **schema summary + sample rows** when larger; preserve column types in metadata | "What is AAPL's Q3 net income?" hits one chunk, not a 10k-row slice |
-| Earnings call transcript  | **Speaker turn** as chunk + rolling **5-turn window** as parent | "What did the CFO say about margins?" wants the answer in context |
-| News article               | **Sentence-window** with overlap; embed title separately and boost its weight | Title is the strongest signal |
-| Scanned PDF (low OCR)     | **Page-level** first, then re-chunk on second pass if text density is high | Don't fight bad OCR with semantic chunking — first you have to have text |
-| Email thread               | **Per-message** with `In-Reply-To` chain as parent | Thread context is everything |
-| Code (e.g. API docs)      | **Function/class** boundaries; LangChain `LanguageAwareSplitter` | Symbols matter, prose is glue |
-| Charts / images            | **Whole-image embedding** via multimodal embed; also extract data table and embed as text chunk | Multimodal + structured both retrieved |
+| Doc type                  | Strategy                                                                                                                                                      | Why                                                                                                |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| Regulatory filings (10-K) | **Hierarchical parent-child**: page = parent, paragraph = child, table = own chunk                                                                            | Queries hit a specific clause; retrieval returns the child but the LLM gets the parent for context |
+| Prospectus / contract     | **Clause-aware** chunking (LangChain `RecursiveCharacterTextSplitter` over clause regex); never break a "Representations and Warranties" section mid-sentence | Cross-clause answers need the whole clause                                                         |
+| Tables (CSV/XLSX/PDF)     | **One row = one chunk** when ≤ 200 rows; **schema summary + sample rows** when larger; preserve column types in metadata                                      | "What is AAPL's Q3 net income?" hits one chunk, not a 10k-row slice                                |
+| Earnings call transcript  | **Speaker turn** as chunk + rolling **5-turn window** as parent                                                                                               | "What did the CFO say about margins?" wants the answer in context                                  |
+| News article              | **Sentence-window** with overlap; embed title separately and boost its weight                                                                                 | Title is the strongest signal                                                                      |
+| Scanned PDF (low OCR)     | **Page-level** first, then re-chunk on second pass if text density is high                                                                                    | Don't fight bad OCR with semantic chunking — first you have to have text                           |
+| Email thread              | **Per-message** with `In-Reply-To` chain as parent                                                                                                            | Thread context is everything                                                                       |
+| Code (e.g. API docs)      | **Function/class** boundaries; LangChain `LanguageAwareSplitter`                                                                                              | Symbols matter, prose is glue                                                                      |
+| Charts / images           | **Whole-image embedding** via multimodal embed; also extract data table and embed as text chunk                                                               | Multimodal + structured both retrieved                                                             |
+|                           |                                                                                                                                                               |                                                                                                    |
 
 **Late chunking** is a strong choice for documents where cross-chunk
 semantics matter (long contracts): embed the whole document first, then
@@ -228,17 +229,17 @@ catches quality problems before they pollute the index.
 
 ### 1.7 Storage layout
 
-| Store                | What lives there                          | Service                       | Access pattern |
-|----------------------|-------------------------------------------|-------------------------------|-----------------|
-| Raw artefacts        | Original PDF/email/CSV/etc. (WORM, 7 yr)  | S3 + Object Lock (Compliance) | Rare; lineage + audit |
-| Canonical text       | Extracted text per artefact               | S3 (Standard)                 | Re-chunking, eval |
-| Chunks + metadata    | Chunk JSON with metadata, citations       | S3 (Standard-IA)              | Re-embed, debug |
-| Vector index         | Embeddings + sparse + dense hybrid        | OpenSearch Serverless or provisioned with `k-NN` (HNSW) | k-NN search |
-| Keyword index        | BM25 inverted index, same docs            | OpenSearch (same cluster, separate index) | Lexical + citation lookup |
-| Structured facts     | Tables, figures, dates, entities          | Aurora PostgreSQL (pgvector for any that need embedding) | SQL, joins, BI |
-| Graph                | Entity relations, document links, citations | Neptune (or Neptune Serverless) | Multi-hop reasoning, "show me everything linked to X" |
-| Manifest + ACL       | Doc id → locations, versions, perms       | DynamoDB (GSI on tenant + tag) | Lookup, ACL pre-filter |
-| Eval + feedback      | Queries, answers, ratings, traces         | S3 + Athena or OpenSearch     | Offline eval |
+| Store             | What lives there                            | Service                                                  | Access pattern                                        |
+| ----------------- | ------------------------------------------- | -------------------------------------------------------- | ----------------------------------------------------- |
+| Raw artefacts     | Original PDF/email/CSV/etc. (WORM, 7 yr)    | S3 + Object Lock (Compliance)                            | Rare; lineage + audit                                 |
+| Canonical text    | Extracted text per artefact                 | S3 (Standard)                                            | Re-chunking, eval                                     |
+| Chunks + metadata | Chunk JSON with metadata, citations         | S3 (Standard-IA)                                         | Re-embed, debug                                       |
+| Vector index      | Embeddings + sparse + dense hybrid          | OpenSearch Serverless or provisioned with `k-NN` (HNSW)  | k-NN search                                           |
+| Keyword index     | BM25 inverted index, same docs              | OpenSearch (same cluster, separate index)                | Lexical + citation lookup                             |
+| Structured facts  | Tables, figures, dates, entities            | Aurora PostgreSQL (pgvector for any that need embedding) | SQL, joins, BI                                        |
+| Graph             | Entity relations, document links, citations | Neptune (or Neptune Serverless)                          | Multi-hop reasoning, "show me everything linked to X" |
+| Manifest + ACL    | Doc id → locations, versions, perms         | DynamoDB (GSI on tenant + tag)                           | Lookup, ACL pre-filter                                |
+| Eval + feedback   | Queries, answers, ratings, traces           | S3 + Athena or OpenSearch                                | Offline eval                                          |
 
 The **manifest in DynamoDB is the source of truth** for "where is this
 document?" All other stores are downstream projections. This makes
@@ -251,12 +252,12 @@ tractable — you find the manifest row, fan-out delete.
 
 ### 2.1 Client patterns
 
-| Client            | Latency need | Interaction | Backend |
-|-------------------|--------------|-------------|---------|
-| **Web UI** (analyst dashboard) | <2s p95, streaming | Sync request/response, then SSE stream | API Gateway → Lambda (sync) → AppSync (GraphQL subscriptions for streaming) |
-| **Agent tool use** (Bedrock Agent action group) | <5s typical, up to 60s | Tool-call return; long runs are background | Direct Lambda invoke (with `actionGroupInvocation` payload), or Step Functions for multi-step |
-| **Event-driven** (e.g. "alert me if a new filing changes my answer") | Fire-and-forget | Async; idempotent | EventBridge → SQS → Lambda fan-out |
-| **Cron / scheduled** (morning research brief, end-of-day compliance digest) | Minutes OK, must complete | Async batch | EventBridge schedule → Step Functions → parallel Lambda map → writes output to S3 + notifies user |
+| Client                                                                      | Latency need              | Interaction                                | Backend                                                                                           |
+| --------------------------------------------------------------------------- | ------------------------- | ------------------------------------------ | ------------------------------------------------------------------------------------------------- |
+| **Web UI** (analyst dashboard)                                              | <2s p95, streaming        | Sync request/response, then SSE stream     | API Gateway → Lambda (sync) → AppSync (GraphQL subscriptions for streaming)                       |
+| **Agent tool use** (Bedrock Agent action group)                             | <5s typical, up to 60s    | Tool-call return; long runs are background | Direct Lambda invoke (with `actionGroupInvocation` payload), or Step Functions for multi-step     |
+| **Event-driven** (e.g. "alert me if a new filing changes my answer")        | Fire-and-forget           | Async; idempotent                          | EventBridge → SQS → Lambda fan-out                                                                |
+| **Cron / scheduled** (morning research brief, end-of-day compliance digest) | Minutes OK, must complete | Async batch                                | EventBridge schedule → Step Functions → parallel Lambda map → writes output to S3 + notifies user |
 
 **The retrieval API has two endpoints, not one:**
 
@@ -537,32 +538,32 @@ across every store, with no bypass path, is the work.**
 
 ## 4. AWS services mapping (cheat sheet)
 
-| Capability                        | Service                                       |
-|-----------------------------------|-----------------------------------------------|
-| LLM (chat, vision)                | Bedrock — Claude Sonnet/Haiku, Nova Pro/Lite   |
-| Embeddings                        | Bedrock — Titan v2, Cohere Embed v3           |
-| Reranking                         | Bedrock — Cohere Rerank 3.5                   |
-| Guardrails / PII                  | Bedrock Guardrails, Comprehend PII, Macie     |
-| OCR                               | Textract (`AnalyzeDocument` with TABLES/FORMS) |
-| Speech-to-text                    | Transcribe (diarisation, custom vocab)        |
-| Object storage (WORM)             | S3 + Object Lock (Compliance mode)            |
-| Vector + keyword hybrid           | OpenSearch Service (k-NN + BM25, ISM)         |
-| Structured facts                  | Aurora PostgreSQL (pgvector optional)         |
-| Graph (entities, relations)       | Neptune (Serverless)                          |
-| Manifest / ACL                    | DynamoDB                                      |
-| Orchestration                     | Step Functions, EventBridge, SQS, SNS         |
-| Compute                           | Lambda (Node 20 / Python 3.12); Fargate for long jobs |
-| API                               | API Gateway (REST + WebSocket), AppSync       |
-| Identity                          | Cognito, IAM Identity Center                  |
-| Secrets / keys                    | Secrets Manager, KMS (per-tenant CMK)         |
-| Observability                     | CloudWatch, X-Ray, OpenTelemetry, Langfuse    |
-| Audit / governance                | CloudTrail Lake, AWS Config, Audit Manager   |
-| Streaming ingest                  | Kinesis Data Streams, Kinesis Firehose, MSK   |
-| File transfer                     | AWS Transfer Family (SFTP/FTPS)               |
-| CDC                               | DMS                                            |
-| Schema discovery                  | Glue Crawler + Glue Data Catalog              |
-| Build / deploy                    | CodePipeline, CodeBuild, CDK or Terraform    |
-| Cost / FinOps                     | Cost Explorer, custom OpenSearch token-cost dashboards |
+| Capability                  | Service                                                |
+| --------------------------- | ------------------------------------------------------ |
+| LLM (chat, vision)          | Bedrock — Claude Sonnet/Haiku, Nova Pro/Lite           |
+| Embeddings                  | Bedrock — Titan v2, Cohere Embed v3                    |
+| Reranking                   | Bedrock — Cohere Rerank 3.5                            |
+| Guardrails / PII            | Bedrock Guardrails, Comprehend PII, Macie              |
+| OCR                         | Textract (`AnalyzeDocument` with TABLES/FORMS)         |
+| Speech-to-text              | Transcribe (diarisation, custom vocab)                 |
+| Object storage (WORM)       | S3 + Object Lock (Compliance mode)                     |
+| Vector + keyword hybrid     | OpenSearch Service (k-NN + BM25, ISM)                  |
+| Structured facts            | Aurora PostgreSQL (pgvector optional)                  |
+| Graph (entities, relations) | Neptune (Serverless)                                   |
+| Manifest / ACL              | DynamoDB                                               |
+| Orchestration               | Step Functions, EventBridge, SQS, SNS                  |
+| Compute                     | Lambda (Node 20 / Python 3.12); Fargate for long jobs  |
+| API                         | API Gateway (REST + WebSocket), AppSync                |
+| Identity                    | Cognito, IAM Identity Center                           |
+| Secrets / keys              | Secrets Manager, KMS (per-tenant CMK)                  |
+| Observability               | CloudWatch, X-Ray, OpenTelemetry, Langfuse             |
+| Audit / governance          | CloudTrail Lake, AWS Config, Audit Manager             |
+| Streaming ingest            | Kinesis Data Streams, Kinesis Firehose, MSK            |
+| File transfer               | AWS Transfer Family (SFTP/FTPS)                        |
+| CDC                         | DMS                                                    |
+| Schema discovery            | Glue Crawler + Glue Data Catalog                       |
+| Build / deploy              | CodePipeline, CodeBuild, CDK or Terraform              |
+| Cost / FinOps               | Cost Explorer, custom OpenSearch token-cost dashboards |
 
 A "fully managed RAG" shortcut exists: **Bedrock Knowledge Bases**
 (managed ingestion + retrieval + OpenSearch) plus **Bedrock Agents**
