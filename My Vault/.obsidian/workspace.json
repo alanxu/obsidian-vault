@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "03 - Areas/Agentic AI/topics/aws-agent-infra.md",
+                "file": "03 - Areas/Agentic AI/topics/skills-tools-mcp-cli.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "aws-agent-infra"
+              "title": "skills-tools-mcp-cli"
             }
           }
         ]
@@ -196,12 +196,21 @@
   },
   "active": "66648ceebb760a33",
   "lastOpenFiles": [
+    "03 - Areas/Agentic AI/context/write-policy.md",
+    "03 - Areas/Agentic AI/topics/skills-tools-mcp-cli.md",
+    "03 - Areas/Agentic AI/topics/rag-system-financial-services-aws.md",
+    "03 - Areas/Agentic AI/context/working-memory.md",
+    "03 - Areas/Agentic AI/context/retrieval.md",
+    "03 - Areas/Agentic AI/context/README.md",
+    "03 - Areas/Agentic AI/context/memory-layers.md",
+    "03 - Areas/Agentic AI/context/compaction.md",
+    "03 - Areas/Agentic AI/context/anti-patterns.md",
+    "03 - Areas/Agentic AI/topics/aws-agent-infra.md",
     "03 - Areas/python-practice/concurrent-event-aggregator.md",
     "03 - Areas/python-practice",
     "03 - Areas/Agentic AI/topics/financial-data-types-for-agents.md",
     "03 - Areas/Agentic AI/topics/financial-agent-data-infrastructure.md",
     "03 - Areas/Agentic AI/topics/agentic-ai-in-finance.md",
-    "03 - Areas/Agentic AI/topics/aws-agent-infra.md",
     "03 - Areas/Agentic AI/topics/26-aws-agent-infra.md",
     "03 - Areas/Agentic AI/harness/framework-evaluation.md",
     "04 - Resources/W.md",
@@ -215,15 +224,6 @@
     "03 - Areas/Agentic AI/governance/aws-bedrock-services.md",
     "03 - Areas/Agentic AI/governance/ux-trust.md",
     "03 - Areas/Agentic AI/governance/reliability-ops.md",
-    "03 - Areas/Agentic AI/governance/evaluation.md",
-    "03 - Areas/Agentic AI/governance/latency.md",
-    "03 - Areas/Agentic AI/governance/cost.md",
-    "03 - Areas/Agentic AI/governance/observability.md",
-    "03 - Areas/Agentic AI/governance/safety-guardrails.md",
-    "03 - Areas/Agentic AI/governance/README.md",
-    "03 - Areas/Agentic AI/harness/minimax-api.md",
-    "03 - Areas/Agentic AI/harness/errors-recovery.md",
-    "03 - Areas/Agentic AI/harness/multi-agent.md",
     "03 - Areas/Agentic AI/quality",
     "03 - Areas/Agentic AI/governance",
     "03 - Areas/Agentic AI/harness",
