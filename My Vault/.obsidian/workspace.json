@@ -196,6 +196,8 @@
   },
   "active": "66648ceebb760a33",
   "lastOpenFiles": [
+    "03 - Areas/Agentic AI/topics/financial-data-types-for-agents.md",
+    "03 - Areas/Agentic AI/topics/financial-agent-data-infrastructure.md",
     "03 - Areas/Agentic AI/topics/agentic-ai-in-finance.md",
     "03 - Areas/Agentic AI/topics/aws-agent-infra.md",
     "03 - Areas/Agentic AI/topics/26-aws-agent-infra.md",
@@ -221,8 +223,6 @@
     "03 - Areas/Agentic AI/harness/errors-recovery.md",
     "03 - Areas/Agentic AI/harness/multi-agent.md",
     "03 - Areas/Agentic AI/harness/state-orchestration.md",
-    "03 - Areas/Agentic AI/harness/tools.md",
-    "03 - Areas/Agentic AI/harness/core-loop.md",
     "03 - Areas/Agentic AI/quality",
     "03 - Areas/Agentic AI/governance",
     "03 - Areas/Agentic AI/harness",
