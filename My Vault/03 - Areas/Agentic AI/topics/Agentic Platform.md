@@ -1,0 +1,46 @@
+1. Agentic Experience
+	- Cohesive web UI, all-in-one experience (like Claude desktop) to enable user work with agents and manage agents, agent teams, automations, install skills/tools(mcp), provision sandboxes; monitor agent activities, status; validate output quality with AI-assistance
+	- In-chat interface
+	- Mobile integration
+	- IDE integration
+	- Claude Terminal integration
+	- Claw-alike autonomous agent with local-first, persistsited memory
+2. Agentic Automation
+	- Autonomy & Multi-Step execution
+	- Build the integration between events and agents, events bootstraps agent container and execute on AgentCore Runtime, the results are available from agent UI and CloudWatch;
+	- HITL guard the risky actions, and send proactive confirmation via chat msgs
+	- Build holistic coverage of events
+		- GitHub events
+		- Data Fabric events
+		- AWS events (S3, CloudWatch Alarms, etc)
+	- Use custom periodic jobs to automate 
+3. Agentic Foundations
+	- Harness
+		- Build resilient, interoperable, replayable and cost-effective agent harness to orchestrate the agent system: Context, Memory, Tools, Skills, Session/State, Safety, Traceability, Identity/Auth
+		- The agent harness is the core engine for agentic workload and supports different execution paradims (long-running, on-demand, event-driven, multi-agent), it needs to be self-contained, env-agnostic
+		- The harness should be model-agnostic with model routing capabilities to optimize performance vs cost
+		- The harness should be extensible and provide framework to support customized workflows
+	- Context Intelligence
+		- Build a foundational context ingestion/retrieval pipeline to streamline the onboarding multi-types of CPPIB knowledge bases
+		- User-friendly UI and/or skills to facility the self-service pipeline creation
+		- Support multiple ingestion strategies 
+			- **Chunking:** fixed-size, hierarchical, semantic, code-aware (tree-sitter), conversational / thread-aware, row-level, none (whole doc)
+			- **Embedding:** Titan v2, Cohere embed-v3, Voyage Code, OpenAI text-embedding-3, BGE / E5, with binary or int8 quantization
+			- **Storage:** OpenSearch Serverless NextGen (hot), OpenSearch managed cluster (warm), S3 Vectors (cold), Aurora / RDS pgvector (SQL-joined), MemoryDB for Redis (sub-ms), Neptune Analytics (graph+vector), DocumentDB with vector search
+			- **Retrieval:** pure BM25, pure vector, hybrid BM25+vector with RRF (k=60), filter-first then vector, vector + cross-encoder rerank, multi-KB routing, conversational / multi-turn
+	- Integration Protocols
+		- MCP (based on AgentCore Gateway)
+			- - **Domain isolation, naming, tool description** — `<org>/<domain>/<server>` namespace, `<verb>_<noun>` tool names, one owner team per tool, clearly defined tool description guideline, CI-linted description template.
+			- **Tool selection optimization** — Curated 10–20 tools per agent role; semantic retrieval at 50+; telemetry per turn; retriever miss → ask the user.
+			- **RBAC + AgentCore Identity** — Filter at the gateway by JWT claims; destructive tools need explicit user approval; audit log is append-only and hash-chained.
+			- **Multi-backend support** — Default to lowest-friction target (Lambda / Bedrock KB / APIs); one gateway aggregates all, per-target SLAs and isolated failures.
+		- A2A
+			- Publishing an A2A "agent card" with capabilities/skills/auth at a well-known URL, registering all cards in a central AgentCore Gateway as MCP-style A2A targets, and routing task-lifecycle messages (submit → working → artifact) through the gateway so agents stay decoupled, discoverable, and governed — with OTel traces, per-task cost attribution, and on-behalf-of auth via AgentCore Identity
+4. Governance
+	- Eval
+		- **Collect** — OTEL traces from every AgentCore Runtime session to S3 + OpenSearch; build a labeled golden-set per agent/skill; sample 5% of production traffic to SageMaker Ground Truth for human-label calibration.
+		- **Evaluate** — nightly AgentCore Evaluations (13 built-in evaluators) + custom LLM-as-judge via Bedrock against the golden-set; re-calibrate when the judge's Cohen's kappa against human labels drops below 0.7.
+		- **Gate** — block promotion in CI when eval scores drop > 5%; surface per-skill recall / drift / cost via CloudWatch + QuickSight; alert on regression.
+		- Report - aggregated eval score dashboard
+	- 
+5. 
