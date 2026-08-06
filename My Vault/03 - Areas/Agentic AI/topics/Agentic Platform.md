@@ -37,10 +37,21 @@
 		- A2A
 			- Publishing an A2A "agent card" with capabilities/skills/auth at a well-known URL, registering all cards in a central AgentCore Gateway as MCP-style A2A targets, and routing task-lifecycle messages (submit → working → artifact) through the gateway so agents stay decoupled, discoverable, and governed — with OTel traces, per-task cost attribution, and on-behalf-of auth via AgentCore Identity
 4. Governance
-	- Eval
+	- Eval & Quality
 		- **Collect** — OTEL traces from every AgentCore Runtime session to S3 + OpenSearch; build a labeled golden-set per agent/skill; sample 5% of production traffic to SageMaker Ground Truth for human-label calibration.
 		- **Evaluate** — nightly AgentCore Evaluations (13 built-in evaluators) + custom LLM-as-judge via Bedrock against the golden-set; re-calibrate when the judge's Cohen's kappa against human labels drops below 0.7.
 		- **Gate** — block promotion in CI when eval scores drop > 5%; surface per-skill recall / drift / cost via CloudWatch + QuickSight; alert on regression.
 		- Report - aggregated eval score dashboard
-	- 
+	- Ecosystem
+		- AgentCore registry for developers on agent, skills, tools, plugins
+		- CI/CD pipeline to continuously deploy, refresh the artifacts to existing agents
+		- Nightly eval pipelines and gate on performance regressions
+		- Harness level support on discovery, semantic search on skills/tools
+	- Permission Control
+		- Build gardrails on 
+		- Dual identity, one runtime** — agent service identity (IAM role) for system actions, user identity (3LO via AgentCore Identity) for user data; runtime brokers both, model never holds raw credentials.
+		- Multi-layer RBAC, gated by JWT claims** — Registry controls who can register/approve, Gateway filters `tools/list` by `org`/`team`/`role`, Runtime enforces per-session sandbox (microVM, scoped IAM, no IMDS); model never sees tools it can't call.
+		- Tool-level + action-level permissions** — every tool carries `risk_class` (read/write/destructive) and `requires_scopes`; gateway returns `{requires_confirmation, preview}` for write/destructive, human-in-loop before execution; per-tool IAM policies (least-privilege, no `*`); on-behalf-of (3LO) for user-scoped tools caps the action at the user's own entitlement.
+		- Audit + deny-by-default** — every call logged with `user` / `agent` / `service-identity` / `args` to an append-only, hash-chained sink; default deny (no scopes, no cross-org, no public discovery), explicit grant per (agent × tool × scope), break-glass paths time-bounded and reviewed.
+		- HITL HOTL
 5. 
