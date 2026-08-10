@@ -11,14 +11,12 @@
             "id": "66648ceebb760a33",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "pdf",
               "state": {
-                "file": "03 - Areas/Agentic AI/topics/Agentic Platform.md",
-                "mode": "source",
-                "source": false
+                "file": "03 - Areas/Career/Alan_Xu_Resume_2607.pdf"
               },
-              "icon": "lucide-file",
-              "title": "Agentic Platform"
+              "icon": "lucide-file-text",
+              "title": "Alan_Xu_Resume_2607"
             }
           }
         ]
@@ -194,12 +192,12 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "646df26cd91e4605",
+  "active": "66648ceebb760a33",
   "lastOpenFiles": [
+    "03 - Areas/Agentic AI/topics/Agentic Platform.md",
     "02 - Projects/openmate/design/rag-infrastructure.md",
     "03 - Areas/Agentic AI/topics/agent-harness-adjectives.md",
     "03 - Areas/Agentic AI/harness/state-orchestration.md",
-    "03 - Areas/Agentic AI/topics/Agentic Platform.md",
     "02 - Projects/openmate/design/agentic-web-ui.md",
     "02 - Projects/openmate/design",
     "02 - Projects/openmate",
