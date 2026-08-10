@@ -9,9 +9,9 @@ Toronto, Canada · +1 416 835 5956 · alanxu.80@gmail.com · [LinkedIn](https://
 ## Summary
 
 - **Tech Lead for AI automation at Meta** — architect autonomous, self-improving agents and the RAG, evaluation, and governance platforms, boosting the dev efficiency of thousands of Meta engineers.
-- **Lead architect of AWB (Analytical Workbench) at CPP Investments** — the firm-wide research and elastic compute platform that put distributed computing in the hands of every Public Capital Markets team.
+- **Lead architect of the Analytical Platform at CPP Investments** — the firm-wide research and elastic compute platform that put distributed computing in the hands of every Public Capital Markets team.
 - **20+ years building large-scale distributed systems** across finance, telecom, and e-commerce — microservices, event-driven architecture, and ultra-low-latency messaging at organizations including CPP Investments, Canonical (Ubuntu), RSA, Thomson Reuters, and Bank of China.
-- **Proven technical leadership**: set multi-year platform direction across partner orgs at Meta, led architecture for CPP Investments' AWB (Analytical Workbench), and managed client-facing delivery teams and project portfolios at Canonical.
+- **Proven technical leadership**: set multi-year platform direction across partner orgs at Meta, led architecture for CPP Investments' Analytical Platform, and managed client-facing delivery teams and project portfolios at Canonical.
 - **Core strengths:** AI agent systems & RAG · distributed systems architecture · platform & developer productivity · technical leadership and mentorship · cross-org program ownership
 
 ---
@@ -22,6 +22,7 @@ Toronto, Canada · +1 416 835 5956 · alanxu.80@gmail.com · [LinkedIn](https://
 *Jan 2022 – Present*
 
 - **Lead AI automation programs** across Meta's Monetization org, architecting autonomous, self-improving agents that measurably elevated the development efficiency of thousands of Meta engineers.
+- **Built reliable model training infrastructure** that enabled Meta's online and recurring model training, supporting continuous model improvement and faster iteration across Monetization AI systems.
 - **Architected and evolved a production RAG system** that dramatically improved agent context intelligence, tuning retrieval and ranking to reach an optimal recall/precision balance for code and knowledge workloads.
 - **Drove the development of evaluation, tracing, governance, and agent-collaboration platforms**, lifting agent reliability, task completion rate, and end-to-end latency — turning agent quality from anecdote into a measurable, regression-tested property.
 - **Set technical direction and grew the team** — defined the agent architecture and platform roadmap, aligned partner orgs on shared standards, drove adoption beyond the founding team, and mentored senior and mid-level engineers on agent design and evaluation methodology.
@@ -29,7 +30,7 @@ Toronto, Canada · +1 416 835 5956 · alanxu.80@gmail.com · [LinkedIn](https://
 ### CPP Investments (CPPIB) — Lead Engineer & Architect
 *Dec 2017 – Jan 2022*
 
-- **Lead architect for AWB (Analytical Workbench)** — designed highly scalable, available services and an elastic Jupyter/Kubernetes compute layer that put distributed computing in the hands of non-technical quantitative researchers, materially improving the efficiency and ROI of every Public Capital Markets team.
+- **Lead architect for the Analytical Platform** — designed highly scalable, available services and an elastic Jupyter/Kubernetes compute layer that put distributed computing in the hands of non-technical quantitative researchers, materially improving the efficiency and ROI of every Public Capital Markets team.
 - **Led the engineering team** — set technical direction, owned design and code review standards, mentored developers, and partnered directly with business stakeholders to translate research needs into a delivery roadmap.
 - **Designed a configuration-driven data ingestion pipeline** on AWS (Airflow, EMR) that scaled to the firm's growing data footprint without per-source engineering work.
 - **Led the migration from legacy monoliths to microservices** — redesigned domain boundaries, built the CI/CD pipelines behind independent deployment, and introduced event-driven infrastructure that lifted throughput and availability.
@@ -69,7 +70,7 @@ Toronto, Canada · +1 416 835 5956 · alanxu.80@gmail.com · [LinkedIn](https://
 
 ## Technical Skills
 
-**AI / ML Systems** — LLM agent architecture, autonomous & self-improving agents, RAG (retrieval, ranking, chunking, embeddings), agent evaluation & benchmarking, tracing/observability, model governance, prompt and context engineering
+**AI / ML Systems** — LLM agent architecture, autonomous & self-improving agents, RAG (retrieval, ranking, chunking, embeddings), agent evaluation & benchmarking, tracing/observability, model governance, prompt and context engineering; agent frameworks (LangChain, LlamaIndex, LangGraph, AutoGen, Semantic Kernel, DSPy, CrewAI)
 
 **Languages** — Python, Java, JavaScript/TypeScript, SQL, Shell
 
