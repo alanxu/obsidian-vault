@@ -24,8 +24,6 @@
 - **Grounded in entitled enterprise knowledge**, with sources attached to every material answer. Entitlements are resolved *before* retrieval, never filtered after; provenance travels with the answer into whatever document, model or deck it ends up in.
 - **Multi-channel by design** — terminal, browser, chat (`#`-mention), and mobile — over one context and one policy set, so an analyst can start a task at their desk, approve it from a phone, and have the audit trail read as a single session.
 
-The measure is not usage; it is the share of real work completed through the interface.
-
 **2. Build an AI engineer that works autonomously toward a goal.** The shift from an assistant that answers to a worker that finishes. Four capabilities make it real:
 
 - **Loop engineering.** Build long-running agents inside an explicit envelope — allowed tools, budgets, thresholds, stop conditions and escalation paths — and **make the output verifiable**. The engineering problem is not what the agent says; it is how it knows it is done and how it checks itself. Every loop needs a grader: tests, recomputation, schema validation, or reconciliation against a source of truth. Where no grader exists, we manufacture one before granting autonomy.
@@ -35,7 +33,15 @@ The measure is not usage; it is the share of real work completed through the int
 
 Human review is designed in as a control point, not bolted on: every correction and rejection becomes a regression test, so oversight compounds into capability instead of being spent.
 
-**3. One platform, common primitives.** Build an enterprise agentic platform providing model access, identity, tools, knowledge, memory, workflow execution, policy enforcement, evaluation, observability and audit — once, for everyone. Bedrock remains the foundation-model and managed AI control plane, and AgentCore can supply runtime, identity, gateway/tool integration, memory and observability; AWS describes it as framework/model agnostic and designed to securely run agents with permissions, persistent memory and observability. [1] **The fund retains what it must own: enterprise policy, data contracts, approval authorities and workflow semantics.** That boundary is the difference between leverage and lock-in.
+**3. Unified Agentic Platform.** Build the primitives once, for everyone. Bedrock remains the foundation-model and managed AI control plane, and AgentCore can supply runtime, identity, gateway/tool integration, memory and observability. [1] **The fund retains what it must own: enterprise policy, data contracts, approval authorities and workflow semantics** — that boundary is the difference between leverage and lock-in.
+
+| Layer | Invest in | Principal challenge |
+|---|---|---|
+| **Unified model routing** | Approved model catalog; task-based routing across frontier, small and specialist models; version pinning; fallback paths | Model upgrades change behaviour without changing the API; agentic loops multiply cost per request |
+| **Context and knowledge** | Entitlement-aware retrieval, hybrid search and reranking, point-in-time correctness, provenance on every material answer | Retrieval crosses security boundaries; semantic similarity is not truth; structured numbers must be queried, not retrieved |
+| **Harness, runtime and orchestration** | Durable execution, checkpointing and resume, context/memory management, budgets, timeouts, human-in-the-loop as a primitive | Non-deterministic failures and partial side effects; quality degrades on long horizons without deliberate context strategy |
+| **Tools, skills and MCP** | Typed contracts, idempotency, dry-run, audit metadata; MCP/OpenAPI wrappers over existing enterprise APIs | Tool surface is a context tax and an attack surface; a low-risk skill becomes high-risk in combination |
+| **Ecosystem and internal marketplace** | Developer SDK, capability registry, sandbox, automated certification, cost attribution, discovery and reuse | Skill duplication and drift; central approval becomes the bottleneck that stalls adoption |
 
 **4. Govern the capability and the action — not merely the model.** An AI control plane enforces identity, policy-as-code, approvals, budgets, kill switches and end-to-end lineage at runtime. The governing question is not "is this model approved?" but "what can this agent autonomously cause to happen in the real world?" Autonomy expands only where evaluation, auditability and rollback are stronger than the risk of the action. **The rule underneath all of it: separate reasoning from authority — agents reason, recommend and prepare; deterministic systems decide, execute and record.**
 
@@ -240,15 +246,15 @@ A two-speed operating model is recommended. Domain teams move quickly inside a g
 
 ### 6.7 Tool Design Rules
 
-| Design rule | Best practice | Failure mode to prevent |
-|---|---|---|
-| **Contract** | OpenAPI / MCP-like schemas; explicit inputs, outputs, errors, permissions, side effects | Agent guesses API semantics |
-| **Idempotency** | Idempotency key on writes; safe retries; transaction status lookup | Duplicate trades / payments / tickets |
-| **Validation** | Schema + business rule validation before execution | LLM-generated invalid parameters |
-| **Dry run** | Support preview / simulation before commit | Unexpected irreversible action |
-| **Audit** | Capture caller, agent, tool version, policy decision, input hash, result and record ID | No reconstructable evidence |
-| **Rate / budget** | Per-agent and per-user quotas, spend/time budgets | Runaway loops and cost explosions |
-| **Human escalation** | Tool returns structured "approval required" outcome | Agent bypasses approval through alternate path |
+| Design rule          | Best practice                                                                           | Failure mode to prevent                        |
+| -------------------- | --------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| **Contract**         | OpenAPI / MCP-like schemas; explicit inputs, outputs, errors, permissions, side effects | Agent guesses API semantics                    |
+| **Idempotency**      | Idempotency key on writes; safe retries; transaction status lookup                      | Duplicate trades / payments / tickets          |
+| **Validation**       | Schema + business rule validation before execution                                      | LLM-generated invalid parameters               |
+| **Dry run**          | Support preview / simulation before commit                                              | Unexpected irreversible action                 |
+| **Audit**            | Capture caller, agent, tool version, policy decision, input hash, result and record ID  | No reconstructable evidence                    |
+| **Rate / budget**    | Per-agent and per-user quotas, spend/time budgets                                       | Runaway loops and cost explosions              |
+| **Human escalation** | Tool returns structured "approval required" outcome                                     | Agent bypasses approval through alternate path |
 
 ---
 
@@ -256,12 +262,12 @@ A two-speed operating model is recommended. Domain teams move quickly inside a g
 
 Separate three patterns: deterministic workflows, agentic workflows and general-purpose goal agents. Use the least agentic pattern that solves the problem. Bedrock supports managed agents and multi-agent collaboration; AWS guidance emphasizes clearly defined supervisor/collaborator roles and minimizing overlapping responsibilities. [10]
 
-| Pattern | When to use | Recommended control |
-|---|---|---|
-| **Deterministic workflow** | Known steps, regulated process, predictable branching | Workflow engine; explicit state transitions; zero free-form planning in critical steps |
-| **Agentic workflow** | Known outcome, but reasoning is required to select documents, tools or route exceptions | State machine + LLM decisions bounded by schemas and policy |
-| **Supervisor / specialist agents** | Distinct domains need specialized context or tools | Clear domain boundaries, budgets, contracts, shared observability |
-| **General goal agent** | Open-ended investigation or bounded operational monitoring | Goal spec + constraints + stop conditions + budget + escalation + evidence log |
+| Pattern                            | When to use                                                                             | Recommended control                                                                    |
+| ---------------------------------- | --------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| **Deterministic workflow**         | Known steps, regulated process, predictable branching                                   | Workflow engine; explicit state transitions; zero free-form planning in critical steps |
+| **Agentic workflow**               | Known outcome, but reasoning is required to select documents, tools or route exceptions | State machine + LLM decisions bounded by schemas and policy                            |
+| **Supervisor / specialist agents** | Distinct domains need specialized context or tools                                      | Clear domain boundaries, budgets, contracts, shared observability                      |
+| **General goal agent**             | Open-ended investigation or bounded operational monitoring                              | Goal spec + constraints + stop conditions + budget + escalation + evidence log         |
 
 > **Best practice** — Do not use multi-agent orchestration to compensate for poor tool contracts or poor data access. More agents generally increase latency, cost, coordination risk and evaluation complexity.
 
@@ -310,15 +316,15 @@ Governance should therefore be a first-class layer of the AI Operating System.
 
 ### 10.1 Control domains and required evidence
 
-| Control domain | Best practice | Evidence / artifact |
-|---|---|---|
-| **Use-case classification** | Risk-tier every AI capability based on impact, autonomy, data sensitivity and reversibility | AI use-case register + risk tier |
-| **Model risk** | Independent challenge for material models; benchmark on fund-specific tasks; monitor drift | Model card + validation report + release approval |
-| **Human oversight** | Define meaningful oversight, not ceremonial approval; allow reject / modify / override | Approval record + exception metrics |
-| **Explainability** | Provide evidence, sources, assumptions, policy checks and decision trace where relevant | Trace + citations + explanation packet |
-| **Privacy** | Privacy-by-design, purpose limitation, minimization, transparency, correction/deletion paths | PIA / privacy assessment + data map |
-| **Third-party risk** | Assess model/provider, data residency, retention, security, resilience and exit strategy | Vendor risk assessment + contractual controls |
-| **Incident management** | Treat AI failures like operational incidents with severity, containment, root cause and remediation | Incident record + postmortem |
+| Control domain              | Best practice                                                                                       | Evidence / artifact                               |
+| --------------------------- | --------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| **Use-case classification** | Risk-tier every AI capability based on impact, autonomy, data sensitivity and reversibility         | AI use-case register + risk tier                  |
+| **Model risk**              | Independent challenge for material models; benchmark on fund-specific tasks; monitor drift          | Model card + validation report + release approval |
+| **Human oversight**         | Define meaningful oversight, not ceremonial approval; allow reject / modify / override              | Approval record + exception metrics               |
+| **Explainability**          | Provide evidence, sources, assumptions, policy checks and decision trace where relevant             | Trace + citations + explanation packet            |
+| **Privacy**                 | Privacy-by-design, purpose limitation, minimization, transparency, correction/deletion paths        | PIA / privacy assessment + data map               |
+| **Third-party risk**        | Assess model/provider, data residency, retention, security, resilience and exit strategy            | Vendor risk assessment + contractual controls     |
+| **Incident management**     | Treat AI failures like operational incidents with severity, containment, root cause and remediation | Incident record + postmortem                      |
 
 ### 10.2 Regulatory alignment
 
