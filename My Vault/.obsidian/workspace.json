@@ -11,12 +11,14 @@
             "id": "1c3373088273cb0c",
             "type": "leaf",
             "state": {
-              "type": "pdf",
+              "type": "markdown",
               "state": {
-                "file": "03 - Areas/Career/Alan_Xu_Resume_2607.pdf"
+                "file": "03 - Areas/Agentic AI/topics/pension-fund-ai-operating-system-roadmap.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-file-text",
-              "title": "Alan_Xu_Resume_2607"
+              "icon": "lucide-file",
+              "title": "pension-fund-ai-operating-system-roadmap"
             }
           }
         ]
@@ -194,9 +196,12 @@
   },
   "active": "1c3373088273cb0c",
   "lastOpenFiles": [
+    "03 - Areas/Agentic AI/topics/pension-fund-agentic-ai-governance.md",
+    "03 - Areas/Agentic AI/topics/pension-fund-ai-operating-system-roadmap.md",
+    "03 - Areas/Agentic AI/topics/Pension_Fund_Agentic_AI_Operating_System_Roadmap_v2.docx",
+    "03 - Areas/Career/Alan_Xu_Resume_2607.pdf",
     "03 - Areas/Career/Alan_Xu_Resume.md",
     "03 - Areas/Career/Alan_Xu_Resume_cppib.pdf",
-    "03 - Areas/Career/Alan_Xu_Resume_2607.pdf",
     "03 - Areas/Agentic AI/topics/Agentic Platform.md",
     "02 - Projects/openmate/design/rag-infrastructure.md",
     "03 - Areas/Agentic AI/topics/agent-harness-adjectives.md",
@@ -224,11 +229,8 @@
     "04 - Resources/W.md",
     "03 - Areas/Agentic AI/topics",
     "03 - Areas/Agentic AI/Production Agent Handbook.md",
-    "02 - Projects/Job Hunt/question-bank/llm-system-design/fundamentals/26-aws-agent-infra.md",
-    "03 - Areas/Agentic AI/quality/further-reading.md",
     "03 - Areas/Agentic AI/quality",
     "03 - Areas/Agentic AI/governance",
-    "03 - Areas/Agentic AI/harness",
-    "03 - Areas/Agentic AI/context"
+    "03 - Areas/Agentic AI/harness"
   ]
 }
