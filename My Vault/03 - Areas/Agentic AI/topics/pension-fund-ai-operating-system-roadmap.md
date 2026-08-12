@@ -31,19 +31,35 @@
 - **Scheduling and event-driven facilities.** Work should start without a human starting it. Heartbeat, cron, hook and goal triggers let agents wake on the events the fund actually runs on — market opens, filings, limit breaches, reconciliation breaks, ticket creation, covenant tests — so monitoring becomes continuous rather than a periodic human sweep.
 - **An OpenClaw-class personal agent, self-hosted per employee.** A persisted, personalized assistant that progressively learns and improves for each individual employee — enabling intelligence to emerge at the edge, then be captured, shared and composed into organizational knowledge. It doubles as a highly customizable personal AI workspace that accelerates how quickly individuals develop and deploy their own skills, tools and workflows. Always on and available on mobile, it lifts personal productivity continuously rather than per session. The pitfalls are cost and security.
 
-Human review is designed in as a control point, not bolted on: every correction and rejection becomes a regression test, so oversight compounds into capability instead of being spent.
-
 **3. Unified Agentic Platform.** Build the primitives once, for everyone. Bedrock remains the foundation-model and managed AI control plane, and AgentCore can supply runtime, identity, gateway/tool integration, memory and observability. [1] **The fund retains what it must own: enterprise policy, data contracts, approval authorities and workflow semantics** — that boundary is the difference between leverage and lock-in.
 
-| Layer | Invest in | Principal challenge |
-|---|---|---|
-| **Unified model routing** | Approved model catalog; task-based routing across frontier, small and specialist models; version pinning; fallback paths | Model upgrades change behaviour without changing the API; agentic loops multiply cost per request |
-| **Context and knowledge** | Entitlement-aware retrieval, hybrid search and reranking, point-in-time correctness, provenance on every material answer | Retrieval crosses security boundaries; semantic similarity is not truth; structured numbers must be queried, not retrieved |
-| **Harness, runtime and orchestration** | Durable execution, checkpointing and resume, context/memory management, budgets, timeouts, human-in-the-loop as a primitive | Non-deterministic failures and partial side effects; quality degrades on long horizons without deliberate context strategy |
-| **Tools, skills and MCP** | Typed contracts, idempotency, dry-run, audit metadata; MCP/OpenAPI wrappers over existing enterprise APIs | Tool surface is a context tax and an attack surface; a low-risk skill becomes high-risk in combination |
-| **Ecosystem and internal marketplace** | Developer SDK, capability registry, sandbox, automated certification, cost attribution, discovery and reuse | Skill duplication and drift; central approval becomes the bottleneck that stalls adoption |
+- **Unified model routing.** Approved model catalog, task-based routing across frontier, small and specialist models, version pinning and fallback paths, abstraction layer to decouple agents with the underlying models for easier management and migration. *Challenge:* model upgrades change behaviour without changing the API, and agentic loops multiply cost per request.
+- **Context and knowledge.** ACL-aware retrieval, hybrid search and reranking, point-in-time correctness, provenance on every material answer, query rewriting, chunking (semantic, fix-window, hierrachical), knowledge graph for entity lineage. *Challenge:* retrieval crosses security boundaries, semantic similarity is not truth, and structured numbers must be queried rather than retrieved.
+- **Harness, runtime and orchestration.** 
+	- Support different agentic paradims (react, plan/execution, reflection, multi-agent patterns); 
+	- Durable execution with checkpoint and resume, 
+	- context and memory management, 
+	- human-in-the-loop as a platform primitive. 
+	- guardrails
+	- *Challenge:* 
+		- non-deterministic failures leave partial side effects, and 
+		- quality degrades over long horizons without a deliberate context strategy.
+- **Tools, skills and MCP.** Typed contracts, idempotency, dry-run, audit metadata; MCP/OpenAPI wrappers over existing enterprise APIs rather than bespoke agent integrations. *Challenge:* Skill explosion and duplication, Prompt/instruction drift and versioning, .
+- **Ecosystem and internal marketplace.** Developer SDK, capability registry (tools, mcp, skills, workflows), sandbox, automated certification, permission request, templates, cost attribution, . *Challenge:* skill duplication and drift, and central approval becoming the bottleneck that stalls adoption.
+- Reliability. Timeouts, retries, circuit breakers, idempotency, checkpointing, resumable runs, graceful degradation; Challenges Non-deterministic failures and partial side effects
+- Evaluation. 
+	- Outcome metrics: task success, factuality, citation correctness, retrieval recall/precision, tool success, policy compliance, escalation quality.
+	- Operational metrics: latency, token usage, cost per outcome, failure rate, retry count, queue depth, model fallback rate.
+	- Agent trajectory tests: evaluate not just final answer but tool sequence, unnecessary actions, budget adherence, stopping behavior and recovery after tool failure.
+	- Production observability: trace the full chain from user → model → retrieval → tool → workflow → system-of-record change. AgentCore Observability provides traces, metrics and OpenTelemetry-compatible telemetry for runtime environments.
+	- LLM-as-judge
 
-**4. Govern the capability and the action — not merely the model.** An AI control plane enforces identity, policy-as-code, approvals, budgets, kill switches and end-to-end lineage at runtime. The governing question is not "is this model approved?" but "what can this agent autonomously cause to happen in the real world?" Autonomy expands only where evaluation, auditability and rollback are stronger than the risk of the action. **The rule underneath all of it: separate reasoning from authority — agents reason, recommend and prepare; deterministic systems decide, execute and record.**
+**4. Govern the capability and the action — not merely the model.** An AI control plane enforces identity, policy, approvals, budgets, kill switches and end-to-end lineage at runtime. The governing question is not "is this model approved?" but "what can this agent autonomously cause to happen in the real world?" Autonomy expands only where evaluation, auditability and rollback are stronger than the risk of the action.
+
+- **Permission and access control.** Authority is resolved at runtime as `user ∩ agent ∩ tool ∩ data policy` — an agent never inherits the full permission set of the person who created it. RBAC establishes the baseline; **PBAC** carries the decision, evaluating purpose, data classification, action risk and context on every material call. Guardrails are expressed as **policy-as-code** in a central decision point, not as instructions in a prompt or logic duplicated inside each agent. Every call resolves to allow, deny or require-approval, and the decision is logged with the delegation chain behind it. *Challenge:* identity propagation through the agent → skill → tool chain is not solved at the protocol layer; without it, entitlement is enforced in the wrong place.
+- **Cost and FinOps.** Agentic cost is per outcome, not per request, and superlinear — each turn resends context, and an unbounded loop is a financial incident. Budgets, step caps and circuit breakers belong in the runtime; model routing and caching are the primary levers; spend is attributed per agent, skill and team so cost has an owner. The managed metric is **cost per completed task**, not tokens or agents deployed. *Challenge:* an agent-per-employee model makes consumption unpredictable, so unit economics must be instrumented from day one rather than reconstructed after the first bill.
+
+**The rule underneath all of it: separate reasoning from authority — agents reason, recommend and prepare; deterministic systems decide, execute and record.**
 
 The strategy is explicitly *not* to build a single "super agent." It is to build the substrate that every AI experience runs on, so the tenth use case costs a fraction of the first.
 
@@ -1127,17 +1143,17 @@ The platform should operate like a product with a platform engineering core and 
 
 ## 19. Principal Risks and Mitigations
 
-| Risk | Why it matters to a pension fund | Mitigation |
-|---|---|---|
-| **Hallucinated investment / policy facts** | Could mislead decisions or create inaccurate records | Grounded retrieval, citations, source locking, independent calculations, human sign-off |
-| **Prompt injection / data exfiltration** | Untrusted documents or websites can manipulate agent behavior | Layered isolation, allowlisted tools, retrieval authorization, secret isolation, guardrails, egress control |
-| **Over-privileged agents** | AI could perform actions beyond intended authority | Agent identity, least privilege, scoped delegation, action-risk tiers, approvals |
-| **Model drift / provider changes** | Behavior may change without code changes | Version pinning, benchmark gates, canaries, fallback models, change management |
-| **Runaway autonomy** | Long-running loops can create cost or operational damage | Budgets, deadlines, max steps, stop conditions, circuit breakers, approval gates |
-| **Institutional memory contamination** | Wrong or stale information can become durable context | Conservative memory writes, provenance, expiry, correction workflow |
-| **Vendor concentration** | Deep Bedrock dependency can increase switching cost | Standard tool contracts, model abstraction, portable policy semantics, exportable audit |
-| **Shadow AI** | Employees may bypass platform controls | Useful default AI workspace, DLP controls, policy, training, approved model access |
-| **Weak evaluation** | Demos work, production fails on edge cases | Fund-specific test sets, adversarial tests, trajectory evaluation, online monitoring |
+| Risk                                       | Why it matters to a pension fund                              | Mitigation                                                                                                  |
+| ------------------------------------------ | ------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| **Hallucinated investment / policy facts** | Could mislead decisions or create inaccurate records          | Grounded retrieval, citations, source locking, independent calculations, human sign-off                     |
+| **Prompt injection / data exfiltration**   | Untrusted documents or websites can manipulate agent behavior | Layered isolation, allowlisted tools, retrieval authorization, secret isolation, guardrails, egress control |
+| **Over-privileged agents**                 | AI could perform actions beyond intended authority            | Agent identity, least privilege, scoped delegation, action-risk tiers, approvals                            |
+| **Model drift / provider changes**         | Behavior may change without code changes                      | Version pinning, benchmark gates, canaries, fallback models, change management                              |
+| **Runaway autonomy**                       | Long-running loops can create cost or operational damage      | Budgets, deadlines, max steps, stop conditions, circuit breakers, approval gates                            |
+| **Institutional memory contamination**     | Wrong or stale information can become durable context         | Conservative memory writes, provenance, expiry, correction workflow                                         |
+| **Vendor concentration**                   | Deep Bedrock dependency can increase switching cost           | Standard tool contracts, model abstraction, portable policy semantics, exportable audit                     |
+| **Shadow AI**                              | Employees may bypass platform controls                        | Useful default AI workspace, DLP controls, policy, training, approved model access                          |
+| **Weak evaluation**                        | Demos work, production fails on edge cases                    | Fund-specific test sets, adversarial tests, trajectory evaluation, online monitoring                        |
 
 ---
 
