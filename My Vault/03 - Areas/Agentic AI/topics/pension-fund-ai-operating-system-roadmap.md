@@ -18,9 +18,26 @@
 
 **Four directions.**
 
-**1. AI becomes the interface to work.** Every employee can ask, investigate, decide, create and initiate work through a single trusted AI interface, grounded in entitled enterprise knowledge with sources attached to every material answer. The measure is not usage; it is the share of real work completed through the interface.
+**1. AI becomes the interface to work.** The AI workspace becomes where work starts, not another application to visit.
 
-**2. Agents move from answering to executing.** Agents coordinate multi-step workflows and pursue bounded goals automatically and autonomously — inside an explicit envelope of allowed tools, budgets, thresholds, stop conditions and escalation paths. Human review is designed in as a control point, not bolted on: every correction and rejection becomes a regression test, so oversight compounds into capability instead of being spent.
+- **Ask, investigate, delegate.** Every employee can interrogate the fund's knowledge, run an investigation across systems, and hand off a unit of work — through a single trusted, always-available interface. Long-running and code-executing work runs inside an **isolated, guarded execution sandbox** with no ambient credentials and controlled egress, so an agent's blast radius is bounded by construction rather than by prompt.
+- **Grounded in entitled enterprise knowledge**, with sources attached to every material answer. Entitlements are resolved *before* retrieval, never filtered after; provenance travels with the answer into whatever document, model or deck it ends up in.
+- **Multi-channel by design** — terminal, browser, chat (`#`-mention), and mobile — over one context and one policy set, so an analyst can start a task at their desk, approve it from a phone, and have the audit trail read as a single session.
+
+The measure is not usage; it is the share of real work completed through the interface.
+
+**2. Build an AI engineer that works autonomously toward a goal.** The shift from an assistant that answers to a worker that finishes. Four capabilities make it real:
+
+- **Loop engineering.** Build long-running agents inside an explicit envelope — allowed tools, budgets, thresholds, stop conditions and escalation paths — and **make the output verifiable**. The engineering problem is not what the agent says; it is how it knows it is done and how it checks itself. Every loop needs a grader: tests, recomputation, schema validation, or reconciliation against a source of truth. Where no grader exists, we manufacture one before granting autonomy.
+- **Graph engineering.** Agents coordinate multi-step workflows and pursue bounded goals automatically and autonomously. Deterministic graph on the outside for durability, resumability, approval seams and audit; agent loops on the inside where judgement is genuinely required. This is what makes a forty-step process survivable — and reconstructable afterwards.
+- **Scheduling and event-driven facilities.** Work should start without a human starting it. Heartbeat, cron, hook and goal triggers let agents wake on the events the fund actually runs on — market opens, filings, limit breaches, reconciliation breaks, ticket creation, covenant tests — so monitoring becomes continuous rather than a periodic human sweep.
+- **An OpenClaw-class personal agent, self-hosted per employee.** A persistent agent per person, holding that person's mandate, context and recurring work, and continuing to act between conversations.
+
+  Its value is reach and retention. A central roadmap can only fund the workflows large enough to justify a project; the long tail of individual work — where most of the fund's hours actually sit — stays untouched. A personal agent is the only form factor that covers it, which is what makes "agents do most of the work" arithmetically achievable: value scales with seats covered times hours reclaimed, not with flagship agents shipped. It also retains what the fund currently loses. Individual working method is tacit, undocumented and leaves with the person; a durable per-person agent accumulates it as executable procedure, and the strongest of it graduates into certified fund-wide skills (§6.1).
+
+  It is only an asset if it runs inside the fund's perimeter under the same identity, entitlements and control plane as everything else — otherwise it is precisely the shadow-AI exposure in §19. The fund should ship the governed version before the ungoverned one arrives on its own.
+
+Human review is designed in as a control point, not bolted on: every correction and rejection becomes a regression test, so oversight compounds into capability instead of being spent.
 
 **3. One platform, common primitives.** Build an enterprise agentic platform providing model access, identity, tools, knowledge, memory, workflow execution, policy enforcement, evaluation, observability and audit — once, for everyone. Bedrock remains the foundation-model and managed AI control plane, and AgentCore can supply runtime, identity, gateway/tool integration, memory and observability; AWS describes it as framework/model agnostic and designed to securely run agents with permissions, persistent memory and observability. [1] **The fund retains what it must own: enterprise policy, data contracts, approval authorities and workflow semantics.** That boundary is the difference between leverage and lock-in.
 
