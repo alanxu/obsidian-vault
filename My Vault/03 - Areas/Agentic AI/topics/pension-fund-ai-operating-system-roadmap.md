@@ -48,6 +48,7 @@
 - **Ecosystem and internal marketplace.** Developer SDK, capability registry (tools, mcp, skills, workflows), sandbox, automated certification, permission request, templates, cost attribution, . *Challenge:* skill duplication and drift, and central approval becoming the bottleneck that stalls adoption.
 - Reliability. Timeouts, retries, circuit breakers, idempotency, checkpointing, resumable runs, graceful degradation; Challenges Non-deterministic failures and partial side effects
 - Evaluation. 
+	- Accelerate eval development with skills, generate datasets, mocks, initial robrics
 	- Outcome metrics: task success, factuality, citation correctness, retrieval recall/precision, tool success, policy compliance, escalation quality.
 	- Operational metrics: latency, token usage, cost per outcome, failure rate, retry count, queue depth, model fallback rate.
 	- Agent trajectory tests: evaluate not just final answer but tool sequence, unnecessary actions, budget adherence, stopping behavior and recovery after tool failure.
@@ -58,6 +59,17 @@
 
 - **Permission and access control.** Authority is resolved at runtime as `user ∩ agent ∩ tool ∩ data policy` — an agent never inherits the full permission set of the person who created it. RBAC establishes the baseline; **PBAC** carries the decision, evaluating purpose, data classification, action risk and context on every material call. Guardrails are expressed as **policy-as-code** in a central decision point, not as instructions in a prompt or logic duplicated inside each agent. Every call resolves to allow, deny or require-approval, and the decision is logged with the delegation chain behind it. *Challenge:* identity propagation through the agent → skill → tool chain is not solved at the protocol layer; without it, entitlement is enforced in the wrong place.
 - **Cost and FinOps.** Agentic cost is per outcome, not per request, and superlinear — each turn resends context, and an unbounded loop is a financial incident. Budgets, step caps and circuit breakers belong in the runtime; model routing and caching are the primary levers; spend is attributed per agent, skill and team so cost has an owner. The managed metric is **cost per completed task**, not tokens or agents deployed. *Challenge:* an agent-per-employee model makes consumption unpredictable, so unit economics must be instrumented from day one rather than reconstructed after the first bill.
+- LLMOps
+	- 
+
+5. Fill the GAP of investiment and technology
+	1. Analytical agents with Data Fabric context and investment skills, image the agent analys 50 years of investiment return trends and do weeks of analysis work in a couple of minuts.
+
+Meta
+- Value Autonomy, encourage agents handle long-running workflows
+- Value self-improvements, have daily pipelines to summary memory from agent trajectory and update memory vector db with versioning and category
+- Strict incident management on agent issues, with review process, impact analysis, root cause, follow up tasks
+- Top down reinforcement on building skill, which boost the progress of AI automation but also cause challenges on skills exploration
 
 **The rule underneath all of it: separate reasoning from authority — agents reason, recommend and prepare; deterministic systems decide, execute and record.**
 
