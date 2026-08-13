@@ -319,14 +319,14 @@ Memory should be designed as a tiered, policy-controlled capability: session con
 
 Autonomy is the strategic differentiator, but also the highest-risk capability. The platform should introduce an explicit "goal object" rather than passing free-form goals directly to an agent. A goal object includes objective, scope, data sources, allowed tools, constraints, budget, time window, materiality threshold, approval policy, stop conditions, evidence requirements and escalation contacts.
 
-| Autonomy level | Example | Minimum control |
-|---|---|---|
-| **L0 — Answer** | "What is the current exposure to X?" | Grounded retrieval + citations |
-| **L1 — Recommend** | "Which managers merit deeper diligence?" | Evidence + rationale + human decision |
-| **L2 — Prepare** | "Prepare a rebalancing proposal." | Simulation / draft only; no commit |
-| **L3 — Execute with approval** | "Prepare and route the trade." | Policy check + human approval + deterministic execution |
-| **L4 — Bounded autonomous execution** | "Monitor and remediate pre-defined operational exceptions." | Explicit policy, quotas, stop conditions, rollback, continuous monitoring |
-| **L5 — Strategic autonomy** | "Optimize the portfolio toward a multi-year objective." | Not recommended as a direct execution mode; use AI for scenario generation and decision support |
+| Autonomy level                        | Example                                                     | Minimum control                                                                                 |
+| ------------------------------------- | ----------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| **L0 — Answer**                       | "What is the current exposure to X?"                        | Grounded retrieval + citations                                                                  |
+| **L1 — Recommend**                    | "Which managers merit deeper diligence?"                    | Evidence + rationale + human decision                                                           |
+| **L2 — Prepare**                      | "Prepare a rebalancing proposal."                           | Simulation / draft only; no commit                                                              |
+| **L3 — Execute with approval**        | "Prepare and route the trade."                              | Policy check + human approval + deterministic execution                                         |
+| **L4 — Bounded autonomous execution** | "Monitor and remediate pre-defined operational exceptions." | Explicit policy, quotas, stop conditions, rollback, continuous monitoring                       |
+| **L5 — Strategic autonomy**           | "Optimize the portfolio toward a multi-year objective."     | Not recommended as a direct execution mode; use AI for scenario generation and decision support |
 
 > **Pension-fund guardrail** — For material investment, fiduciary, beneficiary, legal or cash decisions, the default mode should remain human-governed. The platform can autonomously perform surveillance, data preparation, reconciliation, routing and other bounded actions where the policy envelope is objectively testable.
 
