@@ -202,13 +202,13 @@ The design principle is to separate what a developer creates from what the platf
 
 ### 6.2 Standardize the Building Blocks
 
-| Building block | What developers create | Platform contract | Pension-fund examples |
-|---|---|---|---|
-| **Tool** | Bounded callable capability with typed input/output | Schema, auth, authorization scope, timeout, idempotency, audit metadata, owner, SLA | Portfolio lookup; risk calculation; market-data query; document retrieval; ticket creation |
-| **Skill** | Reusable instructions + decision procedure + tool composition | Manifest, inputs/outputs, allowed tools, policy constraints, eval suite, version, owner | Investment memo drafting; manager due diligence; earnings analysis; incident triage |
-| **Workflow** | Deterministic or hybrid multi-step process | State model, retries, approvals, compensation, observability, SLA, human checkpoints | Quarterly valuation review; onboarding; compliance review; reporting package |
-| **Agent** | Goal-directed application selecting skills/tools | Agent identity, model policy, tool allow-list, autonomy tier, memory policy, evals | Research assistant; operations agent; technology support agent |
-| **Policy** | Machine-enforceable guardrail | Versioned rules evaluated at runtime with deny/approve semantics | Trading limits; data entitlements; segregation of duties; approval thresholds |
+| Building block | What developers create                                        | Platform contract                                                                       | Pension-fund examples                                                                      |
+| -------------- | ------------------------------------------------------------- | --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| **Tool**       | Bounded callable capability with typed input/output           | Schema, auth, authorization scope, timeout, idempotency, audit metadata, owner, SLA     | Portfolio lookup; risk calculation; market-data query; document retrieval; ticket creation |
+| **Skill**      | Reusable instructions + decision procedure + tool composition | Manifest, inputs/outputs, allowed tools, policy constraints, eval suite, version, owner | Investment memo drafting; manager due diligence; earnings analysis; incident triage        |
+| **Workflow**   | Deterministic or hybrid multi-step process                    | State model, retries, approvals, compensation, observability, SLA, human checkpoints    | Quarterly valuation review; onboarding; compliance review; reporting package               |
+| **Agent**      | Goal-directed application selecting skills/tools              | Agent identity, model policy, tool allow-list, autonomy tier, memory policy, evals      | Research assistant; operations agent; technology support agent                             |
+| **Policy**     | Machine-enforceable guardrail                                 | Versioned rules evaluated at runtime with deny/approve semantics                        | Trading limits; data entitlements; segregation of duties; approval thresholds              |
 
 **Recommended ecosystem capabilities**
 
